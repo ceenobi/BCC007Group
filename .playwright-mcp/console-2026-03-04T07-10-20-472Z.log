@@ -1,0 +1,7 @@
+[    1984ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
+[  186299ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
+[  186378ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ http://localhost:4500/login:0
+[  186846ms] [WARNING] No routes matched location "/login"  @ http://localhost:4500/node_modules/.vite/deps/chunk-N2WVVSBZ.js?v=e3042f09:632
+[  186849ms] [WARNING] No routes matched location "/login"  @ http://localhost:4500/node_modules/.vite/deps/chunk-N2WVVSBZ.js?v=e3042f09:632
+[  186900ms] [WARNING] No routes matched location "/login"  @ http://localhost:4500/node_modules/.vite/deps/chunk-N2WVVSBZ.js?v=e3042f09:632
+[  186901ms] [WARNING] No routes matched location "/login"  @ http://localhost:4500/node_modules/.vite/deps/chunk-N2WVVSBZ.js?v=e3042f09:632

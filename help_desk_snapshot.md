@@ -1,0 +1,219 @@
+- generic [active] [ref=e1]:
+  - region "Notifications alt+T"
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - button "BCC007" [ref=e6] [cursor=pointer]: BCC
+        - button [ref=e7] [cursor=pointer]:
+          - img [ref=e8]
+        - generic [ref=e10]:
+          - generic [ref=e12]:
+            - link [ref=e14] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e16]
+            - link [ref=e22] [cursor=pointer]:
+              - /url: /members
+              - img [ref=e24]
+            - link [ref=e30] [cursor=pointer]:
+              - /url: /events
+              - img [ref=e32]
+          - generic [ref=e35]:
+            - link [ref=e37] [cursor=pointer]:
+              - /url: /payments
+              - img [ref=e39]
+            - link [ref=e46] [cursor=pointer]:
+              - /url: /transfers
+              - img [ref=e48]
+          - generic [ref=e52]:
+            - link [ref=e54] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e56]
+            - link [ref=e60] [cursor=pointer]:
+              - /url: /settings
+              - img [ref=e62]
+            - link [ref=e66] [cursor=pointer]:
+              - /url: /help-desk
+              - img [ref=e68]
+    - generic [ref=e71]:
+      - generic [ref=e73]:
+        - heading "Good morning☀️ Cobi" [level=1] [ref=e74]
+        - generic [ref=e75]:
+          - button "Search... K" [ref=e76]:
+            - generic [ref=e77]:
+              - img
+              - generic [ref=e78]: Search...
+            - generic [ref=e79]:
+              - img
+              - generic [ref=e80]: K
+          - button [ref=e81] [cursor=pointer]:
+            - img
+          - button "3 View notifications" [ref=e82] [cursor=pointer]:
+            - img
+            - generic [ref=e83]: "3"
+            - generic [ref=e84]: View notifications
+          - button "Profile menu" [ref=e85] [cursor=pointer]:
+            - img "Cobi Mbachu's avatar" [ref=e86]
+      - generic [ref=e87]:
+        - generic [ref=e89]:
+          - heading "Help Desk & Support" [level=1] [ref=e91]
+          - paragraph [ref=e92]: Get assistance with payment issues, submit tickets, and access support resources
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: "4"
+              - paragraph [ref=e99]: Open Tickets
+            - generic [ref=e101]:
+              - generic [ref=e102]: "1"
+              - paragraph [ref=e103]: In Progress
+            - generic [ref=e105]:
+              - generic [ref=e106]: "1"
+              - paragraph [ref=e107]: Resolved Tickets
+          - generic [ref=e108]:
+            - tablist [ref=e110]:
+              - tab "Tickets" [selected] [ref=e111] [cursor=pointer]
+              - tab "Support articles" [ref=e112] [cursor=pointer]
+              - tab "Actions" [ref=e113] [cursor=pointer]
+            - generic [ref=e116]:
+              - search [ref=e117]:
+                - img [ref=e118]
+                - searchbox "Search" [ref=e121]
+              - generic [ref=e122]:
+                - button "Filter" [ref=e123] [cursor=pointer]:
+                  - img
+                  - text: Filter
+                - button [ref=e124] [cursor=pointer]:
+                  - img
+            - tabpanel "Tickets" [ref=e126]:
+              - generic [ref=e127]:
+                - generic [ref=e204]:
+                  - generic [ref=e205]:
+                    - generic [ref=e206]:
+                      - generic [ref=e207]:
+                        - img [ref=e208]
+                        - heading "E2E Test Ticket - Payment Issue" [level=3] [ref=e210]
+                      - paragraph [ref=e211]: ID:TK-467-099
+                    - generic [ref=e212]:
+                      - generic [ref=e214]:
+                        - img [ref=e215]
+                        - generic [ref=e217]: open
+                      - generic [ref=e218]: MEDIUM
+                  - paragraph [ref=e219]: This is an automated E2E test ticket. Please ignore.
+                  - generic [ref=e220]:
+                    - generic [ref=e221]: Created 04 Mar 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e222] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e224]: Updated 04 Mar 2026
+                - generic [ref=e227]:
+                  - generic [ref=e228]:
+                    - generic [ref=e229]:
+                      - generic [ref=e230]:
+                        - img [ref=e231]
+                        - heading "E2E Test Ticket - Payment Issue" [level=3] [ref=e233]
+                      - paragraph [ref=e234]: ID:TK-324-2241
+                    - generic [ref=e235]:
+                      - generic [ref=e237]:
+                        - img [ref=e238]
+                        - generic [ref=e240]: open
+                      - generic [ref=e241]: MEDIUM
+                  - paragraph [ref=e242]: This is an automated E2E test ticket. Please ignore.
+                  - generic [ref=e243]:
+                    - generic [ref=e244]: Created 04 Mar 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e245] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e247]: Updated 04 Mar 2026
+                - generic [ref=e250]:
+                  - generic [ref=e251]:
+                    - generic [ref=e252]:
+                      - generic [ref=e253]:
+                        - img [ref=e254]
+                        - heading "E2E Test Ticket - Payment Issue" [level=3] [ref=e256]
+                      - paragraph [ref=e257]: ID:TK-125-681
+                    - generic [ref=e258]:
+                      - generic [ref=e260]:
+                        - img [ref=e261]
+                        - generic [ref=e263]: open
+                      - generic [ref=e264]: MEDIUM
+                  - paragraph [ref=e265]: This is an automated E2E test ticket. Please ignore.
+                  - generic [ref=e266]:
+                    - generic [ref=e267]: Created 04 Mar 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e268] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e270]: Updated 04 Mar 2026
+                - generic [ref=e273]:
+                  - generic [ref=e274]:
+                    - generic [ref=e275]:
+                      - generic [ref=e276]:
+                        - img [ref=e277]
+                        - heading "Event not created" [level=3] [ref=e279]
+                      - paragraph [ref=e280]: ID:TK-984-7856
+                    - generic [ref=e281]:
+                      - generic [ref=e283]:
+                        - img [ref=e284]
+                        - generic [ref=e286]: resolved
+                      - generic [ref=e287]: MEDIUM
+                  - paragraph [ref=e288]: I reached out to admin to create an event but I am yet to see it on the app.
+                  - generic [ref=e289]:
+                    - generic [ref=e290]: Created 23 Feb 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e291] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e292]:
+                    - generic [ref=e293]: Updated 01 Mar 2026
+                    - link "Assigned to Edwin Arinze" [ref=e294] [cursor=pointer]:
+                      - /url: /members?query=Edwin Arinze
+                - generic [ref=e297]:
+                  - generic [ref=e298]:
+                    - generic [ref=e299]:
+                      - generic [ref=e300]:
+                        - img [ref=e301]
+                        - heading "I can't login to my account" [level=3] [ref=e303]
+                      - paragraph [ref=e304]: ID:TK-738-9907
+                    - generic [ref=e305]:
+                      - generic [ref=e307]:
+                        - img [ref=e308]
+                        - generic [ref=e310]: open
+                      - generic [ref=e311]: CRITICAL
+                  - paragraph [ref=e312]: I have tried several times but I keep getting not found.
+                  - generic [ref=e313]:
+                    - generic [ref=e314]: Created 23 Feb 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e315] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e317]: Updated 23 Feb 2026
+                - generic [ref=e320]:
+                  - generic [ref=e321]:
+                    - generic [ref=e322]:
+                      - generic [ref=e323]:
+                        - img [ref=e324]
+                        - heading "Monthly levy" [level=3] [ref=e326]
+                      - paragraph [ref=e327]: ID:TK-659-2992
+                    - generic [ref=e328]:
+                      - generic [ref=e330]:
+                        - img [ref=e331]
+                        - generic [ref=e334]: in-progress
+                      - generic [ref=e335]: LOW
+                  - paragraph [ref=e336]: I missed this months levy, can i still pay directly to you?
+                  - generic [ref=e337]:
+                    - generic [ref=e338]: Created 22 Feb 2026
+                    - link "Ticket by Cobi Mbachu" [ref=e339] [cursor=pointer]:
+                      - /url: /members?query=Cobi Mbachu
+                  - generic [ref=e340]:
+                    - generic [ref=e341]: Updated 23 Feb 2026
+                    - link "Assigned to Edwin Arinze" [ref=e342] [cursor=pointer]:
+                      - /url: /members?query=Edwin Arinze
+          - generic [ref=e192]:
+            - generic [ref=e193]:
+              - paragraph [ref=e194]: 1-10 of 1
+              - button "Open menu" [ref=e195]:
+                - generic [ref=e196]: Open menu
+                - img
+            - generic [ref=e197]:
+              - button [disabled]:
+                - img
+              - button [disabled]:
+                - img
+              - button [disabled]:
+                - img
+              - button [disabled]:
+                - img
+  - button "4" [ref=e199] [cursor=pointer]:
+    - img
+    - generic [ref=e201]: "4"

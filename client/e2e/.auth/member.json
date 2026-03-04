@@ -1,0 +1,39 @@
+{
+  "cookies": [
+    {
+      "name": "__bcc007pay.session_token",
+      "value": "p2RystK9Z3Pl2rO3ZhlymRdt9AnbINM1.fRzgc32FxcUAhtiPxKpyDsFJQPmPUZSz0untljNFNJE%3D",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1773233841.719174,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__bcc007pay.session_data",
+      "value": "eyJzZXNzaW9uIjp7InNlc3Npb24iOnsiZXhwaXJlc0F0IjoiMjAyNi0wMy0xMVQxMjo1NzoyMS40MjNaIiwidG9rZW4iOiJwMlJ5c3RLOVozUGwyck8zWmhseW1SZHQ5QW5iSU5NMSIsImNyZWF0ZWRBdCI6IjIwMjYtMDMtMDRUMTI6NTc6MjEuNDIzWiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMDRUMTI6NTc6MjEuNDIzWiIsImlwQWRkcmVzcyI6IjEyNy4wLjAuMSIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIEhlYWRsZXNzQ2hyb21lLzE0NS4wLjc2MzIuNiBTYWZhcmkvNTM3LjM2IiwidXNlcklkIjoiNjk5NmZiZDA0ZGU1MzY3NjY3YTRjMjc0IiwiaWQiOiI2OWE4MmMzMTgyNWY3N2RlNmFlMzk3ZDUifSwidXNlciI6eyJuYW1lIjoiRWR3aW4gQXJpbnplIiwiZW1haWwiOiJjb2JpbWJhY2h1QGdtYWlsLmNvbSIsImVtYWlsVmVyaWZpZWQiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDItMTlUMTI6MDI6MjQuODg1WiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMDRUMDc6MTE6NTcuNTIwWiIsInJvbGUiOiJtZW1iZXIiLCJpc09uYm9hcmRlZCI6dHJ1ZSwibWVtYmVySWQiOiJCQ0NFS01COTgiLCJkaXNhYmxlQmlydGhEYXRlIjpmYWxzZSwiZGlzYWJsZUVtYWlsIjpmYWxzZSwiZGlzYWJsZUdlbmRlciI6ZmFsc2UsImlkIjoiNjk5NmZiZDA0ZGU1MzY3NjY3YTRjMjc0In0sInVwZGF0ZWRBdCI6MTc3MjYyOTA0MTcxNywidmVyc2lvbiI6IjEifSwiZXhwaXJlc0F0IjoxNzcyNjI5MzQxNzE3LCJzaWduYXR1cmUiOiItTjFXWnNEczNESWlaT1FNNjRfbE9ERWxZT1d6bnFUbVZYYTdKaUVkY2lBIn0",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1772629341.719272,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:4500",
+      "localStorage": [
+        {
+          "name": "sidebarOpenBcc007Pay",
+          "value": "false"
+        },
+        {
+          "name": "bcc007pay-theme",
+          "value": "system"
+        }
+      ]
+    }
+  ]
+}
