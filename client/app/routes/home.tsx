@@ -242,7 +242,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="text-center lg:text-start lg:flex gap-4 p-4 rounded-lg space-y-4 hover:shadow-lg hover:bg-zinc-50 dark:hover:bg-white/5 transition-shadow duration-300"
               >
-                <div className="flex justify-center flex-shrink-0">
+                <div className="flex justify-center shrink-0">
                   <Button
                     variant="outline"
                     size="icon"
