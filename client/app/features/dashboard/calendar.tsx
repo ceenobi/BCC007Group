@@ -37,7 +37,8 @@ export default function Calendar({
   users,
   usersCount,
 }: calendarProps) {
-  const calendarEvents = events?.length > 0 ? [...users, ...events] : [];
+  console.log(users)
+  const calendarEvents = events?.length > 0 || users?.length > 0 ? [...users, ...events] : [];
 
   const getEventBgColor = (type: string) => {
     switch (type) {
@@ -85,7 +86,7 @@ export default function Calendar({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="gap-2 w-fit sm:w-auto cursor-pointer"
+                  className="gap-2 w-fit sm:w-auto cursor-pointer rounded-sm"
                 >
                   View All
                   <ArrowRight className="h-4 w-4" />
@@ -138,7 +139,7 @@ export default function Calendar({
                         <div className="flex items-center">
                           <Badge
                             variant="outline"
-                            className={getEventBadgeColor(item.eventType)}
+                            className={`${getEventBadgeColor(item.eventType)} rounded-sm`}
                           >
                             {item?.eventType || "Birthday"}
                           </Badge>

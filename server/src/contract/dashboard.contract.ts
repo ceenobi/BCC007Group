@@ -46,24 +46,28 @@ export const dashboardContract = c.router({
           message: z.string(),
           data: z.object({
             events: z.array(
-              z.object({
-                _id: z.string(),
-                title: z.string(),
-                description: z.string().optional(),
-                date: z.string(),
-                eventType: z.string(),
-                daysUntilEvent: z.number(),
-              }),
+              z
+                .object({
+                  _id: z.any(),
+                  title: z.string(),
+                  description: z.string().optional(),
+                  date: z.coerce.date(),
+                  eventType: z.string(),
+                  daysUntilEvent: z.number(),
+                })
+                .optional(),
             ),
             eventsCount: z.number(),
             users: z.array(
-              z.object({
-                _id: z.string(),
-                name: z.string(),
-                dateOfBirth: z.string(),
-                image: z.string(),
-                daysUntilBirthday: z.number(),
-              }),
+              z
+                .object({
+                  _id: z.any(),
+                  name: z.string(),
+                  dateOfBirth: z.coerce.date().optional(),
+                  image: z.string().optional(),
+                  daysUntilBirthday: z.number(),
+                })
+                .optional(),
             ),
             usersCount: z.number(),
           }),
