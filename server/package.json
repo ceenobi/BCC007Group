@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node -r tsconfig-paths/register dist/index.js",
-    "dev": "nodemon --watch '**/*.ts' --exec 'tsx' --inspect -r dotenv/config src/index.ts",
+    "dev": "nodemon --watch '**/*.ts' --exec 'tsx' --inspect -r dotenv/config api/index.ts",
     "build": "tsc --build",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts,.tsx",
