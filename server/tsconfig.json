@@ -3,7 +3,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "moduleDetection": "force",
@@ -21,7 +21,7 @@
     "lib": ["ES2022"],
     "composite": true
   },
-  "include": ["src/**/*", "src/**/*.json"],
+  "include": ["src/**/*", "src/**/*.json", "api/**/*"],
   "exclude": [
     "node_modules",
     "dist",
