@@ -1,8 +1,12 @@
 import { config } from "dotenv";
 import path from "path";
 
-// Load environment variables from the root .env file
-config({ path: path.resolve(process.cwd(), "../../.env") });
+// Load environment variables - only for local development
+// On Vercel, env vars are injected automatically via dashboard
+if (!process.env.VERCEL) {
+  const envPath = path.resolve(process.cwd(), ".env");
+  config({ path: envPath });
+}
 interface Env {
   readonly nodeEnv: string | undefined;
   readonly googleClientId: string | undefined;
