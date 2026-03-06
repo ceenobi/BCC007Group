@@ -239,4 +239,9 @@ const startServer = async (): Promise<void> => {
     process.exit(1);
   }
 };
-startServer();
+
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+export default app;
