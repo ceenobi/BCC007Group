@@ -3,12 +3,10 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "runtime": "nodejs22.x"
+      }
     }
-  ],
-  "functions": {
-    "index.js": {
-      "runtime": "nodejs22.x"
-    }
-  }
+  ]
 }
