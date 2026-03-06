@@ -5,37 +5,37 @@ import compression from "compression";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { createExpressEndpoints } from "@ts-rest/express";
-import { env } from "./src/config/keys";
-import { errorHandler, notFound } from "./src/middleware/error.middleware";
+import { env } from "./config/keys";
+import { errorHandler, notFound } from "./middleware/error.middleware";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./src/config/better-auth";
-import { gracefulShutdown } from "./src/config/db.server";
-import logger from "./src/config/logger";
-import { limiter } from "./src/middleware/rateLimit.middleware";
-import { compressionOptions, helmetOptions } from "./src/lib/options";
+import { auth } from "./config/better-auth";
+import { gracefulShutdown } from "./config/db.server";
+import logger from "./config/logger";
+import { limiter } from "./middleware/rateLimit.middleware";
+import { compressionOptions, helmetOptions } from "./lib/options";
 //routes and contracts
-import { authRouter } from "./src/routes/auth.routes";
-import { uploadRouter } from "./src/routes/upload.routes";
-import { authContract } from "./src/contract/auth.contract";
-import { uploadContract } from "./src/contract/upload.contract";
-import { paystackRouter } from "./src/routes/paystack.routes";
-import { paystackContract } from "./src/contract/paystack.contract";
-import { bankDetailRouter } from "./src/routes/bankDetail.routes";
-import { bankDetailContract } from "./src/contract/bankDetail.contract";
-import { memberContract } from "./src/contract/member.contract";
-import { memberRouter } from "./src/routes/member.routes";
-import { eventRouter } from "./src/routes/event.routes";
-import { eventContract } from "./src/contract/event.contract";
-import { ticketRouter } from "./src/routes/ticket.routes";
-import { ticketContract } from "./src/contract/ticket.contract";
-import { paymentRouter } from "./src/routes/payment.routes";
-import { paymentContract } from "./src/contract/payment.contract";
-import { dashboardRouter } from "./src/routes/dashboard.routes";
-import { dashboardContract } from "./src/contract/dashboard.contract";
+import { authRouter } from "./routes/auth.routes";
+import { uploadRouter } from "./routes/upload.routes";
+import { authContract } from "./contract/auth.contract";
+import { uploadContract } from "./contract/upload.contract";
+import { paystackRouter } from "./routes/paystack.routes";
+import { paystackContract } from "./contract/paystack.contract";
+import { bankDetailRouter } from "./routes/bankDetail.routes";
+import { bankDetailContract } from "./contract/bankDetail.contract";
+import { memberContract } from "./contract/member.contract";
+import { memberRouter } from "./routes/member.routes";
+import { eventRouter } from "./routes/event.routes";
+import { eventContract } from "./contract/event.contract";
+import { ticketRouter } from "./routes/ticket.routes";
+import { ticketContract } from "./contract/ticket.contract";
+import { paymentRouter } from "./routes/payment.routes";
+import { paymentContract } from "./contract/payment.contract";
+import { dashboardRouter } from "./routes/dashboard.routes";
+import { dashboardContract } from "./contract/dashboard.contract";
 
 //workflows
-import workflowRouter from "./src/routes/workflow.routes";
-import sseRouter from "./src/routes/sse.routes";
+import workflowRouter from "./routes/workflow.routes";
+import sseRouter from "./routes/sse.routes";
 
 declare global {
   namespace Express {
@@ -94,7 +94,7 @@ app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.use(express.static("public"));
 app.disable("x-powered-by");
 
-import { strictLimiter } from "./src/middleware/rateLimit.middleware";
+import { strictLimiter } from "./middleware/rateLimit.middleware";
 app.all("/api/auth/*splat", strictLimiter, toNodeHandler(auth));
 app.use(
   express.json({
