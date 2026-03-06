@@ -14,7 +14,7 @@ import logger from "../src/config/logger";
 import { limiter } from "../src/middleware/rateLimit.middleware";
 import { compressionOptions, helmetOptions } from "../src/lib/options";
 import { strictLimiter } from "../src/middleware/rateLimit.middleware";
-//routes and contracts
+//routes and contracts ts-rest
 import { authRouter } from "../src/routes/auth.routes";
 import { uploadRouter } from "../src/routes/upload.routes";
 import { authContract } from "../src/contract/auth.contract";
