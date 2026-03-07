@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import mongoose from "mongoose";
 import { connectToDB } from "./db.server";
-import { env } from "./keys";
+import { env } from "~/config/keys";
 import emailService from "~/email/send-email.server";
 
 await connectToDB();

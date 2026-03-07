@@ -1,4 +1,4 @@
-import { invalidateCache } from "../middleware/cache.middleware";
+import { invalidateCache } from "~/middleware/cache.middleware";
 import { Types } from "mongoose";
 import Event from "~/models/event";
 

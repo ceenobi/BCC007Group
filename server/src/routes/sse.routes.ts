@@ -1,6 +1,6 @@
 import express from "express";
-import { serverEvents } from "../lib/events";
-import logger from "../config/logger";
+import { serverEvents } from "~/lib/events";
+import logger from "~/config/logger";
 
 const sseRouter = express.Router();
 

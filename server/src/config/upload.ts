@@ -1,5 +1,5 @@
 import { v2 as cloudinary, type UploadApiOptions } from "cloudinary";
-import { env } from "./keys";
+import { env } from "~/config/keys";
 import logger from "./logger";
 
 cloudinary.config({

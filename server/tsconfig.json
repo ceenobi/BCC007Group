@@ -15,7 +15,7 @@
     "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*", "./api/*"]
     },
     "types": ["node"],
     "lib": ["ES2022"],

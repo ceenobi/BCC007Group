@@ -1,6 +1,6 @@
-import emailService from "../email/send-email.server";
-import logger from "../config/logger";
-import { type User } from "../config/better-auth";
+import emailService from "~/email/send-email.server";
+import logger from "~/config/logger";
+import { type User } from "~/config/better-auth";
 import { IEvent } from "~/models/event";
 
 export const sendWelcomePasswordWorkflow = async (context: any) => {
