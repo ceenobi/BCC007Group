@@ -1,8 +1,13 @@
 {
-  "buildCommand": "npm run build",
   "functions": {
-    "dist/api/index.js": {
-      "runtime": "nodejs20.x"
+    "api/index.ts": {
+      "runtime": "nodejs22.x"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
+    }
+  ]
 }
