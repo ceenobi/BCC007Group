@@ -5,7 +5,7 @@ import compression from "compression";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { createExpressEndpoints } from "@ts-rest/express";
-import { env } from "../src/config/keys";
+import { env } from "./config/keys";
 import { errorHandler, notFound } from "../src/middleware/error.middleware";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "../src/config/better-auth";

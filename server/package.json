@@ -5,8 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node -r tsconfig-paths/register dist/index.js",
+    "start": "node -r tsconfig-paths/register dist/api/index.js",
     "dev": "nodemon --watch '**/*.ts' --exec 'tsx' --inspect -r dotenv/config api/index.ts",
+    "dev:staging": "tsx --watch --env-file .env.staging api/index.ts",
     "build": "tsc --build",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts,.tsx",

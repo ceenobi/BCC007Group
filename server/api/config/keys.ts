@@ -4,7 +4,7 @@ import path from "path";
 // Load environment variables - only for local development
 // On Vercel, env vars are injected automatically via dashboard
 if (!process.env.VERCEL) {
-  const envPath = path.resolve(process.cwd(), ".env");
+  const envPath = path.resolve(process.cwd(), ".env.staging");
   config({ path: envPath });
 }
 interface Env {
