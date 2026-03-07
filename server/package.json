@@ -12,7 +12,6 @@
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "vercel-build": "node -e \"const esbuild = require('esbuild'); esbuild.build({entryPoints: ['api/index.ts'], bundle: true, platform: 'node', outfile: 'api/index.js', format: 'esm'}).then(() => console.log('Build complete'))\"",
     "qstash": "npx @upstash/qstash-cli@latest dev",
     "ngrok": "ngrok http --url=salmon-daring-partially.ngrok-free.app 4600",
     "test": "vitest run",
