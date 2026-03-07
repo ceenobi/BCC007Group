@@ -1,20 +1,23 @@
 import { initServer } from "@ts-rest/express";
-import { bankDetailContract } from "~/contract/bankDetail.contract";
-import { createTsRestSuccess, createTsRestError } from "~/lib/tsRestResponse";
-import tryCatchFn from "~/lib/tryCatchFn";
-import { validateFormData } from "~/middleware/formValidate";
-import { customRateLimiter } from "~/middleware/rateLimit.middleware";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
-import { createBankAccountSchema } from "~/lib/dataSchema";
-import BankDetails from "~/models/bank";
+import { bankDetailContract } from "@/contract/bankDetail.contract.js";
+import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import { validateFormData } from "@/middleware/formValidate.js";
+import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
+import { createBankAccountSchema } from "@/lib/dataSchema.js";
+import BankDetails from "@/models/bank.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "~/middleware/cache.middleware";
+} from "@/middleware/cache.middleware.js";
 
-const s = initServer();
+import { connectMongoDb } from "@/config/db.server.js";
 
-export const bankDetailRouter = s.router(bankDetailContract, {
+export const getBankDetailRouter = () => {
+  const s = initServer();
+
+  return s.router(bankDetailContract, {
   bank: {
     createBankAccount: {
       middleware: [
@@ -26,23 +29,23 @@ export const bankDetailRouter = s.router(bankDetailContract, {
       handler: tryCatchFn(async ({ req }) => {
         const { bankAccountNumber, bankAccountName, bank, bankCode } = req.body;
         //check if bank detail exists already
-        const isBankDetailExist = await BankDetails.findOne({
+        const isBankDetailExist = await connectMongoDb(() => BankDetails.findOne({
           bankAccountNumber,
           bankAccountName,
           bank,
           bankCode,
           userId: req.user?.id,
-        }).lean();
+        }).lean());
         if (isBankDetailExist) {
           return createTsRestError(400, "Bank detail already exists");
         }
-        const bankDetails = await BankDetails.create({
+        const bankDetails = await connectMongoDb(() => BankDetails.create({
           bankAccountNumber,
           bankAccountName,
           bank,
           bankCode,
           userId: req.user?.id,
-        });
+        }));
         await invalidateCache(`cache:bank-detail:${req.user?.id}`);
         return createTsRestSuccess(201, {
           success: true,
@@ -61,9 +64,9 @@ export const bankDetailRouter = s.router(bankDetailContract, {
         }),
       ],
       handler: tryCatchFn(async ({ req }) => {
-        const bankDetails = await BankDetails.findOne({
+        const bankDetails = await connectMongoDb(() => BankDetails.findOne({
           userId: req.user?.id,
-        }).lean();
+        }).lean());
         if (!bankDetails) {
           return createTsRestError(404, "Bank detail not found");
         }
@@ -84,9 +87,9 @@ export const bankDetailRouter = s.router(bankDetailContract, {
       handler: tryCatchFn(async ({ req }) => {
         const { bankAccountNumber, bankAccountName, bank, bankCode } = req.body;
         //check if bank detail exists already
-        const isBankDetailExist = await BankDetails.findOne({
+        const isBankDetailExist = await connectMongoDb(() => BankDetails.findOne({
           userId: req.user?.id,
-        }).lean();
+        }).lean());
         if (!isBankDetailExist) {
           return createTsRestError(404, "Bank detail not found");
         }
@@ -104,7 +107,7 @@ export const bankDetailRouter = s.router(bankDetailContract, {
         ) {
           return createTsRestError(400, "Bank detail already exists");
         }
-        const updatedBankDetails = await BankDetails.findOneAndUpdate(
+        const updatedBankDetails = await connectMongoDb(() => BankDetails.findOneAndUpdate(
           {
             userId: req.user?.id,
           },
@@ -115,7 +118,7 @@ export const bankDetailRouter = s.router(bankDetailContract, {
             bankCode,
           },
           { returnDocument: "after" },
-        ).lean();
+        ).lean());
         await invalidateCache(`cache:bank-detail:${req.user?.id}`);
         return createTsRestSuccess(200, {
           success: true,
@@ -126,3 +129,4 @@ export const bankDetailRouter = s.router(bankDetailContract, {
     },
   },
 });
+};

@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
-import { DeleteMediaSchema, ErrorSchema, UploadSchema } from "~/lib/dataSchema";
+import { DeleteMediaSchema, ErrorSchema, UploadSchema } from "@/lib/dataSchema.js";
 
 const c = initContract();
 

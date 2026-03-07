@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
-    "outDir": "./dist",
-    "rootDir": ".",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "moduleDetection": "force",
     "strict": true,
@@ -15,13 +13,13 @@
     "noEmit": false,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*", "./api/*"]
+     "@/*": ["src/*"]
     },
     "types": ["node"],
     "lib": ["ES2022"],
     "composite": true
   },
-  "include": ["src/**/*", "src/**/*.json", "api/**/*"],
+  "include": ["src/**/*", "api/**/*"],
   "exclude": [
     "node_modules",
     "dist",

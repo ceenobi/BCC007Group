@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import tryCatchFn from "./tryCatchFn";
-import * as tsRestResponse from "./tsRestResponse";
+import tryCatchFn from "./tryCatchFn.js";
+import * as tsRestResponse from "./tsRestResponse.js";
 import { APIError } from "better-auth/api";
 
 // Mock dependencies
-vi.mock("~/config/logger", () => ({
+vi.mock("@/config/logger", () => ({
   default: {
     error: vi.fn(),
     warn: vi.fn(),

@@ -1,7 +1,7 @@
-import emailService from "~/email/send-email.server";
-import logger from "~/config/logger";
-import { type User } from "~/config/better-auth";
-import { IEvent } from "~/models/event";
+import emailService from "@/email/send-email.server.js";
+import logger from "@/config/logger.js";
+import { type User } from "@/config/better-auth.js";
+import { IEvent } from "@/models/event.js";
 
 export const sendWelcomePasswordWorkflow = async (context: any) => {
   const { user, password } = context.requestPayload as {

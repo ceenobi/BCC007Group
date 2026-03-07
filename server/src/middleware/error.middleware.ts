@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import logger from "~/config/logger";
-import { createTsRestError } from "~/lib/tsRestResponse";
-import { env } from "~/config/keys";
+import logger from "@/config/logger.js";
+import { createTsRestError } from "@/lib/tsRestResponse.js";
+import { env } from "@/config/keys.js";
 
 class ErrorResponse extends Error {
   statusCode: number;

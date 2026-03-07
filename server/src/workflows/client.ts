@@ -1,5 +1,5 @@
 import { Client } from "@upstash/workflow";
-import { env } from "~/config/keys";
+import { env } from "@/config/keys.js";
 
 if (!env.upstash.qstashToken) {
   throw new Error("Upstash QStash token is required for workflows");

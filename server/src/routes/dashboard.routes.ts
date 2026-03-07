@@ -1,14 +1,16 @@
-import { cacheMiddleware } from "~/middleware/cache.middleware";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
+import { cacheMiddleware } from "@/middleware/cache.middleware.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
 import { initServer } from "@ts-rest/express";
-import { createTsRestSuccess, createTsRestError } from "~/lib/tsRestResponse";
-import User from "~/models/user";
-import Event from "~/models/event";
-import Payment from "~/models/payment";
-import Ticket from "~/models/ticket";
-import { dashboardContract } from "~/contract/dashboard.contract";
-import tryCatchFn from "~/lib/tryCatchFn";
-import DashboardStats from "~/models/dashboardStats";
+import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
+import User from "@/models/user.js";
+import Event from "@/models/event.js";
+import Payment from "@/models/payment.js";
+import Ticket from "@/models/ticket.js";
+import { dashboardContract } from "@/contract/dashboard.contract.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import DashboardStats from "@/models/dashboardStats.js";
+
+import { connectMongoDb } from "@/config/db.server.js";
 
 // type ActivityTrendsQuery = z.infer<
 //   typeof dashboardContract.dashboard.getActivityTrends.query
@@ -23,9 +25,10 @@ interface ActivityTrend {
   activityType: "payment" | "event" | "both";
 }
 
-const s = initServer();
+export const getDashboardRouter = () => {
+  const s = initServer();
 
-export const dashboardRouter = s.router(dashboardContract, {
+  return s.router(dashboardContract, {
   dashboard: {
     getAnnouncements: {
       middleware: [
@@ -39,7 +42,7 @@ export const dashboardRouter = s.router(dashboardContract, {
         const now = new Date();
         const currentMonth = now.getMonth() + 1;
         const currentDay = now.getDate();
-        const [users, events] = await Promise.all([
+        const [users, events] = await connectMongoDb(() => Promise.all([
           User.aggregate([
             {
               $match: {
@@ -143,7 +146,7 @@ export const dashboardRouter = s.router(dashboardContract, {
               $unwind: "$organizerInfo",
             },
           ]),
-        ]);
+        ]));
         const upcomingEvents = {
           users,
           usersCount: users.length,
@@ -171,7 +174,7 @@ export const dashboardRouter = s.router(dashboardContract, {
         daysAgo.setDate(daysAgo.getDate() - days);
 
         // Enhanced aggregation for both payments and events
-        const [paymentTrends, eventTrends] = (await Promise.all([
+        const [paymentTrends, eventTrends] = (await connectMongoDb(() => Promise.all([
           // Payment aggregation
           Payment.aggregate([
             {
@@ -244,7 +247,7 @@ export const dashboardRouter = s.router(dashboardContract, {
               },
             },
           ]),
-        ])) as any[][];
+        ]))) as any[][];
 
         // Create comprehensive date map with all days
         const dateMap = new Map<string, ActivityTrend>();
@@ -317,7 +320,7 @@ export const dashboardRouter = s.router(dashboardContract, {
         }),
       ],
       handler: tryCatchFn(async () => {
-        const stats = await DashboardStats.findOne().sort({ updatedAt: -1 });
+        const stats = await connectMongoDb(() => DashboardStats.findOne().sort({ updatedAt: -1 }));
 
         if (!stats) {
           return createTsRestSuccess(200, {
@@ -360,7 +363,7 @@ export const dashboardRouter = s.router(dashboardContract, {
       handler: tryCatchFn(async ({ query }) => {
         const limit = query.limit || 10;
 
-        const [payments, events, tickets] = await Promise.all([
+        const [payments, events, tickets] = await connectMongoDb(() => Promise.all([
           Payment.find({ paymentStatus: "completed" })
             .sort({ createdAt: -1 })
             .limit(limit)
@@ -376,7 +379,7 @@ export const dashboardRouter = s.router(dashboardContract, {
             .limit(limit)
             .populate("userId", "name image")
             .lean(),
-        ]);
+        ]));
 
         const activities = [
           ...payments.map((p: any) => ({
@@ -431,3 +434,4 @@ export const dashboardRouter = s.router(dashboardContract, {
     },
   },
 });
+};

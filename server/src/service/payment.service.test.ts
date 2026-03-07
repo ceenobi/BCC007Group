@@ -85,7 +85,7 @@ describe("PaymentService", () => {
         data: {
           status: true,
           data: {
-            authorization_url: "http://paystack.com/auth",
+            authorization_url: "http://getPaystack().com/auth",
             reference: "ref1",
           },
         },

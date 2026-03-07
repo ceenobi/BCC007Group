@@ -1,5 +1,5 @@
-import { IEvent } from "~/models/event";
-import { sendEmail } from "../config/email.server";
+import { IEvent } from "@/models/event.js";
+import { sendEmail } from "@/config/email.server.js";
 import {
   changeEmailTemplate,
   forgotPasswordTemplate,
@@ -15,8 +15,8 @@ import {
   ticketIssueResolvedTemplate,
   paymemtConfirmationTemplate,
   cancelSubscriptionTemplate,
-} from "./templates";
-import type { User } from "~/config/better-auth";
+} from "./templates.js";
+import type { User } from "@/config/better-auth.js";
 
 const emailService = {
   sendVerificationEmail: async (user: User, url: string) => {

@@ -1,6 +1,6 @@
-import { resend } from "~/config/resend";
-import { env } from "~/config/keys";
-import logger from "~/config/logger";
+import { getResend } from "@/config/resend.js";
+import { env } from "@/config/keys.js";
+import logger from "@/config/logger.js";
 
 interface SendEmailOptions {
   email: string;
@@ -14,6 +14,7 @@ interface SendEmailOptions {
 
 const sendEmail = async (options: SendEmailOptions): Promise<void> => {
   try {
+    const resend = getResend();
     // Define text fallback
     const textFallback = options.message
       .replace(/<style[\s\S]*?<\/style>/gi, " ")

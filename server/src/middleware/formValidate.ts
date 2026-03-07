@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import { NextFunction, Request, Response } from "express";
-import logger from "~/config/logger";
+import logger from "@/config/logger.js";
 
 export const validateFormData =
   (schema: any) =>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { SignUpSchema, LoginSchema } from "./dataSchema";
+import { SignUpSchema, LoginSchema } from "./dataSchema.js";
 
 describe("Data Schemas", () => {
   describe("SignUpSchema", () => {

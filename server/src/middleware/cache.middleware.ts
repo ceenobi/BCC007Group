@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import getRedisClient from "~/config/redis.config";
-import logger from "~/config/logger";
+import getRedisClient from "@/config/redis.config.js";
+import logger from "@/config/logger.js";
 
 /**
  * Cache middleware options

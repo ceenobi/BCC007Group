@@ -1,31 +1,34 @@
 import { initServer } from "@ts-rest/express";
-import { eventContract } from "~/contract/event.contract";
-import { createTsRestError, createTsRestSuccess } from "~/lib/tsRestResponse";
-import tryCatchFn from "~/lib/tryCatchFn";
-import { validateFormData } from "~/middleware/formValidate";
-import { customRateLimiter } from "~/middleware/rateLimit.middleware";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
+import { eventContract } from "@/contract/event.contract.js";
+import { createTsRestError, createTsRestSuccess } from "@/lib/tsRestResponse.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import { validateFormData } from "@/middleware/formValidate.js";
+import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
 import {
   BatchDeleteEventSchema,
   CreateEventSchema,
   UpdateEventSchema,
-} from "~/lib/dataSchema";
-import Event from "~/models/event";
-import { workflowClient } from "~/workflows/client";
-import { env } from "~/config/keys";
-import logger from "~/config/logger";
-import User from "~/models/user";
+} from "@/lib/dataSchema.js";
+import Event from "@/models/event.js";
+import { workflowClient } from "@/workflows/client.js";
+import { env } from "@/config/keys.js";
+import logger from "@/config/logger.js";
+import User from "@/models/user.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "~/middleware/cache.middleware";
+} from "@/middleware/cache.middleware.js";
 import mongoose from "mongoose";
-import { deleteFromCloudinary } from "~/config/upload";
-import { serverEvents } from "~/lib/events";
+import { deleteFromCloudinary } from "@/config/upload.js";
+import { serverEvents } from "@/lib/events.js";
 
-const s = initServer();
+import { connectMongoDb } from "@/config/db.server.js";
 
-export const eventRouter = s.router(eventContract, {
+export const getEventRouter = () => {
+  const s = initServer();
+
+  return s.router(eventContract, {
   events: {
     createEvent: {
       middleware: [
@@ -42,11 +45,11 @@ export const eventRouter = s.router(eventContract, {
             message: "Event date cannot be set for today or in the past",
           });
         }
-        const event = await Event.create(body);
+        const event = await connectMongoDb(() => Event.create(body));
         //clear cache
         await invalidateCache("cache:/api/v1/events*");
         //fetch user to use in workflow
-        const users = await User.find({ _id: { $in: event.organizer } }).lean();
+        const users = await connectMongoDb(() => User.find({ _id: { $in: event.organizer } }).lean());
         // Trigger workflow for email
         workflowClient
           .trigger({
@@ -98,9 +101,9 @@ export const eventRouter = s.router(eventContract, {
 
         if (query) {
           const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-          const users = await User.find({
+          const users = await connectMongoDb(() => User.find({
             $or: [{ name: { $regex: escapedQuery, $options: "i" } }],
-          }).select("_id");
+          }).select("_id"));
           const userIds = users.map((user) => user._id);
 
           matchStage.$or = [
@@ -113,15 +116,15 @@ export const eventRouter = s.router(eventContract, {
           }
         }
 
-        const events = await Event.find(matchStage)
+        const events = await connectMongoDb(() => Event.find(matchStage)
           .populate("organizer", "memberId name email image")
           .populate("interestedMembers", "memberId name email image")
           .skip((page - 1) * limit)
           .limit(limit)
           .sort({ createdAt: -1 })
-          .lean();
+          .lean());
 
-        const totalEvents = await Event.countDocuments(matchStage);
+        const totalEvents = await connectMongoDb(() => Event.countDocuments(matchStage));
         if (!events) {
           return createTsRestError(404, "Events not found");
         }
@@ -149,9 +152,9 @@ export const eventRouter = s.router(eventContract, {
       ],
       handler: tryCatchFn(async ({ req }) => {
         const { ids } = req.body;
-        const events = await Event.find({
+        const events = await connectMongoDb(() => Event.find({
           _id: { $in: ids },
-        }).lean();
+        }).lean());
         for (const event of events) {
           if (!event) {
             return createTsRestError(
@@ -168,12 +171,12 @@ export const eventRouter = s.router(eventContract, {
             }
           }),
         );
-        await Promise.all([
+        await connectMongoDb(() => Promise.all([
           Event.deleteMany({
             _id: { $in: ids },
           }),
           invalidateCache("cache:/api/v1/events*"),
-        ]);
+        ]));
         return createTsRestSuccess(200, {
           success: true,
           message: "Events deleted successfully",
@@ -185,7 +188,7 @@ export const eventRouter = s.router(eventContract, {
       middleware: [verifyUser, authorizedRoles("super_admin", "admin")],
       handler: tryCatchFn(async ({ params }) => {
         const { id } = params;
-        const event = await Event.findById(id).lean();
+        const event = await connectMongoDb(() => Event.findById(id).lean());
         if (!event) {
           return createTsRestError(404, "Event not found");
         }
@@ -193,10 +196,10 @@ export const eventRouter = s.router(eventContract, {
         if (event.featuredImageId) {
           await deleteFromCloudinary(event.featuredImageId);
         }
-        await Promise.all([
+        await connectMongoDb(() => Promise.all([
           Event.deleteOne({ _id: id }),
           invalidateCache("cache:/api/v1/events*"),
-        ]);
+        ]));
         return createTsRestSuccess(200, {
           success: true,
           message: "Event deleted successfully",
@@ -212,7 +215,7 @@ export const eventRouter = s.router(eventContract, {
       ],
       handler: tryCatchFn(async ({ params, body }) => {
         const { id } = params;
-        const event = await Event.findById(id);
+        const event = await connectMongoDb(() => Event.findById(id));
         if (!event) {
           return createTsRestError(404, "Event not found");
         }
@@ -227,23 +230,23 @@ export const eventRouter = s.router(eventContract, {
         );
 
         if (idsToDeleteOrganizer.length > 0) {
-          await Promise.all(
+          await connectMongoDb(() => Promise.all(
             idsToDeleteOrganizer.map((id: string) =>
               Event.findByIdAndUpdate(id, {
                 $pull: { organizer: id },
               }),
             ),
-          );
+          ));
         }
 
         if (idsToAddOrganizer.length > 0) {
-          await Promise.all(
+          await connectMongoDb(() => Promise.all(
             idsToAddOrganizer.map((id: string) =>
               Event.findByIdAndUpdate(id, {
                 $addToSet: { organizer: id },
               }),
             ),
-          );
+          ));
         }
 
         for (const [key, value] of Object.entries(body)) {
@@ -251,7 +254,7 @@ export const eventRouter = s.router(eventContract, {
             (event as any)[key] = value;
           }
         }
-        await event.save();
+        await connectMongoDb(() => event.save());
         await invalidateCache("cache:/api/v1/events*");
         serverEvents.emit("event:updated", event);
         return createTsRestSuccess(200, {
@@ -263,3 +266,4 @@ export const eventRouter = s.router(eventContract, {
     },
   },
 });
+};

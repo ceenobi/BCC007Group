@@ -6,7 +6,7 @@ import {
   initializePaymentSchema,
   paymentSchema,
   verifyPaymentSchema,
-} from "~/lib/dataSchema";
+} from "@/lib/dataSchema.js";
 
 const c = initContract();
 

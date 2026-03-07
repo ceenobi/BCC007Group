@@ -1,5 +1,5 @@
 import { CompressionOptions } from "compression";
-import { env } from "~/config/keys";
+import { env } from "@/config/keys.js";
 
 export const compressionOptions: CompressionOptions = {
   // Level of compression (0-9, where 9 is maximum compression)
@@ -48,7 +48,7 @@ export const helmetOptions = {
         "'self'",
         "https:",
         env.serverUrl || "http://localhost:4600",
-        "https://api.paystack.co",
+        "https://api.getPaystack().co",
         "https://res.cloudinary.com",
       ],
       fontSrc: ["'self'", "https:", "data:"],

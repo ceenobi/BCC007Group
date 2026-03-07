@@ -1,7 +1,7 @@
 // Ensure environment variables are loaded
 import mongoose, { ConnectOptions } from "mongoose";
-import { env } from "~/config/keys";
-import logger from "./logger";
+import { env } from "@/config/keys.js";
+import logger from "./logger.js";
 
 if (!env.databaseUrl) {
   throw new Error("DATABASE_URL environment variable is not defined");
@@ -117,10 +117,10 @@ process.on("uncaughtException", (error: Error) => {
   gracefulShutdown().finally(() => process.exit(1));
 });
 
-export async function withMongo<T>(fn: () => Promise<T>): Promise<T> {
+export async function connectMongoDb<T>(operation: () => Promise<T>): Promise<T> {
   try {
     await connectToDB();
-    return await fn();
+    return await operation();
   } catch (error: any) {
     logger.error("Operation failed", error);
     throw error?.response?.data || error;

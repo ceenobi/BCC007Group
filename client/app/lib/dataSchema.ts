@@ -399,8 +399,8 @@ export const initializePaymentSchema = z.object({
   eventId: z.string().optional(),
   note: z
     .string()
-    .min(5, "Note is required")
-    .max(50, "Note is too long")
+    .min(5, "Note should be at least 5 characters long")
+    .max(50, "Note should be at most 50 characters long")
     .optional(),
 });
 

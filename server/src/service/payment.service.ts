@@ -1,11 +1,13 @@
 import crypto from "crypto";
-import logger from "~/config/logger";
-import { paystack } from "~/config/paystack";
-import { type User as BetterAuthUser } from "~/config/better-auth";
-import { env } from "~/config/keys";
-import { workflowClient } from "~/workflows/client";
-import User from "~/models/user";
-import { invalidateCache } from "~/middleware/cache.middleware";
+import logger from "@/config/logger.js";
+import { getPaystack } from "@/config/paystack.js";
+import { type User as BetterAuthUser } from "@/config/better-auth.js";
+import { env } from "@/config/keys.js";
+import { workflowClient } from "@/workflows/client.js";
+import User from "@/models/user.js";
+import { invalidateCache } from "@/middleware/cache.middleware.js";
+
+import { connectMongoDb } from "@/config/db.server.js";
 
 export interface InitializePaymentData {
   amount: number;
@@ -59,7 +61,7 @@ export class PaymentService {
     try {
       // 1. Validation
       if (data.paymentType === "membership_dues") {
-        const Payment = (await import("~/models/payment")).default;
+        const Payment = (await import("@/models/payment.js")).default;
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const endOfMonth = new Date(
@@ -72,12 +74,12 @@ export class PaymentService {
           999,
         );
 
-        const existingPayment = await Payment.findOne({
+        const existingPayment = await connectMongoDb(() => Payment.findOne({
           userId: user.id,
           paymentType: "membership_dues",
           paymentStatus: "completed",
           createdAt: { $gte: startOfMonth, $lte: endOfMonth },
-        });
+        }));
 
         if (existingPayment) {
           throw new Error(
@@ -98,7 +100,7 @@ export class PaymentService {
       if (data.paymentType === "membership_dues" && data.isRecurring) {
         // Handle Subscription
         const planCode = PAYSTACK_PLANS.levy_plan;
-        response = await paystack.post("/transaction/initialize", {
+        response = await getPaystack().post("/transaction/initialize", {
           email: user.email,
           amount: amountInKobo,
           reference,
@@ -114,7 +116,7 @@ export class PaymentService {
         });
       } else {
         // Handle One-time payment
-        response = await paystack.post("/transaction/initialize", {
+        response = await getPaystack().post("/transaction/initialize", {
           email: user.email,
           amount: amountInKobo,
           reference,
@@ -148,7 +150,7 @@ export class PaymentService {
    */
   async verifyPayment(data: VerifyPaymentData, user: BetterAuthUser): Promise<any> {
     try {
-      const response = await paystack.get(
+      const response = await getPaystack().get(
         `/transaction/verify/${data.reference}`,
       );
 
@@ -156,7 +158,7 @@ export class PaymentService {
         const tx = response.data.data;
         const metadata = tx.metadata;
 
-        const Payment = (await import("~/models/payment")).default;
+        const Payment = (await import("@/models/payment.js")).default;
 
         const paymentUpdate = {
           userId: metadata.userId,
@@ -203,11 +205,11 @@ export class PaymentService {
           );
         }
 
-        const payment = await Payment.findOneAndUpdate(
+        const payment = await connectMongoDb(() => Payment.findOneAndUpdate(
           { reference: tx.reference },
           paymentUpdate,
           { upsert: true, returnDocument: "after" },
-        );
+        ));
         //trigger payment confirmation workflow
         await this._triggerPaymentConfirmation(
           metadata.userId,
@@ -266,7 +268,7 @@ export class PaymentService {
         );
 
         // 1. Verify the transaction to get the customer code
-        const txRes = await paystack.get(`/transaction/verify/${reference}`);
+        const txRes = await getPaystack().get(`/transaction/verify/${reference}`);
         const tx = txRes.data?.data;
         const customerCode = tx?.customer?.customer_code;
         const customerId = tx?.customer?.id;
@@ -276,7 +278,7 @@ export class PaymentService {
         }
 
         // 2. List subscriptions for that customer using their numeric ID
-        const subRes = await paystack.get(`/subscription`, {
+        const subRes = await getPaystack().get(`/subscription`, {
           params: { customer: customerId },
         });
 
@@ -289,11 +291,11 @@ export class PaymentService {
             `No active subscription found for customer ${customerCode}. Marking as cancelled locally to heal the state.`,
           );
 
-          const Payment = (await import("~/models/payment")).default;
-          await Payment.updateMany(
+          const Payment = (await import("@/models/payment.js")).default;
+          await connectMongoDb(() => Payment.updateMany(
             { reference },
             { $set: { subscriptionStatus: "cancelled", isRecurring: false } },
-          );
+          ));
 
           return {
             status: true,
@@ -306,8 +308,8 @@ export class PaymentService {
         token = activeSub.email_token;
 
         // Save these back so future cancel attempts don't need the fallback
-        const Payment = (await import("~/models/payment")).default;
-        await Payment.updateMany(
+        const Payment = (await import("@/models/payment.js")).default;
+        await connectMongoDb(() => Payment.updateMany(
           { reference },
           {
             $set: {
@@ -315,13 +317,13 @@ export class PaymentService {
               paystackEmailToken: token,
             },
           },
-        );
+        ));
         logger.info(
           `Backfilled subscription code/token for reference ${reference}`,
         );
       }
 
-      const response = await paystack.post("/subscription/disable", {
+      const response = await getPaystack().post("/subscription/disable", {
         code,
         token,
       });
@@ -333,11 +335,11 @@ export class PaymentService {
       }
 
       // Mark as cancelled in DB
-      const Payment = (await import("~/models/payment")).default;
-      await Payment.updateMany(
+      const Payment = (await import("@/models/payment.js")).default;
+      await connectMongoDb(() => Payment.updateMany(
         { paystackSubscriptionId: code },
         { $set: { subscriptionStatus: "cancelled", isRecurring: false } },
-      );
+      ));
       await Promise.all([
         invalidateCache(`cache:payments:${user.id}`),
         invalidateCache(`cache:/api/v1/payments*`),
@@ -377,7 +379,7 @@ export class PaymentService {
    */
   async handleWebhook(event: any): Promise<void> {
     const { event: eventType, data } = event;
-    const Payment = (await import("~/models/payment")).default;
+    const Payment = (await import("@/models/payment.js")).default;
 
     try {
       switch (eventType) {
@@ -387,7 +389,7 @@ export class PaymentService {
           );
           // Try to find the record either by subscription code (if already saved by verify)
           // or by customer and plan type when no subscription code is set yet
-          await Payment.findOneAndUpdate(
+          await connectMongoDb(() => Payment.findOneAndUpdate(
             {
               $or: [
                 { paystackSubscriptionId: data.subscription_code },
@@ -409,7 +411,7 @@ export class PaymentService {
               },
             },
             { sort: { createdAt: -1 } },
-          );
+          ));
           break;
 
         case "charge.success":
@@ -440,11 +442,11 @@ export class PaymentService {
           }
 
           // Use reference to find the specific initial payment attempt
-          const payment = await Payment.findOneAndUpdate(
+          const payment = await connectMongoDb(() => Payment.findOneAndUpdate(
             { reference: data.reference },
             chargeUpdate,
             { upsert: true, returnDocument: "after" },
-          );
+          ));
 
           // Trigger workflow for successful charge
           if (payment) {
@@ -460,10 +462,10 @@ export class PaymentService {
           logger.info(
             `Webhook subscription.disable: ${data.subscription_code}`,
           );
-          await Payment.findOneAndUpdate(
+          await connectMongoDb(() => Payment.findOneAndUpdate(
             { paystackSubscriptionId: data.subscription_code },
             { isRecurring: false, subscriptionStatus: "cancelled" },
-          );
+          ));
           break;
 
         default:
@@ -496,7 +498,7 @@ export class PaymentService {
     name: string,
   ): Promise<any> {
     try {
-      const response = await paystack.post("/customer", {
+      const response = await getPaystack().post("/customer", {
         email,
         metadata: {
           userId,
@@ -525,7 +527,7 @@ export class PaymentService {
     reference: string,
   ) {
     try {
-      const user = await User.findById(userId).lean();
+      const user = await connectMongoDb(() => User.findById(userId).lean());
       if (!user) {
         logger.error(`User ${userId} not found for payment confirmation`);
         return;

@@ -1,9 +1,9 @@
-import User from "~/models/user";
-import Payment from "~/models/payment";
-import Ticket from "~/models/ticket";
-import DashboardStats from "~/models/dashboardStats";
+import User from "@/models/user.js";
+import Payment from "@/models/payment.js";
+import Ticket from "@/models/ticket.js";
+import DashboardStats from "@/models/dashboardStats.js";
 import { startOfMonth, endOfMonth, subMonths } from "date-fns";
-import logger from "~/config/logger";
+import logger from "@/config/logger.js";
 
 export const calculateDashboardStats = async () => {
   logger.info("Starting dashboard stats calculation workflow...");

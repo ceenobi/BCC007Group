@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { createTsRestError } from "~/lib/tsRestResponse";
-import { auth, User } from "~/config/better-auth";
+import { createTsRestError } from "@/lib/tsRestResponse.js";
+import { auth, User } from "@/config/better-auth.js";
 import { fromNodeHeaders } from "better-auth/node";
 
 declare global {

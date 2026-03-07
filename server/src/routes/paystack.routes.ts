@@ -1,22 +1,23 @@
 import { initServer } from "@ts-rest/express";
 import type { Request } from "express";
-import { paystackContract } from "~/contract/paystack.contract";
-import { createTsRestSuccess, createTsRestError } from "~/lib/tsRestResponse";
-import tryCatchFn from "~/lib/tryCatchFn";
-import { customRateLimiter } from "~/middleware/rateLimit.middleware";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
+import { paystackContract } from "@/contract/paystack.contract.js";
+import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
 import axios from "axios";
-import { env } from "~/config/keys";
-import { cacheMiddleware } from "~/middleware/cache.middleware";
-import logger from "~/config/logger";
-import { paymentService } from "~/service/payment.service";
-import { User } from "~/config/better-auth";
-import { serverEvents } from "~/lib/events";
-import { workflowClient } from "~/workflows/client";
+import { env } from "@/config/keys.js";
+import { cacheMiddleware } from "@/middleware/cache.middleware.js";
+import logger from "@/config/logger.js";
+import { paymentService } from "@/service/payment.service.js";
+import { User } from "@/config/better-auth.js";
+import { serverEvents } from "@/lib/events.js";
+import { workflowClient } from "@/workflows/client.js";
 
-const s = initServer();
+export const getPaystackRouter = () => {
+  const s = initServer();
 
-export const paystackRouter = s.router(paystackContract, {
+  return s.router(paystackContract, {
   paystack: {
     listBanks: {
       middleware: [
@@ -162,3 +163,4 @@ export const paystackRouter = s.router(paystackContract, {
     },
   },
 });
+};

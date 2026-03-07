@@ -1,16 +1,17 @@
 import { initServer } from "@ts-rest/express";
-import { uploadContract } from "~/contract/upload.contract";
-import { createTsRestSuccess, createTsRestError } from "~/lib/tsRestResponse";
-import tryCatchFn from "~/lib/tryCatchFn";
-import { validateFormData } from "~/middleware/formValidate";
-import { customRateLimiter } from "~/middleware/rateLimit.middleware";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
-import { UploadSchema } from "~/lib/dataSchema";
-import { deleteFromCloudinary, uploadToCloudinary } from "~/config/upload";
+import { uploadContract } from "@/contract/upload.contract.js";
+import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import { validateFormData } from "@/middleware/formValidate.js";
+import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
+import { UploadSchema } from "@/lib/dataSchema.js";
+import { deleteFromCloudinary, uploadToCloudinary } from "@/config/upload.js";
 
-const s = initServer();
+export const getUploadRouter = () => {
+  const s = initServer();
 
-export const uploadRouter = s.router(uploadContract, {
+  return s.router(uploadContract, {
   upload: {
     deleteMedia: {
       middleware: [
@@ -57,3 +58,4 @@ export const uploadRouter = s.router(uploadContract, {
     },
   },
 });
+};

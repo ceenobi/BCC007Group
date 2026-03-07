@@ -5,7 +5,7 @@ process.env.DATABASE_URL = "mongodb://localhost:27017/test";
 process.env.NODE_ENV = "test";
 
 // Mock environment keys
-vi.mock("~/config/keys", () => ({
+vi.mock("@/config/keys", () => ({
   env: {
     databaseUrl: "mongodb://localhost:27017/test",
     nodeEnv: "test",

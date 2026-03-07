@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
-import { env } from "~/config/keys";
-import logger from "./logger";
+import { env } from "@/config/keys.js";
+import logger from "./logger.js";
 
 /**
  * Upstash Redis client instance

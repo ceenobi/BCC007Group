@@ -1,16 +1,19 @@
 import { initServer } from "@ts-rest/express";
-import { paymentContract } from "~/contract/payment.contract";
-import { createTsRestSuccess, createTsRestError } from "~/lib/tsRestResponse";
-import tryCatchFn from "~/lib/tryCatchFn";
-import { authorizedRoles, verifyUser } from "~/middleware/auth.middleware";
-import { cacheMiddleware } from "~/middleware/cache.middleware";
-import Payment from "~/models/payment";
-import User from "~/models/user";
+import { paymentContract } from "@/contract/payment.contract.js";
+import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
+import tryCatchFn from "@/lib/tryCatchFn.js";
+import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
+import { cacheMiddleware } from "@/middleware/cache.middleware.js";
+import Payment from "@/models/payment.js";
+import User from "@/models/user.js";
 import mongoose from "mongoose";
 
-const s = initServer();
+import { connectMongoDb } from "@/config/db.server.js";
 
-export const paymentRouter = s.router(paymentContract, {
+export const getPaymentRouter = () => {
+  const s = initServer();
+
+  return s.router(paymentContract, {
   payments: {
     listUserPayments: {
       middleware: [
@@ -42,14 +45,13 @@ export const paymentRouter = s.router(paymentContract, {
         if (paymentType) {
           matchStage.paymentType = paymentType;
         }
-        const payments = await Payment.find(matchStage)
+        const payments = await connectMongoDb(() => Payment.find(matchStage)
           .populate("userId", "memberId name email image")
           .skip((page - 1) * limit)
           .limit(limit)
           .sort({ createdAt: -1 })
-          .lean();
-
-        const totalPayments = await Payment.countDocuments(matchStage);
+          .lean())
+        const totalPayments = await connectMongoDb(() => Payment.countDocuments(matchStage));
         if (!payments) {
           return createTsRestError(404, "Payments not found");
         }
@@ -96,11 +98,11 @@ export const paymentRouter = s.router(paymentContract, {
           matchStage.reference = normalizedQuery;
         } else if (normalizedQuery) {
           // Find users matching the name query
-          const users = await User.find({
-            name: { $regex: normalizedQuery, $options: "i" },
+          const users = await connectMongoDb(() => User.find({
+            $or: [{ name: { $regex: normalizedQuery, $options: "i" } }],
           })
             .select("_id")
-            .lean();
+            .lean())
           const userIds = users.map((u: any) => u._id);
 
           matchStage.$or = [
@@ -115,14 +117,14 @@ export const paymentRouter = s.router(paymentContract, {
           matchStage.paymentType = paymentType;
         }
 
-        const payments = await Payment.find(matchStage)
+        const payments = await connectMongoDb(() => Payment.find(matchStage)
           .populate("userId", "memberId name email image")
           .skip((page - 1) * limit)
           .limit(limit)
           .sort({ createdAt: -1 })
-          .lean();
+          .lean());
 
-        const totalPayments = await Payment.countDocuments(matchStage);
+        const totalPayments = await connectMongoDb(() => Payment.countDocuments(matchStage));
         if (!payments) {
           return createTsRestError(404, "Payments not found");
         }
@@ -175,7 +177,7 @@ export const paymentRouter = s.router(paymentContract, {
         const dateFormat =
           period === "1w" || period === "1m" ? "%Y-%m-%d" : "%Y-%m";
 
-        const aggregateResult = await Payment.aggregate([
+        const aggregateResult = await connectMongoDb(() => Payment.aggregate([
           { $match: matchStage },
           {
             $facet: {
@@ -239,7 +241,7 @@ export const paymentRouter = s.router(paymentContract, {
               ],
             },
           },
-        ]);
+        ]));
 
         const result = aggregateResult[0];
         const stats = {
@@ -261,7 +263,7 @@ export const paymentRouter = s.router(paymentContract, {
         if (paymentStatus) monthlyMatchStage.paymentStatus = paymentStatus;
         if (paymentType) monthlyMatchStage.paymentType = paymentType;
 
-        const paymentsByMonth = await Payment.aggregate([
+        const paymentsByMonth = await connectMongoDb(() => Payment.aggregate([
           { $match: monthlyMatchStage },
           {
             $group: {
@@ -274,7 +276,7 @@ export const paymentRouter = s.router(paymentContract, {
             },
           },
           { $sort: { _id: 1 } },
-        ]);
+        ]));
 
         const allMonths = Array.from({ length: 12 }, (_, i) => {
           const date = new Date(currentYear, i, 1);
@@ -306,14 +308,14 @@ export const paymentRouter = s.router(paymentContract, {
         };
 
         // Group-level rolling 12-month membership dues stats
-        const firstDuesPayment = await Payment.findOne(
+        const firstDuesPayment = await connectMongoDb(() => Payment.findOne(
           {
             paymentType: "membership_dues",
             paymentStatus: "completed",
           },
           { createdAt: 1 },
           { sort: { createdAt: 1 } },
-        ).lean();
+        ).lean());
 
         if (!firstDuesPayment?.createdAt) {
           return createTsRestSuccess(200, {
@@ -343,7 +345,7 @@ export const paymentRouter = s.router(paymentContract, {
         const cycleEnd = new Date(cycleStart);
         cycleEnd.setFullYear(cycleEnd.getFullYear() + 1);
 
-        const yearlyPayments = await Payment.aggregate([
+        const yearlyPayments = await connectMongoDb(() => Payment.aggregate([
           {
             $match: {
               paymentType: "membership_dues",
@@ -359,7 +361,7 @@ export const paymentRouter = s.router(paymentContract, {
               lastPayment: { $max: "$createdAt" },
             },
           },
-        ]);
+        ]));
 
         const yearlyDues = 2000 * 12; // 2000 per month * 12 months
         const totalPaidThisYear = yearlyPayments[0]?.totalPaid || 0;
@@ -433,7 +435,7 @@ export const paymentRouter = s.router(paymentContract, {
         const dateFormat =
           period === "1w" || period === "1m" ? "%Y-%m-%d" : "%Y-%m";
 
-        const aggregateResult = await Payment.aggregate([
+        const aggregateResult = await connectMongoDb(() => Payment.aggregate([
           { $match: matchStage },
           {
             $facet: {
@@ -497,7 +499,7 @@ export const paymentRouter = s.router(paymentContract, {
               ],
             },
           },
-        ]);
+        ]));
 
         const result = aggregateResult[0];
         const stats = {
@@ -521,7 +523,7 @@ export const paymentRouter = s.router(paymentContract, {
         if (paymentStatus) monthlyMatchStage.paymentStatus = paymentStatus;
         if (paymentType) monthlyMatchStage.paymentType = paymentType;
 
-        const paymentsByMonth = await Payment.aggregate([
+        const paymentsByMonth = await connectMongoDb(() => Payment.aggregate([
           { $match: monthlyMatchStage },
           {
             $group: {
@@ -534,7 +536,7 @@ export const paymentRouter = s.router(paymentContract, {
             },
           },
           { $sort: { _id: 1 } },
-        ]);
+        ]));
 
         const allMonths = Array.from({ length: 12 }, (_, i) => {
           const date = new Date(currentYear, i, 1);
@@ -567,13 +569,13 @@ export const paymentRouter = s.router(paymentContract, {
         // member-level rolling 12-month membership dues stats
         const cycleUserId = new mongoose.Types.ObjectId(req.user?.id);
 
-        const firstDuesPayment = await Payment.findOne({
+        const firstDuesPayment = await connectMongoDb(() => Payment.findOne({
           userId: cycleUserId,
           paymentStatus: "completed",
           paymentType: "membership_dues",
         })
           .sort({ createdAt: 1 })
-          .lean();
+          .lean());
 
         if (!firstDuesPayment?.createdAt) {
           return createTsRestSuccess(200, {
@@ -603,15 +605,15 @@ export const paymentRouter = s.router(paymentContract, {
         const cycleEnd = new Date(cycleStart);
         cycleEnd.setFullYear(cycleEnd.getFullYear() + 1);
 
-        const lastMonthlyDuesPaid = await Payment.findOne({
+        const lastMonthlyDuesPaid = await connectMongoDb(() => Payment.findOne({
           userId: cycleUserId,
           paymentStatus: "completed",
           paymentType: "membership_dues",
         })
           .sort({ createdAt: -1 })
-          .lean();
+          .lean());
 
-        const cyclePaymentsAgg = await Payment.aggregate([
+        const cyclePaymentsAgg = await connectMongoDb(() => Payment.aggregate([
           {
             $match: {
               userId: cycleUserId,
@@ -630,7 +632,7 @@ export const paymentRouter = s.router(paymentContract, {
               paymentCount: { $sum: 1 },
             },
           },
-        ]);
+        ]));
 
         const totalPaidThisYear = cyclePaymentsAgg[0]?.totalPaid || 0;
         const monthsPaid = Math.floor(totalPaidThisYear / 2000);
@@ -654,7 +656,7 @@ export const paymentRouter = s.router(paymentContract, {
         const nextCycleMonthStart = new Date(currentCycleMonthStart);
         nextCycleMonthStart.setMonth(nextCycleMonthStart.getMonth() + 1);
 
-        const currentMonthlyDuesPaid = await Payment.findOne({
+        const currentMonthlyDuesPaid = await connectMongoDb(() => Payment.findOne({
           userId: cycleUserId,
           paymentStatus: "completed",
           paymentType: "membership_dues",
@@ -662,7 +664,7 @@ export const paymentRouter = s.router(paymentContract, {
             $gte: currentCycleMonthStart,
             $lt: nextCycleMonthStart,
           },
-        }).lean();
+        }).lean());
 
         const paymentPercentage = (totalPaidThisYear / yearlyDues) * 100;
         const isUpToDate =
@@ -695,3 +697,4 @@ export const paymentRouter = s.router(paymentContract, {
     },
   },
 });
+};
