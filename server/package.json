@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=production tsx api/index.ts",
+    "build": "rm -rf dist && tsc",
+    "start": "node dist/api/index.js",
     "dev": "NODE_ENV=development tsx watch api/index.ts",
     "dev:staging": "NODE_ENV=staging tsx watch api/index.ts",
     "lint": "eslint . --ext .ts,.tsx",
