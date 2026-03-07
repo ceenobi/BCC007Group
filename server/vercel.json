@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "api/index.ts": {}
-  },
   "routes": [
     {
       "src": "/(.*)",
