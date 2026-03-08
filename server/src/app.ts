@@ -9,7 +9,7 @@ import { createExpressEndpoints } from "@ts-rest/express";
 import { errorHandler, notFound } from "@/middleware/error.middleware.js";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "@/config/better-auth.js";
-import { connectMongoDb, gracefulShutdown } from "@/config/db.server.js";
+import { gracefulShutdown } from "@/config/db.server.js";
 import logger from "@/config/logger.js";
 import { limiter } from "@/middleware/rateLimit.middleware.js";
 import { compressionOptions, helmetOptions } from "@/lib/options.js";
@@ -192,14 +192,11 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4600;
 const startServer = async (): Promise<void> => {
   let server: any;
   try {
-    await connectMongoDb(async () => {
-      server = app.listen(PORT, "0.0.0.0", () => {
-        logger.info(
-          `\n✅ Server running in ${env.nodeEnv} mode on port ${PORT}`,
-        );
-        logger.info(`🌐 http://localhost:${PORT}\n`);
-      });
-      return server;
+    server = app.listen(PORT, "0.0.0.0", () => {
+      logger.info(
+        `\n✅ Server running in ${env.nodeEnv} mode on port ${PORT}`,
+      );
+      logger.info(`🌐 http://localhost:${PORT}\n`);
     });
     // Handle unhandled promise rejections
     process.on("unhandledRejection", (reason: unknown) => {

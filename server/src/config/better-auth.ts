@@ -5,10 +5,7 @@ import { connectToDB } from "./db.server.js";
 import { env } from "@/config/keys.js";
 import emailService from "@/email/send-email.server.js";
 
-async function start() {
-  await connectToDB();
-}
-start();
+await connectToDB();
 
 export const auth = betterAuth({
   appName: "Bcc007Pay",
