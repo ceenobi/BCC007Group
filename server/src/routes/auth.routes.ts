@@ -1,5 +1,5 @@
 import { initServer } from "@ts-rest/express";
-import { authContract } from "@/contract/auth.contract.js";
+import { authContract } from "../contract/auth.contract.js";
 import {
   SignUpSchema,
   LoginSchema,
@@ -8,28 +8,28 @@ import {
   ChangeEmailSchema,
   UpdateUserSchema,
   UpdateUserAvatarSchema,
-} from "@/lib/dataSchema.js";
-import { auth } from "@/config/better-auth.js";
+} from "../lib/dataSchema.js";
+import { auth } from "../config/better-auth.js";
 import {
   createTsRestSuccess,
   createTsRestError,
-} from "@/lib/tsRestResponse.js";
+} from "../lib/tsRestResponse.js";
 import { fromNodeHeaders } from "better-auth/node";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { env } from "@/config/keys.js";
-import { type User as BetterAuthUser } from "@/config/better-auth.js";
-import logger from "@/config/logger.js";
-import { validateFormData } from "@/middleware/formValidate.js";
-import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import { generateMemberId } from "@/lib/options.js";
-import { deleteFromCloudinary } from "@/config/upload.js";
-import User from "@/models/user.js";
-import BankDetails from "@/models/bank.js";
-import { workflowClient } from "@/workflows/client.js";
-import { invalidateCache } from "@/middleware/cache.middleware.js";
-import { serverEvents } from "@/lib/events.js";
-import { connectMongoDb } from "@/config/db.server.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { env } from "../config/keys.js";
+import { type User as BetterAuthUser } from "../config/better-auth.js";
+import logger from "../config/logger.js";
+import { validateFormData } from "../middleware/formValidate.js";
+import { customRateLimiter } from "../middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import { generateMemberId } from "../lib/options.js";
+import { deleteFromCloudinary } from "../config/upload.js";
+import User from "../models/user.js";
+import BankDetails from "../models/bank.js";
+import { workflowClient } from "../workflows/client.js";
+import { invalidateCache } from "../middleware/cache.middleware.js";
+import { serverEvents } from "../lib/events.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getAuthRouter = () => {
   const s = initServer();

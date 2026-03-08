@@ -1,6 +1,6 @@
 // Ensure environment variables are loaded
 import mongoose, { ConnectOptions } from "mongoose";
-import { env } from "@/config/keys.js";
+import { env } from "./keys.js";
 import logger from "./logger.js";
 
 if (!env.databaseUrl) {

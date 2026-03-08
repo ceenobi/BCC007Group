@@ -1,27 +1,27 @@
 import { initServer } from "@ts-rest/express";
-import { ticketContract } from "@/contract/ticket.contract.js";
+import { ticketContract } from "../contract/ticket.contract.js";
 import {
   createTsRestSuccess,
   createTsRestError,
-} from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import Ticket from "@/models/ticket.js";
-import User from "@/models/user.js";
+} from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import Ticket from "../models/ticket.js";
+import User from "../models/user.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "@/middleware/cache.middleware.js";
-import { validateFormData } from "@/middleware/formValidate.js";
-import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
-import { CreateTicketSchema, UpdateTicketSchema } from "@/lib/dataSchema.js";
-import { generateTicketId } from "@/lib/options.js";
-import { workflowClient } from "@/workflows/client.js";
-import { env } from "@/config/keys.js";
-import { serverEvents } from "@/lib/events.js";
-import logger from "@/config/logger.js";
+} from "../middleware/cache.middleware.js";
+import { validateFormData } from "../middleware/formValidate.js";
+import { customRateLimiter } from "../middleware/rateLimit.middleware.js";
+import { CreateTicketSchema, UpdateTicketSchema } from "../lib/dataSchema.js";
+import { generateTicketId } from "../lib/options.js";
+import { workflowClient } from "../workflows/client.js";
+import { env } from "../config/keys.js";
+import { serverEvents } from "../lib/events.js";
+import logger from "../config/logger.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getTicketRouter = () => {
   const s = initServer();

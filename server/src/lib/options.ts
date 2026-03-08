@@ -1,5 +1,5 @@
 import { CompressionOptions } from "compression";
-import { env } from "@/config/keys.js";
+import { env } from "../config/keys.js";
 
 export const compressionOptions: CompressionOptions = {
   // Level of compression (0-9, where 9 is maximum compression)

@@ -1,14 +1,14 @@
 import { initServer } from "@ts-rest/express";
-import { paymentContract } from "@/contract/payment.contract.js";
-import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import { cacheMiddleware } from "@/middleware/cache.middleware.js";
-import Payment from "@/models/payment.js";
-import User from "@/models/user.js";
+import { paymentContract } from "../contract/payment.contract.js";
+import { createTsRestSuccess, createTsRestError } from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import { cacheMiddleware } from "../middleware/cache.middleware.js";
+import Payment from "../models/payment.js";
+import User from "../models/user.js";
 import mongoose from "mongoose";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getPaymentRouter = () => {
   const s = initServer();

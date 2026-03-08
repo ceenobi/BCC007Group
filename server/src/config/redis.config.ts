@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { env } from "@/config/keys.js";
+import { env } from "./keys.js";
 import logger from "./logger.js";
 
 /**

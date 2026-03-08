@@ -1,18 +1,18 @@
 import { initServer } from "@ts-rest/express";
-import { bankDetailContract } from "@/contract/bankDetail.contract.js";
-import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { validateFormData } from "@/middleware/formValidate.js";
-import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import { createBankAccountSchema } from "@/lib/dataSchema.js";
-import BankDetails from "@/models/bank.js";
+import { bankDetailContract } from "../contract/bankDetail.contract.js";
+import { createTsRestSuccess, createTsRestError } from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { validateFormData } from "../middleware/formValidate.js";
+import { customRateLimiter } from "../middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import { createBankAccountSchema } from "../lib/dataSchema.js";
+import BankDetails from "../models/bank.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "@/middleware/cache.middleware.js";
+} from "../middleware/cache.middleware.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getBankDetailRouter = () => {
   const s = initServer();

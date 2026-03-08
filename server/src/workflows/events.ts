@@ -1,6 +1,6 @@
-import { invalidateCache } from "@/middleware/cache.middleware.js";
+import { invalidateCache } from "../middleware/cache.middleware.js";
 import { Types } from "mongoose";
-import Event from "@/models/event.js";
+import Event from "../models/event.js";
 
 type BulkWriteOperation = {
   updateOne: {

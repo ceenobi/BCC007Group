@@ -11,7 +11,7 @@ import {
   UpdateUserAvatarSchema,
   ChangePasswordSchema,
   ChangeEmailSchema,
-} from "@/lib/dataSchema.js";
+} from "../lib/dataSchema.js";
 
 const SuccessSchema = z.object({
   success: z.boolean(),

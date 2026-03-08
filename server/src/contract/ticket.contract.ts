@@ -5,7 +5,7 @@ import {
   CreateTicketSchema,
   UpdateTicketSchema,
   ErrorSchema,
-} from "@/lib/dataSchema.js";
+} from "../lib/dataSchema.js";
 
 const c = initContract();
 

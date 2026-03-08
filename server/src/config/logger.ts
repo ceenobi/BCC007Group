@@ -1,7 +1,7 @@
 import winston from "winston";
 import path from "path";
 import fs from "fs";
-import { env } from "@/config/keys.js";
+import { env } from "./keys.js";
 
 const transports: winston.transport[] = [
   new winston.transports.Console({

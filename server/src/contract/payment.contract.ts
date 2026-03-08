@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import z from "zod";
-import { ErrorSchema, paymentSchema } from "@/lib/dataSchema.js";
+import { ErrorSchema, paymentSchema } from "../lib/dataSchema.js";
 
 const c = initContract();
 

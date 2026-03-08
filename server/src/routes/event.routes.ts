@@ -1,29 +1,29 @@
 import { initServer } from "@ts-rest/express";
-import { eventContract } from "@/contract/event.contract.js";
-import { createTsRestError, createTsRestSuccess } from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { validateFormData } from "@/middleware/formValidate.js";
-import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
+import { eventContract } from "../contract/event.contract.js";
+import { createTsRestError, createTsRestSuccess } from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { validateFormData } from "../middleware/formValidate.js";
+import { customRateLimiter } from "../middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
 import {
   BatchDeleteEventSchema,
   CreateEventSchema,
   UpdateEventSchema,
-} from "@/lib/dataSchema.js";
-import Event from "@/models/event.js";
-import { workflowClient } from "@/workflows/client.js";
-import { env } from "@/config/keys.js";
-import logger from "@/config/logger.js";
-import User from "@/models/user.js";
+} from "../lib/dataSchema.js";
+import Event from "../models/event.js";
+import { workflowClient } from "../workflows/client.js";
+import { env } from "../config/keys.js";
+import logger from "../config/logger.js";
+import User from "../models/user.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "@/middleware/cache.middleware.js";
+} from "../middleware/cache.middleware.js";
 import mongoose from "mongoose";
-import { deleteFromCloudinary } from "@/config/upload.js";
-import { serverEvents } from "@/lib/events.js";
+import { deleteFromCloudinary } from "../config/upload.js";
+import { serverEvents } from "../lib/events.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getEventRouter = () => {
   const s = initServer();

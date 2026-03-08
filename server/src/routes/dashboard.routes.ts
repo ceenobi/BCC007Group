@@ -1,16 +1,16 @@
-import { cacheMiddleware } from "@/middleware/cache.middleware.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
+import { cacheMiddleware } from "../middleware/cache.middleware.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
 import { initServer } from "@ts-rest/express";
-import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
-import User from "@/models/user.js";
-import Event from "@/models/event.js";
-import Payment from "@/models/payment.js";
-import Ticket from "@/models/ticket.js";
-import { dashboardContract } from "@/contract/dashboard.contract.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import DashboardStats from "@/models/dashboardStats.js";
+import { createTsRestSuccess, createTsRestError } from "../lib/tsRestResponse.js";
+import User from "../models/user.js";
+import Event from "../models/event.js";
+import Payment from "../models/payment.js";
+import Ticket from "../models/ticket.js";
+import { dashboardContract } from "../contract/dashboard.contract.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import DashboardStats from "../models/dashboardStats.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 // type ActivityTrendsQuery = z.infer<
 //   typeof dashboardContract.dashboard.getActivityTrends.query

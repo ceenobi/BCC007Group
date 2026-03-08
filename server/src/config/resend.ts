@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { env } from "@/config/keys.js";
+import { env } from "./keys.js";
 
 let resendInstance: Resend | null = null;
 

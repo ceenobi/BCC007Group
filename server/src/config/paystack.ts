@@ -1,5 +1,5 @@
 import axios from "axios";
-import { env } from "@/config/keys.js";
+import { env } from "./keys.js";
 
 export const PAYSTACK_SECRET_KEY = env.paystackSecretKey;
 export const PAYSTACK_BASE_URL = "https://api.paystack.co";

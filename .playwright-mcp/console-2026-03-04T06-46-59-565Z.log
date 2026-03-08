@@ -1,6 +1,0 @@
-[    1338ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
-[  152466ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
-[  233825ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
-[  239253ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
-[  349817ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120
-[ 1385484ms] [ERROR] SSE: Connection error Event @ http://localhost:4500/app/hooks/useSSE.ts:120

@@ -1,6 +1,6 @@
-import { getResend } from "@/config/resend.js";
-import { env } from "@/config/keys.js";
-import logger from "@/config/logger.js";
+import { getResend } from "./resend.js";
+import { env } from "./keys.js";
+import logger from "./logger.js";
 
 interface SendEmailOptions {
   email: string;

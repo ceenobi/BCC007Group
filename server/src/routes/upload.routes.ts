@@ -1,12 +1,12 @@
 import { initServer } from "@ts-rest/express";
-import { uploadContract } from "@/contract/upload.contract.js";
-import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { validateFormData } from "@/middleware/formValidate.js";
-import { customRateLimiter } from "@/middleware/rateLimit.middleware.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import { UploadSchema } from "@/lib/dataSchema.js";
-import { deleteFromCloudinary, uploadToCloudinary } from "@/config/upload.js";
+import { uploadContract } from "../contract/upload.contract.js";
+import { createTsRestSuccess, createTsRestError } from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { validateFormData } from "../middleware/formValidate.js";
+import { customRateLimiter } from "../middleware/rateLimit.middleware.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import { UploadSchema } from "../lib/dataSchema.js";
+import { deleteFromCloudinary, uploadToCloudinary } from "../config/upload.js";
 
 export const getUploadRouter = () => {
   const s = initServer();

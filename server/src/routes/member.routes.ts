@@ -1,16 +1,16 @@
 import { initServer } from "@ts-rest/express";
-import { memberContract } from "@/contract/member.contract.js";
-import { createTsRestSuccess, createTsRestError } from "@/lib/tsRestResponse.js";
-import tryCatchFn from "@/lib/tryCatchFn.js";
-import { authorizedRoles, verifyUser } from "@/middleware/auth.middleware.js";
-import User from "@/models/user.js";
+import { memberContract } from "../contract/member.contract.js";
+import { createTsRestSuccess, createTsRestError } from "../lib/tsRestResponse.js";
+import tryCatchFn from "../lib/tryCatchFn.js";
+import { authorizedRoles, verifyUser } from "../middleware/auth.middleware.js";
+import User from "../models/user.js";
 import {
   cacheMiddleware,
   invalidateCache,
-} from "@/middleware/cache.middleware.js";
-import { workflowClient } from "@/workflows/client.js";
-import logger from "@/config/logger.js";
-import { env } from "@/config/keys.js";
+} from "../middleware/cache.middleware.js";
+import { workflowClient } from "../workflows/client.js";
+import logger from "../config/logger.js";
+import { env } from "../config/keys.js";
 
 import { connectMongoDb } from "@/config/db.server.js";
 

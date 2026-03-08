@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
-import { ErrorSchema, UserSchema } from "@/lib/dataSchema.js";
+import { ErrorSchema, UserSchema } from "../lib/dataSchema.js";
 
 const MemberResponseSchema = z.object({
   success: z.boolean(),

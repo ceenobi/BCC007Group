@@ -9,9 +9,9 @@ import {
   sendTicketIssueResolvedWorkflow,
   sendPaymentConfirmationWorkflow,
   sendCancelSubscriptionWorkflow,
-} from "@/workflows/email.workflow.js";
-import { updateEventStatuses } from "@/workflows/events.js";
-import { calculateDashboardStats } from "@/workflows/dashboard.workflow.js";
+} from "../workflows/email.workflow.js";
+import { updateEventStatuses } from "../workflows/events.js";
+import { calculateDashboardStats } from "../workflows/dashboard.workflow.js";
 
 const workflowRouter = express.Router();
 

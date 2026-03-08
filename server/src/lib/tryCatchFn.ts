@@ -1,5 +1,5 @@
 import { APIError } from "better-auth/api";
-import logger from "@/config/logger.js";
+import logger from "../config/logger.js";
 import { createTsRestError } from "./tsRestResponse.js";
 
 const tryCatchFn = <T extends (...args: any[]) => any>(fn: T): T => {

@@ -1,6 +1,6 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
-import { ErrorSchema, EventSchema, CreateEventSchema, UpdateEventSchema } from "@/lib/dataSchema.js";
+import { ErrorSchema, EventSchema, CreateEventSchema, UpdateEventSchema } from "../lib/dataSchema.js";
 
 const EventResponseSchema = z.object({
   success: z.boolean(),
