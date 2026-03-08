@@ -26,4 +26,22 @@ export default defineConfig({
       "::1",
     ],
   },
+  build: {
+    sourcemap: true,
+    target: "esnext",
+    minify: "esbuild",
+    reportCompressedSize: true,
+    assetsInlineLimit: 4096,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router"],
+          ui: ["lucide-react", "framer-motion", "recharts"],
+        },
+      },
+    },
+  },
+  esbuild: {
+    target: "esnext",
+  },
 });
