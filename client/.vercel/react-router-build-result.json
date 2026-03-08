@@ -1,0 +1,498 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/login/login": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/forgot-password/forgot-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/reset-password/reset-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/verify-email/verify-email": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/logout/logout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/email-verified/email-verified": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/uploads/upload-avatar": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/dashboard": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/onboarding/onboarding": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/members/members": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/members/member": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/events/events": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/payments/payments": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/payments/verify": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/payments/reports": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/settings/settings": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/help-desk/help-desk": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/profile/profile": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/dashboard/transfers/transfers": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {}
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "app/routes/home.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/layout": {
+        "id": "routes/auth/layout",
+        "parentId": "root",
+        "file": "app/routes/auth/layout.tsx",
+        "config": {}
+      },
+      "routes/auth/login/login": {
+        "id": "routes/auth/login/login",
+        "parentId": "routes/auth/layout",
+        "file": "app/routes/auth/login/login.tsx",
+        "path": "account/login",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/forgot-password/forgot-password": {
+        "id": "routes/auth/forgot-password/forgot-password",
+        "parentId": "routes/auth/layout",
+        "file": "app/routes/auth/forgot-password/forgot-password.tsx",
+        "path": "account/forgot-password",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/reset-password/reset-password": {
+        "id": "routes/auth/reset-password/reset-password",
+        "parentId": "routes/auth/layout",
+        "file": "app/routes/auth/reset-password/reset-password.tsx",
+        "path": "account/reset-password",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/verify-email/verify-email": {
+        "id": "routes/auth/verify-email/verify-email",
+        "parentId": "routes/auth/layout",
+        "file": "app/routes/auth/verify-email/verify-email.tsx",
+        "path": "account/verify-email",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/logout/logout": {
+        "id": "routes/auth/logout/logout",
+        "parentId": "root",
+        "file": "app/routes/auth/logout/logout.tsx",
+        "path": "logout",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/email-verified/email-verified": {
+        "id": "routes/email-verified/email-verified",
+        "parentId": "root",
+        "file": "app/routes/email-verified/email-verified.tsx",
+        "path": "email-verified",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/uploads/upload-avatar": {
+        "id": "routes/uploads/upload-avatar",
+        "parentId": "root",
+        "file": "app/routes/uploads/upload-avatar.ts",
+        "path": "uploads/upload-avatar",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/layout": {
+        "id": "routes/dashboard/layout",
+        "parentId": "root",
+        "file": "app/routes/dashboard/layout.tsx",
+        "config": {}
+      },
+      "routes/dashboard/dashboard": {
+        "id": "routes/dashboard/dashboard",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/dashboard.tsx",
+        "path": "dashboard",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/onboarding/onboarding": {
+        "id": "routes/dashboard/onboarding/onboarding",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/onboarding/onboarding.tsx",
+        "path": "members/onboarding",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/members/members": {
+        "id": "routes/dashboard/members/members",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/members/members.tsx",
+        "path": "members",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/members/member": {
+        "id": "routes/dashboard/members/member",
+        "parentId": "routes/dashboard/members/members",
+        "file": "app/routes/dashboard/members/member.tsx",
+        "path": ":name/:id",
+        "config": {}
+      },
+      "routes/dashboard/events/events": {
+        "id": "routes/dashboard/events/events",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/events/events.tsx",
+        "path": "events",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/payments/payments": {
+        "id": "routes/dashboard/payments/payments",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/payments/payments.tsx",
+        "path": "payments",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/payments/verify": {
+        "id": "routes/dashboard/payments/verify",
+        "parentId": "routes/dashboard/payments/payments",
+        "file": "app/routes/dashboard/payments/verify.tsx",
+        "path": "verify",
+        "config": {}
+      },
+      "routes/dashboard/payments/reports": {
+        "id": "routes/dashboard/payments/reports",
+        "parentId": "routes/dashboard/payments/payments",
+        "file": "app/routes/dashboard/payments/reports.tsx",
+        "path": "reports",
+        "config": {}
+      },
+      "routes/dashboard/settings/settings": {
+        "id": "routes/dashboard/settings/settings",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/settings/settings.tsx",
+        "path": "settings",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/help-desk/help-desk": {
+        "id": "routes/dashboard/help-desk/help-desk",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/help-desk/help-desk.tsx",
+        "path": "help-desk",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/profile/profile": {
+        "id": "routes/dashboard/profile/profile",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/profile/profile.tsx",
+        "path": "profile",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/dashboard/transfers/transfers": {
+        "id": "routes/dashboard/transfers/transfers",
+        "parentId": "routes/dashboard/layout",
+        "file": "app/routes/dashboard/transfers/transfers.tsx",
+        "path": "transfers",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/Users/cobimbachu/Documents/bcc007PayNew/client/app",
+    "basename": "/",
+    "buildDirectory": "/Users/cobimbachu/Documents/bcc007PayNew/client/build",
+    "future": {
+      "unstable_optimizeDeps": false,
+      "unstable_subResourceIntegrity": false,
+      "unstable_trailingSlashAwareDataRequests": false,
+      "v8_middleware": true,
+      "v8_splitRouteModules": false,
+      "v8_viteEnvironmentApi": false
+    },
+    "prerender": [
+      "/"
+    ],
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "routes/home": {
+        "id": "routes/home",
+        "parentId": "root",
+        "file": "routes/home.tsx",
+        "index": true
+      },
+      "routes/auth/layout": {
+        "id": "routes/auth/layout",
+        "parentId": "root",
+        "file": "routes/auth/layout.tsx"
+      },
+      "routes/auth/login/login": {
+        "id": "routes/auth/login/login",
+        "parentId": "routes/auth/layout",
+        "file": "routes/auth/login/login.tsx",
+        "path": "account/login"
+      },
+      "routes/auth/forgot-password/forgot-password": {
+        "id": "routes/auth/forgot-password/forgot-password",
+        "parentId": "routes/auth/layout",
+        "file": "routes/auth/forgot-password/forgot-password.tsx",
+        "path": "account/forgot-password"
+      },
+      "routes/auth/reset-password/reset-password": {
+        "id": "routes/auth/reset-password/reset-password",
+        "parentId": "routes/auth/layout",
+        "file": "routes/auth/reset-password/reset-password.tsx",
+        "path": "account/reset-password"
+      },
+      "routes/auth/verify-email/verify-email": {
+        "id": "routes/auth/verify-email/verify-email",
+        "parentId": "routes/auth/layout",
+        "file": "routes/auth/verify-email/verify-email.tsx",
+        "path": "account/verify-email"
+      },
+      "routes/auth/logout/logout": {
+        "id": "routes/auth/logout/logout",
+        "parentId": "root",
+        "file": "routes/auth/logout/logout.tsx",
+        "path": "logout"
+      },
+      "routes/email-verified/email-verified": {
+        "id": "routes/email-verified/email-verified",
+        "parentId": "root",
+        "file": "routes/email-verified/email-verified.tsx",
+        "path": "email-verified"
+      },
+      "routes/uploads/upload-avatar": {
+        "id": "routes/uploads/upload-avatar",
+        "parentId": "root",
+        "file": "routes/uploads/upload-avatar.ts",
+        "path": "uploads/upload-avatar"
+      },
+      "routes/dashboard/layout": {
+        "id": "routes/dashboard/layout",
+        "parentId": "root",
+        "file": "routes/dashboard/layout.tsx"
+      },
+      "routes/dashboard/dashboard": {
+        "id": "routes/dashboard/dashboard",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/dashboard.tsx",
+        "path": "dashboard"
+      },
+      "routes/dashboard/onboarding/onboarding": {
+        "id": "routes/dashboard/onboarding/onboarding",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/onboarding/onboarding.tsx",
+        "path": "members/onboarding"
+      },
+      "routes/dashboard/members/members": {
+        "id": "routes/dashboard/members/members",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/members/members.tsx",
+        "path": "members"
+      },
+      "routes/dashboard/members/member": {
+        "id": "routes/dashboard/members/member",
+        "parentId": "routes/dashboard/members/members",
+        "file": "routes/dashboard/members/member.tsx",
+        "path": ":name/:id"
+      },
+      "routes/dashboard/events/events": {
+        "id": "routes/dashboard/events/events",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/events/events.tsx",
+        "path": "events"
+      },
+      "routes/dashboard/payments/payments": {
+        "id": "routes/dashboard/payments/payments",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/payments/payments.tsx",
+        "path": "payments"
+      },
+      "routes/dashboard/payments/verify": {
+        "id": "routes/dashboard/payments/verify",
+        "parentId": "routes/dashboard/payments/payments",
+        "file": "routes/dashboard/payments/verify.tsx",
+        "path": "verify"
+      },
+      "routes/dashboard/payments/reports": {
+        "id": "routes/dashboard/payments/reports",
+        "parentId": "routes/dashboard/payments/payments",
+        "file": "routes/dashboard/payments/reports.tsx",
+        "path": "reports"
+      },
+      "routes/dashboard/settings/settings": {
+        "id": "routes/dashboard/settings/settings",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/settings/settings.tsx",
+        "path": "settings"
+      },
+      "routes/dashboard/help-desk/help-desk": {
+        "id": "routes/dashboard/help-desk/help-desk",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/help-desk/help-desk.tsx",
+        "path": "help-desk"
+      },
+      "routes/dashboard/profile/profile": {
+        "id": "routes/dashboard/profile/profile",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/profile/profile.tsx",
+        "path": "profile"
+      },
+      "routes/dashboard/transfers/transfers": {
+        "id": "routes/dashboard/transfers/transfers",
+        "parentId": "routes/dashboard/layout",
+        "file": "routes/dashboard/transfers/transfers.tsx",
+        "path": "transfers"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "allowedActionOrigins": false,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "file": "routes/home.tsx",
+            "index": true
+          },
+          {
+            "file": "routes/auth/layout.tsx",
+            "children": [
+              {
+                "file": "routes/auth/login/login.tsx",
+                "path": "account/login"
+              },
+              {
+                "file": "routes/auth/forgot-password/forgot-password.tsx",
+                "path": "account/forgot-password"
+              },
+              {
+                "file": "routes/auth/reset-password/reset-password.tsx",
+                "path": "account/reset-password"
+              },
+              {
+                "file": "routes/auth/verify-email/verify-email.tsx",
+                "path": "account/verify-email"
+              }
+            ]
+          },
+          {
+            "file": "routes/auth/logout/logout.tsx",
+            "path": "logout"
+          },
+          {
+            "file": "routes/email-verified/email-verified.tsx",
+            "path": "email-verified"
+          },
+          {
+            "file": "routes/uploads/upload-avatar.ts",
+            "path": "uploads/upload-avatar"
+          },
+          {
+            "file": "routes/dashboard/layout.tsx",
+            "children": [
+              {
+                "file": "routes/dashboard/dashboard.tsx",
+                "path": "dashboard"
+              },
+              {
+                "file": "routes/dashboard/onboarding/onboarding.tsx",
+                "path": "members/onboarding"
+              },
+              {
+                "file": "routes/dashboard/members/members.tsx",
+                "children": [
+                  {
+                    "file": "routes/dashboard/members/member.tsx",
+                    "path": ":name/:id"
+                  }
+                ],
+                "path": "members"
+              },
+              {
+                "file": "routes/dashboard/events/events.tsx",
+                "path": "events"
+              },
+              {
+                "file": "routes/dashboard/payments/payments.tsx",
+                "children": [
+                  {
+                    "file": "routes/dashboard/payments/verify.tsx",
+                    "path": "verify"
+                  },
+                  {
+                    "file": "routes/dashboard/payments/reports.tsx",
+                    "path": "reports"
+                  }
+                ],
+                "path": "payments"
+              },
+              {
+                "file": "routes/dashboard/settings/settings.tsx",
+                "path": "settings"
+              },
+              {
+                "file": "routes/dashboard/help-desk/help-desk.tsx",
+                "path": "help-desk"
+              },
+              {
+                "file": "routes/dashboard/profile/profile.tsx",
+                "path": "profile"
+              },
+              {
+                "file": "routes/dashboard/transfers/transfers.tsx",
+                "path": "transfers"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
