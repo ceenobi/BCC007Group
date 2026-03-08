@@ -12,7 +12,7 @@ import { workflowClient } from "../workflows/client.js";
 import logger from "../config/logger.js";
 import { env } from "../config/keys.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export const getMemberRouter = () => {
   const s = initServer();
