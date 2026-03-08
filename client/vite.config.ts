@@ -19,19 +19,11 @@ export default defineConfig({
     allowedHosts: [
       "localhost",
       "salmon-daring-partially.ngrok-free.app",
+      "bcc007pay-server.vercel.app",
+      "bcc007pay-staging.vercel.app",
       "127.0.0.1",
       "0.0.0.0",
       "::1",
     ],
-  },
-  build: {
-    target: "esnext",
-    ssr: true,
-    outDir: "build",
-    assetsDir: "assets",
-    sourcemap: true,
-  },
-  esbuild: {
-    target: "esnext",
   },
 });

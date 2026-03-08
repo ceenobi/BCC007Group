@@ -51,6 +51,8 @@ export const authContract = c.router({
       responses: {
         201: AuthUserResponseSchema,
         400: ErrorSchema,
+        401: ErrorSchema,
+        403: ErrorSchema,
         429: ErrorSchema,
         500: ErrorSchema,
       },
@@ -100,6 +102,9 @@ export const authContract = c.router({
       path: "/api/v1/auth/session",
       responses: {
         200: UserSchema,
+        400: ErrorSchema,
+        401: ErrorSchema,
+        403: ErrorSchema,
         404: ErrorSchema,
         429: ErrorSchema,
         500: ErrorSchema,
