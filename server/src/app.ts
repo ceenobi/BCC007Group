@@ -47,13 +47,15 @@ declare global {
   }
 }
 
-const app = express();
+const app = express();  
 // Trust first proxy (for production/ngrok)
 app.set("trust proxy", 1);
 
-const allowedOrigins = [env.clientUrl, env.serverUrl].filter(
-  Boolean,
-) as string[];
+const allowedOrigins = [
+  env.clientUrl,
+  env.serverUrl,
+  "https://bcc007pay-preview.vercel.app",
+].filter(Boolean) as string[];
 
 // // Add production URL if not already included
 if (env.nodeEnv === "production") {
@@ -193,9 +195,7 @@ const startServer = async (): Promise<void> => {
   let server: any;
   try {
     server = app.listen(PORT, "0.0.0.0", () => {
-      logger.info(
-        `\n✅ Server running in ${env.nodeEnv} mode on port ${PORT}`,
-      );
+      logger.info(`\n✅ Server running in ${env.nodeEnv} mode on port ${PORT}`);
       logger.info(`🌐 http://localhost:${PORT}\n`);
     });
     // Handle unhandled promise rejections
