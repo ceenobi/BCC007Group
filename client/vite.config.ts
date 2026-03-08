@@ -27,6 +27,7 @@ export default defineConfig({
     ],
   },
   build: {
+    ssr: true,
     sourcemap: true,
     target: "esnext",
     minify: "esbuild",
@@ -35,6 +36,8 @@ export default defineConfig({
     rollupOptions: {
       output: {},
     },
+    outDir: "build",
+    assetsDir: "assets",
   },
   esbuild: {
     target: "esnext",
