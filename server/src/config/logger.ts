@@ -12,8 +12,8 @@ const transports: winston.transport[] = [
   }),
 ];
 
-// Add file logging only in production
-if (env.nodeEnv === "production") {
+// Add file logging only in production and not on Vercel
+if (env.nodeEnv === "production" && !process.env.VERCEL) {
   const logsDir = path.join(process.cwd(), "logs");
   if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
