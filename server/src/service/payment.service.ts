@@ -1,13 +1,13 @@
 import crypto from "crypto";
-import logger from "@/config/logger.js";
-import { getPaystack } from "@/config/paystack.js";
-import { type User as BetterAuthUser } from "@/config/better-auth.js";
-import { env } from "@/config/keys.js";
-import { workflowClient } from "@/workflows/client.js";
-import User from "@/models/user.js";
-import { invalidateCache } from "@/middleware/cache.middleware.js";
+import logger from "../config/logger.js";
+import { getPaystack } from "../config/paystack.js";
+import { type User as BetterAuthUser } from "../config/better-auth.js";
+import { env } from "../config/keys.js";
+import { workflowClient } from "../workflows/client.js";
+import User from "../models/user.js";
+import { invalidateCache } from "../middleware/cache.middleware.js";
 
-import { connectMongoDb } from "@/config/db.server.js";
+import { connectMongoDb } from "../config/db.server.js";
 
 export interface InitializePaymentData {
   amount: number;

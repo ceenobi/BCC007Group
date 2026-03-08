@@ -1,4 +1,4 @@
-import { env } from "@/config/keys.js";
+import { env } from "./config/keys.js";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -6,37 +6,37 @@ import compression from "compression";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { createExpressEndpoints } from "@ts-rest/express";
-import { errorHandler, notFound } from "@/middleware/error.middleware.js";
+import { errorHandler, notFound } from "./middleware/error.middleware.js";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "@/config/better-auth.js";
-import { gracefulShutdown } from "@/config/db.server.js";
-import logger from "@/config/logger.js";
-import { limiter } from "@/middleware/rateLimit.middleware.js";
-import { compressionOptions, helmetOptions } from "@/lib/options.js";
-import { strictLimiter } from "@/middleware/rateLimit.middleware.js";
+import { auth } from "./config/better-auth.js";
+import { gracefulShutdown } from "./config/db.server.js";
+import logger from "./config/logger.js";
+import { limiter } from "./middleware/rateLimit.middleware.js";
+import { compressionOptions, helmetOptions } from "./lib/options.js";
+import { strictLimiter } from "./middleware/rateLimit.middleware.js";
 //routes and contracts ts-rest
-import { getAuthRouter } from "@/routes/auth.routes.js";
-import { getUploadRouter } from "@/routes/upload.routes.js";
-import { authContract } from "@/contract/auth.contract.js";
-import { uploadContract } from "@/contract/upload.contract.js";
-import { getPaystackRouter } from "@/routes/paystack.routes.js";
-import { paystackContract } from "@/contract/paystack.contract.js";
-import { getBankDetailRouter } from "@/routes/bankDetail.routes.js";
-import { bankDetailContract } from "@/contract/bankDetail.contract.js";
-import { memberContract } from "@/contract/member.contract.js";
-import { getMemberRouter } from "@/routes/member.routes.js";
-import { getEventRouter } from "@/routes/event.routes.js";
-import { eventContract } from "@/contract/event.contract.js";
-import { getTicketRouter } from "@/routes/ticket.routes.js";
-import { ticketContract } from "@/contract/ticket.contract.js";
-import { getPaymentRouter } from "@/routes/payment.routes.js";
-import { paymentContract } from "@/contract/payment.contract.js";
-import { getDashboardRouter } from "@/routes/dashboard.routes.js";
-import { dashboardContract } from "@/contract/dashboard.contract.js";
+import { getAuthRouter } from "./routes/auth.routes.js";
+import { getUploadRouter } from "./routes/upload.routes.js";
+import { authContract } from "./contract/auth.contract.js";
+import { uploadContract } from "./contract/upload.contract.js";
+import { getPaystackRouter } from "./routes/paystack.routes.js";
+import { paystackContract } from "./contract/paystack.contract.js";
+import { getBankDetailRouter } from "./routes/bankDetail.routes.js";
+import { bankDetailContract } from "./contract/bankDetail.contract.js";
+import { memberContract } from "./contract/member.contract.js";
+import { getMemberRouter } from "./routes/member.routes.js";
+import { getEventRouter } from "./routes/event.routes.js";
+import { eventContract } from "./contract/event.contract.js";
+import { getTicketRouter } from "./routes/ticket.routes.js";
+import { ticketContract } from "./contract/ticket.contract.js";
+import { getPaymentRouter } from "./routes/payment.routes.js";
+import { paymentContract } from "./contract/payment.contract.js";
+import { getDashboardRouter } from "./routes/dashboard.routes.js";
+import { dashboardContract } from "./contract/dashboard.contract.js";
 
 //workflows
-import workflowRouter from "@/routes/workflow.routes.js";
-import sseRouter from "@/routes/sse.routes.js";
+import workflowRouter from "./routes/workflow.routes.js";
+import sseRouter from "./routes/sse.routes.js";
 
 declare global {
   namespace Express {
