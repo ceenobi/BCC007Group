@@ -47,13 +47,12 @@ declare global {
   }
 }
 
-const app = express();  
+const app = express();
 // Trust first proxy (for production/ngrok)
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
   env.clientUrl,
-  env.serverUrl,
   "https://bcc007pay-preview.vercel.app",
 ].filter(Boolean) as string[];
 
