@@ -53,7 +53,9 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   env.clientUrl,
+  env.serverUrl,
   "https://bcc007pay-preview.vercel.app",
+  "https://bcc007pay-staging.vercel.app",
 ].filter(Boolean) as string[];
 
 // // Add production URL if not already included
