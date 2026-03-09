@@ -14,9 +14,6 @@ export default function Logo({
     <h1
       className={`w-fit font-bold cursor-pointer ${classname}`}
       onClick={() => navigate("/")}
-      role="button"
-      tabIndex={0}
-      aria-label="BCC007"
     >
       {isOpenSidebar && (
         <>
