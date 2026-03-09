@@ -103,7 +103,7 @@ const corsOptions: cors.CorsOptions = {
 
 // Middlewares
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.options("/*", cors(corsOptions));
 app.use(limiter);
 app.use(compression(compressionOptions));
 app.use(cookieParser());
