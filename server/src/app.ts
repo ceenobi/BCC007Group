@@ -86,7 +86,7 @@ const corsOptions: cors.CorsOptions = {
     }
 
     // Strict origin matching for production
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
       logger.info(`CORS: Origin ${origin} is allowed (exact match)`);
       return callback(null, true);
     }
@@ -103,6 +103,7 @@ const corsOptions: cors.CorsOptions = {
 
 // Middlewares
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(limiter);
 app.use(compression(compressionOptions));
 app.use(cookieParser());
