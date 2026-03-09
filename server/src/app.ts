@@ -51,11 +51,9 @@ const app = express();
 // Trust first proxy (for production/ngrok)
 app.set("trust proxy", 1);
 
-const allowedOrigins = [
-  "http://localhost:4500",
-  "https://bcc007pay.vercel.app",
-  "https://bcc007pay-preview.vercel.app",
-].filter(Boolean) as string[];
+const allowedOrigins = ["http://localhost:4500", env.clientUrl].filter(
+  Boolean,
+) as string[];
 
 // DEBUG: Log the allowed origins at startup
 logger.info(`CORS: Allowed origins configured: ${allowedOrigins.join(", ")}`);
@@ -86,8 +84,14 @@ const corsOptions: cors.CorsOptions = {
     }
 
     // Strict origin matching for production
-    if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+    if (allowedOrigins.includes(origin)) {
       logger.info(`CORS: Origin ${origin} is allowed (exact match)`);
+      return callback(null, true);
+    }
+
+    // Allow ALL Vercel preview deployments
+    if (origin.endsWith(".vercel.app")) {
+      logger.info(`CORS: Allowing Vercel preview deployment: ${origin}`);
       return callback(null, true);
     }
 
@@ -103,7 +107,6 @@ const corsOptions: cors.CorsOptions = {
 
 // Middlewares
 app.use(cors(corsOptions));
-app.options("/*", cors(corsOptions));
 app.use(limiter);
 app.use(compression(compressionOptions));
 app.use(cookieParser());

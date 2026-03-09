@@ -13,11 +13,7 @@ export const auth = betterAuth({
     client: mongoose.connection.getClient() as any,
     transaction: false,
   }),
-  trustedOrigins: [
-    "http://localhost:4500",
-    "https://bcc007pay.vercel.app",
-    "https://bcc007pay-preview.vercel.app",
-  ],
+  trustedOrigins: ["http://localhost:4500", env.clientUrl],
   baseURL:
     env.nodeEnv === "production" ? env.serverUrl : "http://localhost:4600",
   cookies: {
