@@ -52,11 +52,9 @@ const app = express();
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
-  env.clientUrl,
-  env.serverUrl,
+  "http://localhost:4500",
   "https://bcc007pay.vercel.app",
   "https://bcc007pay-preview.vercel.app",
-  "https://bcc007pay-staging.vercel.app",
 ].filter(Boolean) as string[];
 
 // DEBUG: Log the allowed origins at startup
@@ -74,7 +72,7 @@ const corsOptions: cors.CorsOptions = {
     // DEBUG: Log all incoming origin requests
     logger.info(`CORS check: Origin header = ${origin || "(none)"}`);
     logger.info(`CORS check: Allowed origins = ${allowedOrigins.join(", ")}`);
-    
+
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) {
       logger.info("CORS: Allowing request with no origin");
