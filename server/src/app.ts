@@ -105,7 +105,7 @@ const corsOptions: cors.CorsOptions = {
   optionsSuccessStatus: 200,
 };
 
-// Middlewares
+// Middlewares use
 app.use(cors(corsOptions));
 app.use(limiter);
 app.use(compression(compressionOptions));
