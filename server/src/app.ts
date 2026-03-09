@@ -113,18 +113,6 @@ app.use(cookieParser());
 app.use(helmet(helmetOptions));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.use(express.static("public"));
-app.disable("x-powered-by");
-
-app.all("/api/auth/*splat", strictLimiter, toNodeHandler(auth));
-app.use(
-  express.json({
-    limit: "25mb",
-    verify: (req: any, res, buf) => {
-      req.rawBody = buf;
-    },
-  }),
-);
-
 app.use((req, res, next) => {
   // Allow credentials
   res.header("Access-Control-Allow-Credentials", "true");
@@ -139,6 +127,17 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.disable("x-powered-by");
+
+app.all("/api/auth/*splat", strictLimiter, toNodeHandler(auth));
+app.use(
+  express.json({
+    limit: "25mb",
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
 // Logging middleware in development
 if (env.nodeEnv === "development") {
   app.use(morgan("dev"));
