@@ -48,7 +48,7 @@ export const helmetOptions = {
         "'self'",
         "https:",
         env.serverUrl || "http://localhost:4600",
-        "https://api.getPaystack().co",
+        "https://api.paystack.co",
         "https://res.cloudinary.com",
       ],
       fontSrc: ["'self'", "https:", "data:"],
