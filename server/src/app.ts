@@ -58,6 +58,9 @@ const allowedOrigins = [
   "https://bcc007pay-staging.vercel.app",
 ].filter(Boolean) as string[];
 
+// DEBUG: Log the allowed origins at startup
+logger.info(`CORS: Allowed origins configured: ${allowedOrigins.join(", ")}`);
+
 // // Add production URL if not already included
 if (env.nodeEnv === "production") {
   if (!env.clientUrl || !env.serverUrl) {
@@ -67,14 +70,25 @@ if (env.nodeEnv === "production") {
 
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
+    // DEBUG: Log all incoming origin requests
+    logger.info(`CORS check: Origin header = ${origin || "(none)"}`);
+    logger.info(`CORS check: Allowed origins = ${allowedOrigins.join(", ")}`);
+    
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      logger.info("CORS: Allowing request with no origin");
+      return callback(null, true);
+    }
 
     // In development, allow all for easier testing, but still prefer defined origins
-    if (env.nodeEnv === "development") return callback(null, true);
+    if (env.nodeEnv === "development") {
+      logger.info("CORS: Development mode - allowing all origins");
+      return callback(null, true);
+    }
 
     // Strict origin matching for production
     if (allowedOrigins.includes(origin)) {
+      logger.info(`CORS: Origin ${origin} is allowed`);
       return callback(null, true);
     }
 

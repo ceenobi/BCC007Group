@@ -31,12 +31,6 @@ export const auth = betterAuth({
     secure: env.nodeEnv === "production",
     httpOnly: true,
   },
-  socialProviders: {
-    google: {
-      clientId: env.googleClientId!,
-      clientSecret: env.googleClientSecret!,
-    },
-  },
   session: {
     maxAge: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
