@@ -19,14 +19,14 @@ interface EnvSpec {
 }
 const ENV_VARS: EnvSpec[] = [
   { key: "NODE_ENV" },
-  { key: "GOOGLE_CLIENT_ID" },
-  { key: "GOOGLE_CLIENT_SECRET" },
+  // { key: "GOOGLE_CLIENT_ID" },
+  // { key: "GOOGLE_CLIENT_SECRET" },
+  // { key: "EMAIL_HOST" },
+  // { key: "EMAIL_PORT" },
+  // { key: "EMAIL_USER" },
+  // { key: "EMAIL_PASSWORD" },
   { key: "BETTER_AUTH_URL" },
   { key: "BETTER_AUTH_SECRET" },
-  { key: "EMAIL_HOST" },
-  { key: "EMAIL_PORT" },
-  { key: "EMAIL_USER" },
-  { key: "EMAIL_PASSWORD" },
   { key: "DATABASE_URL" },
   { key: "DATABASE_NAME" },
   { key: "CLIENT_URL" },
@@ -42,7 +42,7 @@ const ENV_VARS: EnvSpec[] = [
   { key: "QSTASH_TOKEN" },
   { key: "QSTASH_URL" },
   { key: "RESEND_API_KEY" },
-  { key: "BREVO_API_KEY" },
+  // { key: "BREVO_API_KEY" },
   // Add optional vars like this:
   // { key: "OPTIONAL_VAR", required: false }
 ];
@@ -71,14 +71,14 @@ function getEnvVar(): Record<string, string> {
 
 interface Env {
   readonly nodeEnv: string;
-  readonly googleClientId: string;
-  readonly googleClientSecret: string;
+  // readonly googleClientId: string;
+  // readonly googleClientSecret: string;
+  // readonly emailHost: string;
+  // readonly emailPort: string;
+  // readonly emailUser: string;
+  // readonly emailPassword: string;
   readonly betterAuthUrl: string;
   readonly betterAuthSecret: string;
-  readonly emailHost: string;
-  readonly emailPort: string;
-  readonly emailUser: string;
-  readonly emailPassword: string;
   readonly databaseUrl: string;
   readonly databaseName: string;
   readonly clientUrl: string;
@@ -102,14 +102,14 @@ interface Env {
 
 export const env: Env = {
   nodeEnv: getEnvVar()["NODE_ENV"] || "development",
-  googleClientId: getEnvVar()["GOOGLE_CLIENT_ID"],
-  googleClientSecret: getEnvVar()["GOOGLE_CLIENT_SECRET"],
+  // googleClientId: getEnvVar()["GOOGLE_CLIENT_ID"],
+  // googleClientSecret: getEnvVar()["GOOGLE_CLIENT_SECRET"],
+  // emailHost: getEnvVar()["EMAIL_HOST"],
+  // emailPort: getEnvVar()["EMAIL_PORT"],
+  // emailUser: getEnvVar()["EMAIL_USER"],
+  // emailPassword: getEnvVar()["EMAIL_PASSWORD"],
   betterAuthUrl: getEnvVar()["BETTER_AUTH_URL"],
   betterAuthSecret: getEnvVar()["BETTER_AUTH_SECRET"],
-  emailHost: getEnvVar()["EMAIL_HOST"],
-  emailPort: getEnvVar()["EMAIL_PORT"],
-  emailUser: getEnvVar()["EMAIL_USER"],
-  emailPassword: getEnvVar()["EMAIL_PASSWORD"],
   databaseUrl: getEnvVar()["DATABASE_URL"],
   databaseName: getEnvVar()["DATABASE_NAME"],
   clientUrl: getEnvVar()["CLIENT_URL"],
