@@ -118,7 +118,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className={`fixed top-5 left-4 right-4 flex justify-center items-center py-3 px-4 bg-white/30 backdrop-blur supports-backdrop-filter:bg-white/70 shadow rounded-full z-50 transition-all duration-300`}
+            className={`fixed top-5 left-4 right-4 flex justify-center items-center p-4 bg-white/30 backdrop-blur supports-backdrop-filter:bg-white/70 shadow rounded-full z-50 transition-all duration-300`}
           >
             <div className="flex justify-between items-center w-full container mx-auto px-4">
               <Logo
@@ -159,7 +159,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           </motion.div>
 
           <div
-            className="min-h-[500px] items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-4 mt-30"
+            className="min-h-[500px] items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-4 mt-30"
             id="home"
           >
             <motion.div

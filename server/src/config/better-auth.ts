@@ -15,16 +15,11 @@ export const auth = betterAuth({
   }),
   trustedOrigins: [
     "http://localhost:4500",
-    "http://localhost:4600",
+    "https://bcc007pay.vercel.app",
     "https://bcc007pay-preview.vercel.app",
-    env.clientUrl!,
   ],
   baseURL:
-    env.nodeEnv === "production"
-      ? env.serverUrl ||
-        "https://bcc007pay.vercel.app" ||
-        "https://bcc007pay-staging.vercel.app"
-      : "http://localhost:4600",
+    env.nodeEnv === "production" ? env.serverUrl : "http://localhost:4600",
   cookies: {
     domain: env.nodeEnv === "production" ? undefined : undefined,
     sameSite: env.nodeEnv === "production" ? "none" : "lax",

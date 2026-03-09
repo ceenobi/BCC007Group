@@ -36,6 +36,7 @@ export default function Login() {
   useEffect(() => {
     if (fetcher.data && fetcher.data?.status === 200) {
       toast.success("Login successful, redirecting...");
+      navigate("/dashboard");
     } else if (fetcher.data && fetcher.data?.status !== 200) {
       toast.error(fetcher.data?.body?.message || "Something went wrong!");
       if (fetcher.data.body.message === "Email not verified") {

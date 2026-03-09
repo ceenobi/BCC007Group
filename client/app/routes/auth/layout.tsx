@@ -46,24 +46,24 @@ export default function AuthLayout() {
                 {highlightsImgs?.map((item, index) => (
                   <div
                     key={item.id}
-                    className={`w-[450px] mx-auto rounded-2xl ${
+                    className={`w-[450px] mx-auto rounded-2xl transition-opacity ${
                       index === currentImageIndex
-                        ? "fade-enter fade-enter-active"
-                        : "fade-exit fade-exit-active"
+                        ? "fade-enter fade-enter-active opacity-100"
+                        : "fade-exit fade-exit-active opacity-0"
                     }`}
                   >
                     {index === currentImageIndex && (
                       <div className="relative">
                         <div
                           className={cn(
-                            "rounded-2xl w-[450px] h-[450px] object-cover object-center transition-all duration-500",
+                            "rounded-2xl w-[450px] h-[450px] object-cover object-center transition-opacity duration-500",
                             "",
                           )}
                         >
                           <ImageComponent
                             cellValue={item.image}
                             alt="Community"
-                            classname="rounded-2xl transition-all duration-500"
+                            classname="rounded-2xl"
                           />
                         </div>
                         <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent rounded-2xl w-full h-[450px] object-cover object-center" />
