@@ -1,3 +1,4 @@
+//ensure we are in client
 const isBrowser =
   typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 
