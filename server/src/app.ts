@@ -54,6 +54,7 @@ app.set("trust proxy", 1);
 const allowedOrigins = [
   env.clientUrl,
   env.serverUrl,
+  "https://bcc007pay.vercel.app",
   "https://bcc007pay-preview.vercel.app",
   "https://bcc007pay-staging.vercel.app",
 ].filter(Boolean) as string[];
@@ -88,7 +89,7 @@ const corsOptions: cors.CorsOptions = {
 
     // Strict origin matching for production
     if (allowedOrigins.includes(origin)) {
-      logger.info(`CORS: Origin ${origin} is allowed`);
+      logger.info(`CORS: Origin ${origin} is allowed (exact match)`);
       return callback(null, true);
     }
 
