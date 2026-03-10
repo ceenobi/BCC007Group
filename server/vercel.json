@@ -1,14 +1,8 @@
 {
-  "version": 2,
-  "functions": {
-    "api/index.ts": {
-      "runtime": "@vercel/node"
-    }
-  },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/api/index.ts"
+      "source": "/api/:path*",
+      "destination": "${SERVER_URL}/api/:path*"
     }
   ]
 }
