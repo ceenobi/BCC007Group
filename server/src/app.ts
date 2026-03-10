@@ -83,15 +83,30 @@ const corsOptions: cors.CorsOptions = {
       return callback(null, true);
     }
 
-    // Strict origin matching for production
+    // Strict origin matching for production - check exact match first
     if (allowedOrigins.includes(origin)) {
       logger.info(`CORS: Origin ${origin} is allowed (exact match)`);
       return callback(null, true);
     }
 
-    // Allow ALL Vercel preview deployments
-    if (origin.endsWith(".vercel.app")) {
-      logger.info(`CORS: Allowing Vercel preview deployment: ${origin}`);
+    // Allow ALL Vercel preview/production deployments (both .vercel.app and custom domains)
+    if (
+      origin.endsWith(".vercel.app") ||
+      origin.includes(".vercel.") ||
+      origin.includes("vercel.app") ||
+      // Allow any origin on the same Vercel project (production and preview deployments)
+      origin.match(/^https?:\/\/[\w-]+\.vercel\.app$/) ||
+      // Allow localhost for testing
+      origin.startsWith("http://localhost:") ||
+      origin.startsWith("http://127.0.0.1:")
+    ) {
+      logger.info(`CORS: Allowing Vercel/localhost deployment: ${origin}`);
+      return callback(null, true);
+    }
+
+    // Allow if the origin matches the server's own domain (for same-origin requests)
+    if (env.serverUrl && origin === env.serverUrl) {
+      logger.info(`CORS: Allowing same origin (server URL): ${origin}`);
       return callback(null, true);
     }
 
