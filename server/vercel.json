@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/index.ts": {
-      "runtime": "nodejs"
+      "runtime": "nodejs24.x"
     }
   },
   "routes": [
