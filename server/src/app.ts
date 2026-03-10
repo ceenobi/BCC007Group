@@ -113,7 +113,9 @@ const corsOptions: cors.CorsOptions = {
     }
 
     // Reject requests from other origins
-    logger.error(`Blocked by CORS: ${origin} - Allowed: ${allowedOrigins.join(", ")}`);
+    logger.error(
+      `Blocked by CORS: ${origin} - Allowed: ${allowedOrigins.join(", ")}`,
+    );
     callback(new Error(`Not allowed by CORS: ${origin}`));
   },
   credentials: true,
@@ -124,12 +126,6 @@ const corsOptions: cors.CorsOptions = {
 
 // Middlewares use
 app.use(cors(corsOptions));
-app.use(limiter);
-app.use(compression(compressionOptions));
-app.use(cookieParser());
-app.use(helmet(helmetOptions));
-app.use(express.urlencoded({ extended: true, limit: "25mb" }));
-app.use(express.static("public"));
 app.use((req, res, next) => {
   // Allow credentials
   res.header("Access-Control-Allow-Credentials", "true");
@@ -144,6 +140,12 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.use(limiter);
+app.use(compression(compressionOptions));
+app.use(cookieParser());
+app.use(helmet(helmetOptions));
+app.use(express.urlencoded({ extended: true, limit: "25mb" }));
+app.use(express.static("public"));
 app.disable("x-powered-by");
 
 app.all("/api/auth/*splat", strictLimiter, toNodeHandler(auth));
