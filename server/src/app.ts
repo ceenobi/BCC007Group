@@ -90,15 +90,17 @@ const corsOptions: cors.CorsOptions = {
     }
 
     // Allow ALL Vercel preview/production deployments (both .vercel.app and custom domains)
+    // This is more permissive to handle all Vercel deployment patterns
     if (
-      origin.endsWith(".vercel.app") ||
-      origin.includes(".vercel.") ||
-      origin.includes("vercel.app") ||
-      // Allow any origin on the same Vercel project (production and preview deployments)
-      origin.match(/^https?:\/\/[\w-]+\.vercel\.app$/) ||
+      // Match any .vercel.app domain (covers preview, production, staging, etc.)
+      origin.match(/^[\w-]+:\/\/[\w.-]+\.vercel\.app$/) ||
+      // Also match direct vercel.app patterns without protocol prefix issues
+      origin.includes(".vercel.app") ||
       // Allow localhost for testing
       origin.startsWith("http://localhost:") ||
-      origin.startsWith("http://127.0.0.1:")
+      origin.startsWith("http://127.0.0.1:") ||
+      // DEBUG: Also allow bcc007pay-server.vercel.app explicitly
+      origin === "https://bcc007pay-server.vercel.app"
     ) {
       logger.info(`CORS: Allowing Vercel/localhost deployment: ${origin}`);
       return callback(null, true);
@@ -111,7 +113,7 @@ const corsOptions: cors.CorsOptions = {
     }
 
     // Reject requests from other origins
-    logger.error(`Blocked by CORS: ${origin}`);
+    logger.error(`Blocked by CORS: ${origin} - Allowed: ${allowedOrigins.join(", ")}`);
     callback(new Error(`Not allowed by CORS: ${origin}`));
   },
   credentials: true,
