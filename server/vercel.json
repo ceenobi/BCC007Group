@@ -1,8 +1,14 @@
 {
-  "rewrites": [
+  "version": 2,
+  "functions": {
+    "api/index.ts": {
+      "runtime": "nodejs"
+    }
+  },
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "${SERVER_URL}/api/:path*"
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
     }
   ]
 }
