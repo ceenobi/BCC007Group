@@ -99,3 +99,42 @@ The application maintains a persistent connection (`/api/v1/sse/stream`) to keep
 - **Security Headers**: Managed via [Helmet](https://helmetjs.github.io/) with custom CSP policies for Cloudinary and Paystack.
 - **Rate Limiting**: Granular rate implementation for sensitive endpoints (Auth, Payments) using `express-rate-limit`.
 - **Validation**: Strict input sanitization and typing via **Zod** across both client and server.
+
+---
+
+## 🏗 Development & CI/CD Workflow
+
+To ensure a high-standard, production-ready codebase, the project follows a strict branching and CI/CD strategy.
+
+### 1. Branching Model
+
+- **`main`**: The production-ready branch. Only merges from `staging` are allowed via Pull Requests.
+- **`staging`**: The integration branch. All feature branches and bug fixes must be merged here first for testing.
+- **`feature/*` or `fix/*`**: Temporary branches for new development or patches.
+
+### 2. Branch Protection Rules
+
+Both `main` and `staging` branches are protected to prevent accidental direct pushes and ensure quality:
+
+- **Pull Requests (PRs) Required**: All changes must go through a PR. Direct pushes to `main` and `staging` are blocked.
+- **Status Checks**: GitHub Actions must pass (Linting, Typechecking, Unit Tests, E2E Tests) before a merge is permitted.
+- **Code Reviews**: 
+  - `main` requires at least **1 approving review** from a code owner.
+  - `staging` requires a successful PR and passing CI (no manual approval required for solo development speed).
+- **Admin Enforcement**: These rules apply to everyone, including repository owners, to ensure a consistent workflow.
+
+### 3. CI/CD Operations
+
+- **CI (GitHub Actions)**: Every PR to `staging` or `main` triggers an automated pipeline:
+  - **Server**: Typechecks and Vitest unit/integration tests.
+  - **Client**: Typechecks, Vitest unit tests, and Playwright E2E tests.
+- **Deployment**: 
+  - Merges to `main` trigger a production deployment to **Vercel** for both client and server applications.
+
+### 4. Contributing
+
+When starting a new task:
+1. Create a feature branch from latest `staging`.
+2. Push changes and open a PR targeting `staging`.
+3. Use the provided [PR Template](.github/pull_request_template.md) to describe your changes.
+4. Once CI passes and the PR is merged, create a subsequent PR from `staging` to `main` for production release.
