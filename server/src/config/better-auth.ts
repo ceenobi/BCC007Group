@@ -16,12 +16,6 @@ export const auth = betterAuth({
   trustedOrigins: ["http://localhost:4500", env.clientUrl],
   baseURL:
     env.nodeEnv === "production" ? env.serverUrl : "http://localhost:4600",
-  cookies: {
-    domain: env.nodeEnv === "production" ? undefined : undefined,
-    sameSite: env.nodeEnv === "production" ? "none" : "lax",
-    secure: env.nodeEnv === "production",
-    httpOnly: true,
-  },
   session: {
     maxAge: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
@@ -125,6 +119,15 @@ export const auth = betterAuth({
   },
   advanced: {
     cookiePrefix: "__bcc007pay",
+    crossSubDomainCookies: {
+      enabled: env.nodeEnv === "production",
+    },
+    defaultCookieAttributes: {
+      sameSite: env.nodeEnv === "production" ? "none" : "lax",
+      secure: env.nodeEnv === "production",
+      httpOnly: true,
+      partitioned: env.nodeEnv === "production",
+    },
   },
 });
 
