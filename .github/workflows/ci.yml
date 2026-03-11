@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, staging]
   pull_request:
-    branches: [main, develop]
+    branches: [main, staging]
 
 jobs:
   server-ci:
@@ -50,8 +50,11 @@ jobs:
           cache: "yarn"
           cache-dependency-path: client/yarn.lock
 
-      - name: Install dependencies
+      - name: Install client dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Install server dependencies (for E2E)
+        run: cd ../server && yarn install --frozen-lockfile
 
       - name: Typecheck
         run: yarn typecheck
@@ -65,5 +68,21 @@ jobs:
       - name: E2E Tests
         run: yarn test:e2e
         env:
-          # Add any required client-side env vars for E2E tests here
+          NODE_ENV: development
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          BETTER_AUTH_URL: http://localhost:4600
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          CLIENT_URL: http://localhost:4500
+          SERVER_URL: http://localhost:4600
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+          QSTASH_URL: ${{ secrets.QSTASH_URL }}
+          PAYSTACK_SECRET_KEY: ${{ secrets.PAYSTACK_SECRET_KEY }}
+          PAYSTACK_PUBLIC_KEY: ${{ secrets.PAYSTACK_PUBLIC_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_SECRET_KEY: ${{ secrets.CLOUDINARY_SECRET_KEY }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}

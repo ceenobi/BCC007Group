@@ -41,4 +41,22 @@ export default defineConfig({
       testMatch: /security\.spec\.ts/,
     },
   ],
+  webServer: [
+    {
+      command: "npm run dev",
+      url: "http://localhost:4500",
+      reuseExistingServer: !process.env.CI,
+      stdout: "pipe",
+      stderr: "pipe",
+      timeout: 120_000,
+    },
+    {
+      command: "cd ../server && npm run dev",
+      url: "http://localhost:4600",
+      reuseExistingServer: !process.env.CI,
+      stdout: "pipe",
+      stderr: "pipe",
+      timeout: 120_000,
+    },
+  ],
 });

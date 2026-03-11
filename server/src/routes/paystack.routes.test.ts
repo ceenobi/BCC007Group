@@ -62,13 +62,17 @@ describe("Paystack Routes", () => {
       },
     }));
 
-    const { paystackRouter } = await import("./paystack.routes");
+    vi.doMock("../config/db.server", () => ({
+      connectMongoDb: vi.fn((op) => op()),
+    }));
+
+    const { getPaystackRouter } = await import("./paystack.routes");
     const { paystackContract } = await import("../contract/paystack.contract");
 
     app = express();
     app.use(express.json());
 
-    createExpressEndpoints(paystackContract, paystackRouter, app, {
+    createExpressEndpoints(paystackContract, getPaystackRouter(), app, {
       jsonQuery: true,
       responseValidation: true,
     });
