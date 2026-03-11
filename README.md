@@ -99,3 +99,23 @@ The application maintains a persistent connection (`/api/v1/sse/stream`) to keep
 - **Security Headers**: Managed via [Helmet](https://helmetjs.github.io/) with custom CSP policies for Cloudinary and Paystack.
 - **Rate Limiting**: Granular rate implementation for sensitive endpoints (Auth, Payments) using `express-rate-limit`.
 - **Validation**: Strict input sanitization and typing via **Zod** across both client and server.
+
+---
+
+## 🧪 Testing & CI/CD
+
+The project implements a multi-layer testing strategy to ensure reliability across both frontend and backend.
+
+### **Testing Layers**
+- **Server Unit & Integration**: [Vitest](https://vitest.dev/) for testing services, models, and API routes with comprehensive mocking for external dependencies (Paystack, MongoDB).
+- **Client Unit**: Vitest and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for component-level validation.
+- **End-to-End (E2E)**: [Playwright](https://playwright.dev/) for full user flows (Auth, Payments) with automated server orchestration.
+
+### **Automated Pipeline (GitHub Actions)**
+Every Pull Request to `main` or `staging` triggers the CI pipeline:
+1. **Server CI**: Handles TypeScript validation and unit/integration tests.
+2. **Client CI**: Handles TypeScript validation, unit tests, and full E2E Playwright tests.
+3. **Security**: Automated GitGuardian scans for exposed secrets.
+
+> [!IMPORTANT]
+> To ensure E2E tests pass in CI, the following **GitHub Actions Secrets** must be configured in the repository: `DATABASE_URL`, `DATABASE_NAME`, `BETTER_AUTH_SECRET`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `QSTASH_TOKEN`, `QSTASH_URL`, `PAYSTACK_SECRET_KEY`, `PAYSTACK_PUBLIC_KEY`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_SECRET_KEY`, `CLOUDINARY_UPLOAD_PRESET`, `RESEND_API_KEY`.
