@@ -22,10 +22,13 @@ describe("PaymentService", () => {
       findOneAndUpdate: vi.fn(),
       updateMany: vi.fn(),
       aggregate: vi.fn(),
+      countDocuments: vi.fn(),
     };
 
     mockUserModel = {
-      findById: vi.fn(),
+      findById: vi.fn().mockReturnValue({
+        lean: vi.fn().mockResolvedValue({ id: "user-123", email: "test@example.com", name: "Test User" }),
+      }),
     };
 
     mockWorkflowClient = {
@@ -36,6 +39,7 @@ describe("PaymentService", () => {
 
     vi.doMock("../config/paystack", () => ({
       paystack: mockPaystack,
+      getPaystack: () => mockPaystack,
     }));
 
     vi.doMock("../models/payment", () => ({
@@ -60,7 +64,14 @@ describe("PaymentService", () => {
         paystackSecretKey: "test_secret_key",
         clientUrl: "http://localhost:3000",
         serverUrl: "http://localhost:4600",
+        databaseUrl: "mongodb://localhost:27017/test",
       },
+    }));
+
+    vi.doMock("../config/db.server", () => ({
+      connectMongoDb: vi.fn((op) => op()),
+      connectToDB: vi.fn(),
+      gracefulShutdown: vi.fn(),
     }));
 
     const module = await import("./payment.service");
@@ -147,7 +158,9 @@ describe("PaymentService", () => {
         ...txData,
         amount: 5000,
       });
-      mockUserModel.findById.mockResolvedValue(mockUser);
+      mockUserModel.findById.mockReturnValue({
+        lean: vi.fn().mockResolvedValue(mockUser),
+      });
 
       const result = await paymentService.verifyPayment(
         { reference: "ref1" },
@@ -181,7 +194,9 @@ describe("PaymentService", () => {
       });
       expect(mockPaymentModel.updateMany).toHaveBeenCalledWith(
         { paystackSubscriptionId: "SUB_123" },
-        expect.objectContaining({ subscriptionStatus: "cancelled" }),
+        expect.objectContaining({
+          $set: expect.objectContaining({ subscriptionStatus: "cancelled" }),
+        }),
       );
       expect(result.status).toBe(true);
     });
@@ -223,10 +238,27 @@ describe("PaymentService", () => {
         "/subscription",
         expect.objectContaining({ params: { customer: 789 } }),
       );
+      expect(mockPaymentModel.updateMany).toHaveBeenNthCalledWith(
+        1,
+        { reference: "ref_missing" },
+        expect.objectContaining({
+          $set: expect.objectContaining({
+            paystackSubscriptionId: "SUB_456",
+            paystackEmailToken: "TOKEN_456",
+          }),
+        }),
+      );
       expect(mockPaystack.post).toHaveBeenCalledWith("/subscription/disable", {
         code: "SUB_456",
         token: "TOKEN_456",
       });
+      expect(mockPaymentModel.updateMany).toHaveBeenNthCalledWith(
+        2,
+        { paystackSubscriptionId: "SUB_456" },
+        expect.objectContaining({
+          $set: expect.objectContaining({ subscriptionStatus: "cancelled" }),
+        }),
+      );
     });
   });
 
@@ -235,7 +267,9 @@ describe("PaymentService", () => {
       mockPaymentModel.findOneAndUpdate.mockResolvedValue({
         userId: mockUser.id,
       });
-      mockUserModel.findById.mockResolvedValue(mockUser);
+      mockUserModel.findById.mockReturnValue({
+        lean: vi.fn().mockResolvedValue(mockUser),
+      });
 
       const event = {
         event: "charge.success",
@@ -270,9 +304,16 @@ describe("PaymentService", () => {
       await paymentService.handleWebhook(event);
 
       expect(mockPaymentModel.findOneAndUpdate).toHaveBeenCalledWith(
-        expect.any(Object),
-        expect.objectContaining({ paystackSubscriptionId: "SUB_NEW" }),
-        expect.any(Object),
+        expect.objectContaining({
+          $or: expect.arrayContaining([
+            { paystackSubscriptionId: "SUB_NEW" },
+            expect.objectContaining({ paystackCustomerId: "CUS_123" }),
+          ]),
+        }),
+        expect.objectContaining({
+          $set: expect.objectContaining({ paystackSubscriptionId: "SUB_NEW" }),
+        }),
+        expect.objectContaining({ sort: { createdAt: -1 } }),
       );
     });
   });
