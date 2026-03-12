@@ -6,19 +6,19 @@ import { Link } from "react-router";
 import Profile from "~/components/profile";
 
 const heroContentVariants = {
-  hidden: { opacity: 0, x: -30 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     transition: { duration: 0.8, staggerChildren: 0.2 },
   },
 };
 
 const heroImageVariants = {
-  hidden: { opacity: 0, x: 50, scale: 0.95 },
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     scale: 1,
     transition: { duration: 1, delay: 0.4 },
   },
@@ -49,10 +49,12 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
   ];
 
   return (
-    <div className="relative min-h-dvh md:min-h-[60dvh] xl:min-h-dvh bg-linear-to-bl from-lightBlue via-lightBlue/50 to-lightBlue text-zinc-900 dark:text-white overflow-hidden">
-      <div className="container mx-auto p-4 lg:px-8" id="home">
+    <div className="relative min-h-dvh md:min-h-full xl:min-h-dvh bg-linear-to-bl from-lightBlue via-lightBlue/50 to-lightBlue text-zinc-900 dark:text-white overflow-hidden flex flex-col justify-center items-center">
+      <div className="container mx-auto px-4 py-4 lg:px-8" id="home">
         <motion.div
-          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          initial={
+            shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }
+          }
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className={`fixed top-5 left-4 right-4 flex justify-center items-center p-4 bg-white/30 backdrop-blur supports-backdrop-filter:bg-white/70 shadow rounded-full z-50 transition-all duration-300`}
@@ -96,7 +98,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
         </motion.div>
 
         <div
-          className="min-h-[500px] items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-4 mt-30"
+          className="min-h-[500px] xl:min-h-full items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-4 py-30"
           id="home"
         >
           <motion.div
@@ -107,7 +109,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-6xl md:text-7xl font-bold"
+              className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-bold"
             >
               <span className="tracking-tighter inline-block">DISCOVER</span>{" "}
               <br />
@@ -117,7 +119,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
             </motion.h1>
             <motion.p
               variants={itemVariants}
-              className="text-md sm:text-xl w-[80%] mx-auto lg:mx-0"
+              className="text-md sm:text-xl w-[80%] lg:w-[80%] mx-auto lg:mx-0"
             >
               BCCOO7 Platform is a web application that allows its users to
               manage their payments and transfers.
@@ -134,14 +136,14 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
           </motion.div>
           <motion.div
             variants={heroImageVariants}
-            initial={shouldReduceMotion ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: 50, scale: 0.95 }}
+            initial={shouldReduceMotion ? "visible" : "hidden"}
             animate="visible"
             className="text-start overflow-clip relative"
           >
             <motion.img
               src="https://res.cloudinary.com/ceenobi/image/upload/q_auto/v1761658645/BCCOO7DB/iPhone-12-PRO-localhost_jntqwj.webp"
               alt="Phone Mockup"
-              className="relative z-10 w-fit h-[600px] mx-auto object-contain md:mr-0"
+              className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] h-auto md:h-[600px] md:w-fit mx-auto object-contain md:mr-0"
               loading="eager"
               decoding="async"
               width="400"

@@ -22,7 +22,7 @@ export default function MobileDrawer() {
         <Button
           variant="outline"
           size="icon"
-          className="relative h-8 w-8 cursor-pointer md:hidden"
+          className="relative h-8 w-8 cursor-pointer md:hidden rounded-sm"
         >
           <Menu size={18} />
         </Button>
