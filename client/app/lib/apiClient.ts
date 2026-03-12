@@ -32,7 +32,11 @@ const combinedContract = {
 };
 
 export const apiClient = initClient(combinedContract, {
-  baseUrl: getBaseUrl(),
+  baseUrl:
+    typeof document === "undefined" &&
+    import.meta.env.VITE_BASE_URL?.startsWith("/")
+      ? `https://bcc007pay-server.vercel.app${import.meta.env.VITE_BASE_URL}`
+      : import.meta.env.VITE_BASE_URL || "http://localhost:4500",
   baseHeaders: {
     "Content-Type": "application/json",
   },
