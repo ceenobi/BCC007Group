@@ -134,7 +134,7 @@ export const getAuthRouter = () => {
         }),
       },
       verifyEmail: {
-        handler: tryCatchFn(async ({ req }) => {
+        handler: tryCatchFn(async ({ req, res }) => {
           const token = req.query.token || "";
           const authResponse = await auth.api.verifyEmail({
             query: {
@@ -154,6 +154,7 @@ export const getAuthRouter = () => {
               errorData?.details || [],
             );
           }
+          res.setHeaders(authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "Email verified successfully",
@@ -232,7 +233,7 @@ export const getAuthRouter = () => {
         res.setHeaders(response.headers);
         return createTsRestSuccess(200, session.user);
       }),
-      logOutUser: tryCatchFn(async ({ req }) => {
+      logOutUser: tryCatchFn(async ({ req, res }) => {
         const response = await auth.api.signOut({
           headers: fromNodeHeaders(req.headers),
           asResponse: true,
@@ -241,6 +242,7 @@ export const getAuthRouter = () => {
         if (!response.ok) {
           return createTsRestError(404, "No active session found");
         }
+        res.setHeaders(response.headers);
         return createTsRestSuccess(200, {
           success: true,
           message: "Logout successful",
@@ -330,7 +332,7 @@ export const getAuthRouter = () => {
           verifyUser,
           authorizedRoles("member", "admin", "super_admin"),
         ],
-        handler: tryCatchFn(async ({ req }) => {
+        handler: tryCatchFn(async ({ req, res }) => {
           const { newPassword, currentPassword } = req.body;
           const authResponse = await auth.api.changePassword({
             body: {
@@ -350,6 +352,7 @@ export const getAuthRouter = () => {
               errorData.message || "Failed to change password",
             );
           }
+          res.setHeaders(authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "Password changed successfully",
@@ -395,7 +398,7 @@ export const getAuthRouter = () => {
           authorizedRoles("member", "admin", "super_admin"),
           validateFormData(UpdateUserSchema),
         ],
-        handler: tryCatchFn(async ({ req }) => {
+        handler: tryCatchFn(async ({ req, res }) => {
           const {
             name,
             phone,
@@ -431,6 +434,7 @@ export const getAuthRouter = () => {
               errorData.message || "Failed to update user",
             );
           }
+          res.setHeaders(authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "User updated successfully",
@@ -444,7 +448,7 @@ export const getAuthRouter = () => {
           authorizedRoles("member", "admin", "super_admin"),
           validateFormData(UpdateUserAvatarSchema),
         ],
-        handler: tryCatchFn(async ({ req }) => {
+        handler: tryCatchFn(async ({ req, res }) => {
           const { image, imageId } = req.body;
           // Delete profile photo if it exists
           if (req.user?.imageId) {
@@ -467,6 +471,7 @@ export const getAuthRouter = () => {
               errorData.message || "Failed to update user avatar",
             );
           }
+          res.setHeaders(authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "User avatar updated successfully",
