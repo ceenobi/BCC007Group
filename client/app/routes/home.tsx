@@ -8,12 +8,12 @@ import {
 
 export const middleware = [sessionMiddleware];
 
-const HeroSection = lazy(() => import("~/components/HeroSection"));
-const InfoSection = lazy(() => import("~/components/InfoSection"));
-const AboutSection = lazy(() => import("~/components/AboutSection"));
-const ServicesSection = lazy(() => import("~/components/ServicesSection"));
-const ContactSection = lazy(() => import("~/components/ContactSection"));
-const FooterSection = lazy(() => import("~/components/FooterSection"));
+const HeroSection = lazy(() => import("~/features/home/heroSection"));
+const InfoSection = lazy(() => import("~/features/home/infoSection"));
+const AboutSection = lazy(() => import("~/features/home/aboutSection"));
+const ServicesSection = lazy(() => import("~/features/home/servicesSection"));
+const ContactSection = lazy(() => import("~/features/home/contactSection"));
+const FooterSection = lazy(() => import("~/features/home/footerSection"));
 
 export function meta({}: Route.MetaArgs) {
   return [

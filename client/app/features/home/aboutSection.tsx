@@ -10,20 +10,20 @@ export default function AboutSection() {
     >
       <div className="container mx-auto p-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <motion.img
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           src="/bcc.jpg"
           alt="bcc007-group image"
-          className="rounded-xl shadow-2xl w-full h-full"
+          className="rounded-xl shadow-xl w-full h-full"
           loading="lazy"
           width="600"
           height="400"
         />
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mt-6 md:mt-0 space-y-6 text-center md:text-start"

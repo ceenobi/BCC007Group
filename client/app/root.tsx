@@ -179,7 +179,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             </p>
             {details !== "fetch failed" && (
               <div className="mt-4 inline-flex gap-4">
-                <Button variant="outline" size="lg" asChild>
+                <Button variant="outline" size="lg" asChild className="rounded-sm shadow-lg w-[200px] bg-lightBlue hover:bg-coolBlue text-white h-12 font-bold transition-all duration-300">
                   <Link to="/">Go Home</Link>
                 </Button>
               </div>
