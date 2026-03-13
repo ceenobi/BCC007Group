@@ -13,6 +13,16 @@ import { createAuthClient } from "better-auth/react";
 //   return url;
 // };
 
+const getBaseUrl = () => {
+  const url = import.meta.env.VITE_BASE_URL || "http://localhost:4500/api";
+  if (url) {
+    return typeof document === "undefined"
+      ? url
+      : "";
+  }
+  return url;
+};
+
 export const authClient = createAuthClient({
-  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:4500/api",
+  baseURL: getBaseUrl(),
 });
