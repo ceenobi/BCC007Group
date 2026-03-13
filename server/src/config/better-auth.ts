@@ -13,9 +13,11 @@ export const auth = betterAuth({
     client: mongoose.connection.getClient() as any,
     transaction: false,
   }),
-  trustedOrigins: ["http://localhost:4500", env.clientUrl],
+  trustedOrigins: ["http://localhost:4500", env.clientUrl].filter(Boolean) as string[],
   baseURL:
-    env.nodeEnv === "production" ? env.serverUrl : "http://localhost:4600",
+    env.nodeEnv === "production"
+      ? `${env.clientUrl}/api/auth`
+      : "http://localhost:4600",
   session: {
     maxAge: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
@@ -120,13 +122,12 @@ export const auth = betterAuth({
   advanced: {
     cookiePrefix: "__bcc007pay",
     crossSubDomainCookies: {
-      enabled: env.nodeEnv === "production",
+      enabled: false,
     },
     defaultCookieAttributes: {
-      sameSite: env.nodeEnv === "production" ? "none" : "lax",
+      sameSite: "lax",
       secure: env.nodeEnv === "production",
       httpOnly: true,
-      partitioned: env.nodeEnv === "production",
     },
   },
 });
