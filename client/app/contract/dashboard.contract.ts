@@ -8,7 +8,7 @@ export const dashboardContract = c.router({
   dashboard: {
     getActivityTrends: {
       method: "GET",
-      path: "/api/v1/dashboard/activities",
+      path: "/v1/dashboard/activities",
       query: z.object({
         days: z.coerce.number().optional(),
       }),
@@ -38,7 +38,7 @@ export const dashboardContract = c.router({
     },
     getStats: {
       method: "GET",
-      path: "/api/v1/dashboard/stats",
+      path: "/v1/dashboard/stats",
       summary: "Get dashboard stats",
       responses: {
         200: z.object({
@@ -65,7 +65,7 @@ export const dashboardContract = c.router({
     },
     getAnnouncements: {
       method: "GET",
-      path: "/api/v1/dashboard/upcoming-events",
+      path: "/v1/dashboard/upcoming-events",
       summary: "Get upcoming events",
       responses: {
         200: z.object({
@@ -109,7 +109,7 @@ export const dashboardContract = c.router({
     },
     getRecentActivities: {
       method: "GET",
-      path: "/api/v1/dashboard/recent-activities",
+      path: "/v1/dashboard/recent-activities",
       query: z.object({
         limit: z.coerce.number().optional(),
       }),

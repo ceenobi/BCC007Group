@@ -43,7 +43,7 @@ export const ticketContract = c.router({
   tickets: {
     createTicket: {
       method: "POST",
-      path: "/api/v1/tickets/create",
+      path: "/v1/tickets/create",
       summary: "Create ticket",
       body: CreateTicketSchema,
       responses: {
@@ -58,7 +58,7 @@ export const ticketContract = c.router({
     },
     getTickets: {
       method: "GET",
-      path: "/api/v1/tickets/get",
+      path: "/v1/tickets/get",
       query: z.object({
         page: z.coerce.number().optional(),
         limit: z.coerce.number().optional(),
@@ -82,7 +82,7 @@ export const ticketContract = c.router({
     },
     updateTicket: {
       method: "PATCH",
-      path: "/api/v1/tickets/update/:id",
+      path: "/v1/tickets/update/:id",
       pathParams: z.object({
         id: z.string(),
       }),

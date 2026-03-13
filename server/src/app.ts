@@ -68,8 +68,8 @@ if (env.nodeEnv === "production") {
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
     // DEBUG: Log all incoming origin requests
-    logger.info(`CORS check: Origin header = ${origin || "(none)"}`);
-    logger.info(`CORS check: Allowed origins = ${allowedOrigins.join(", ")}`);
+    // logger.info(`CORS check: Origin header = ${origin || "(none)"}`);
+    // logger.info(`CORS check: Allowed origins = ${allowedOrigins.join(", ")}`);
 
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) {

@@ -84,7 +84,7 @@ export const paymentContract = c.router({
   payments: {
     listUserPayments: {
       method: "GET",
-      path: "/api/v1/payments/user",
+      path: "/v1/payments/user",
       query: z.object({
         page: z.coerce.number().optional(),
         limit: z.coerce.number().optional(),
@@ -109,7 +109,7 @@ export const paymentContract = c.router({
     },
     groupPayments: {
       method: "GET",
-      path: "/api/v1/payments/group",
+      path: "/v1/payments/group",
       query: z.object({
         page: z.coerce.number().optional(),
         limit: z.coerce.number().optional(),
@@ -134,7 +134,7 @@ export const paymentContract = c.router({
     },
     paymentReports: {
       method: "GET",
-      path: "/api/v1/payments/reports",
+      path: "/v1/payments/reports",
       query: z.object({
         period: z.enum(["1w", "1m", "6m", "1y", "all"]).optional(),
         paymentStatus: z
@@ -157,7 +157,7 @@ export const paymentContract = c.router({
     },
     paymentReportsUser: {
       method: "GET",
-      path: "/api/v1/payments/reports/user",
+      path: "/v1/payments/reports/user",
       query: z.object({
         period: z.enum(["1w", "1m", "6m", "1y", "all"]).optional(),
         paymentStatus: z

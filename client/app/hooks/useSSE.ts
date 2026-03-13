@@ -9,14 +9,14 @@ export function useSSE() {
 
   useEffect(() => {
     const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:4600";
-    const eventSource = new EventSource(`${baseUrl}/api/v1/sse/stream`, {
+    const eventSource = new EventSource(`${baseUrl}/v1/sse/stream`, {
       withCredentials: true,
     });
 
     eventSource.onopen = () => {
       console.log(
         "SSE: Connection established to",
-        `${baseUrl}/api/v1/sse/stream`,
+        `${baseUrl}/v1/sse/stream`,
       );
     };
 

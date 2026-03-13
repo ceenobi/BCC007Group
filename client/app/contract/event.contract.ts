@@ -29,7 +29,7 @@ export const eventContract = c.router({
   events: {
     createEvent: {
       method: "POST",
-      path: "/api/v1/events/create",
+      path: "/v1/events/create",
       body: CreateEventSchema,
       responses: {
         201: EventResponseSchema,
@@ -44,7 +44,7 @@ export const eventContract = c.router({
     },
     getEvents: {
       method: "GET",
-      path: "/api/v1/events/get",
+      path: "/v1/events/get",
       query: z.object({
         page: z.coerce.number().optional(),
         limit: z.coerce.number().optional(),
@@ -71,7 +71,7 @@ export const eventContract = c.router({
     },
     batchDeleteEvents: {
       method: "DELETE",
-      path: "/api/v1/events/delete",
+      path: "/v1/events/delete",
       body: z.object({
         ids: z.array(z.string()),
       }),
@@ -94,7 +94,7 @@ export const eventContract = c.router({
     },
     deleteEvent: {
       method: "DELETE",
-      path: "/api/v1/events/delete/:id",
+      path: "/v1/events/delete/:id",
       pathParams: z.object({
         id: z.string(),
       }),
@@ -114,7 +114,7 @@ export const eventContract = c.router({
     },
     updateEvent: {
       method: "PATCH",
-      path: "/api/v1/events/update/:id",
+      path: "/v1/events/update/:id",
       pathParams: z.object({
         id: z.string(),
       }),
