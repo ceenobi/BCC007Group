@@ -9,14 +9,13 @@ import { ticketContract } from "~/contract/ticket.contract";
 import { paymentContract } from "~/contract/payment.contract";
 import { dashboardContract } from "~/contract/dashboard.contract";
 
+const normalizeOrigin = (value: string) => value.replace(/\/?api\/?$/, "");
+
 const getBaseUrl = () => {
-  const url = import.meta.env.VITE_BASE_URL || "http://localhost:4500/api";
-  if (url) {
-    return typeof document === "undefined"
-      ? url
-      : "";
-  }
-  return url;
+  const origin = normalizeOrigin(
+    import.meta.env.VITE_BASE_URL || "http://localhost:4600",
+  );
+  return typeof document === "undefined" ? `${origin}/api` : "/api";
 };
 
 const combinedContract = {

@@ -23,7 +23,7 @@
   ],
   "origins": [
     {
-      "origin": "http://localhost:4500/api",
+      "origin": "http://localhost:4500",
       "localStorage": [
         {
           "name": "sidebarOpenBcc007Pay",
