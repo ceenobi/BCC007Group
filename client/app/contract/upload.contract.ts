@@ -8,7 +8,7 @@ export const uploadContract = c.router({
   upload: {
     deleteMedia: {
       method: "DELETE",
-      path: "/api/upload/delete",
+      path: "/upload/delete",
       body: z.object({
         publicIds: z.array(z.string()),
       }),
@@ -29,7 +29,7 @@ export const uploadContract = c.router({
     },
     uploadMedia: {
       method: "POST",
-      path: "/api/upload/file",
+      path: "/upload/file",
       body: UploadSchema,
       responses: {
         200: z.object({

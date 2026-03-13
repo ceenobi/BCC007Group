@@ -13,11 +13,11 @@ export const auth = betterAuth({
     client: mongoose.connection.getClient() as any,
     transaction: false,
   }),
-  trustedOrigins: ["http://localhost:4500", env.clientUrl].filter(Boolean) as string[],
+  trustedOrigins: ["http://localhost:4500", env.clientUrl].filter(
+    Boolean,
+  ) as string[],
   baseURL:
-    env.nodeEnv === "production"
-      ? `${env.clientUrl}/api/auth`
-      : "http://localhost:4600",
+    env.nodeEnv === "production" ? `${env.clientUrl}` : "http://localhost:4600",
   session: {
     maxAge: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,

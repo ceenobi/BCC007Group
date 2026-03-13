@@ -130,7 +130,7 @@ export const authContract = c.router({
     },
     resendEmailVerification: {
       method: "POST",
-      path: "/api/v1/auth/resend-email-verification",
+      path: "/auth/resend-email-verification",
       body: ForgotPasswordSchema,
       responses: {
         200: AuthUserResponseSchema,
