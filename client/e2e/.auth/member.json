@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "__bcc007pay.session_token",
-      "value": "p2RystK9Z3Pl2rO3ZhlymRdt9AnbINM1.fRzgc32FxcUAhtiPxKpyDsFJQPmPUZSz0untljNFNJE%3D",
+      "value": "womDCCw6j2nBMUSI7hgXPjrxMCnNkegw.UDsC47SDJLVW4VwZDGwOYhHkwxvI%2F%2Bh6vfyXMohCAog%3D",
       "domain": "localhost",
       "path": "/",
-      "expires": 1773233841.719174,
+      "expires": 1774046217.123539,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "__bcc007pay.session_data",
-      "value": "eyJzZXNzaW9uIjp7InNlc3Npb24iOnsiZXhwaXJlc0F0IjoiMjAyNi0wMy0xMVQxMjo1NzoyMS40MjNaIiwidG9rZW4iOiJwMlJ5c3RLOVozUGwyck8zWmhseW1SZHQ5QW5iSU5NMSIsImNyZWF0ZWRBdCI6IjIwMjYtMDMtMDRUMTI6NTc6MjEuNDIzWiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMDRUMTI6NTc6MjEuNDIzWiIsImlwQWRkcmVzcyI6IjEyNy4wLjAuMSIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIEhlYWRsZXNzQ2hyb21lLzE0NS4wLjc2MzIuNiBTYWZhcmkvNTM3LjM2IiwidXNlcklkIjoiNjk5NmZiZDA0ZGU1MzY3NjY3YTRjMjc0IiwiaWQiOiI2OWE4MmMzMTgyNWY3N2RlNmFlMzk3ZDUifSwidXNlciI6eyJuYW1lIjoiRWR3aW4gQXJpbnplIiwiZW1haWwiOiJjb2JpbWJhY2h1QGdtYWlsLmNvbSIsImVtYWlsVmVyaWZpZWQiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDItMTlUMTI6MDI6MjQuODg1WiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMDRUMDc6MTE6NTcuNTIwWiIsInJvbGUiOiJtZW1iZXIiLCJpc09uYm9hcmRlZCI6dHJ1ZSwibWVtYmVySWQiOiJCQ0NFS01COTgiLCJkaXNhYmxlQmlydGhEYXRlIjpmYWxzZSwiZGlzYWJsZUVtYWlsIjpmYWxzZSwiZGlzYWJsZUdlbmRlciI6ZmFsc2UsImlkIjoiNjk5NmZiZDA0ZGU1MzY3NjY3YTRjMjc0In0sInVwZGF0ZWRBdCI6MTc3MjYyOTA0MTcxNywidmVyc2lvbiI6IjEifSwiZXhwaXJlc0F0IjoxNzcyNjI5MzQxNzE3LCJzaWduYXR1cmUiOiItTjFXWnNEczNESWlaT1FNNjRfbE9ERWxZT1d6bnFUbVZYYTdKaUVkY2lBIn0",
+      "value": "eyJzZXNzaW9uIjp7InNlc3Npb24iOnsiZXhwaXJlc0F0IjoiMjAyNi0wMy0yMFQyMjozNjo1Ni44NDZaIiwidG9rZW4iOiJ3b21EQ0N3NmoybkJNVVNJN2hnWFBqcnhNQ25Oa2VndyIsImNyZWF0ZWRBdCI6IjIwMjYtMDMtMTNUMjI6MzY6NTYuODUyWiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMTNUMjI6MzY6NTYuODUyWiIsImlwQWRkcmVzcyI6IjEyNy4wLjAuMSIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIEhlYWRsZXNzQ2hyb21lLzE0NS4wLjc2MzIuNiBTYWZhcmkvNTM3LjM2IiwidXNlcklkIjoiNjk5NmZiZDA0ZGU1MzY3NjY3YTRjMjc0IiwiaWQiOiI2OWI0OTE4ODIwMDk1MzEyNTA2NzYyNWUifSwidXNlciI6eyJuYW1lIjoiRWR3aW4gQXJpbnplIiwiZW1haWwiOiJjb2JpbWJhY2h1QGdtYWlsLmNvbSIsImVtYWlsVmVyaWZpZWQiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDItMTlUMTI6MDI6MjQuODg1WiIsInVwZGF0ZWRBdCI6IjIwMjYtMDMtMDRUMTM6Mzg6NDQuNDgwWiIsInJvbGUiOiJtZW1iZXIiLCJpc09uYm9hcmRlZCI6dHJ1ZSwicGhvbmUiOiIrMjM0NzAzMTU0NjM2MSIsIm1lbWJlcklkIjoiQkNDRUtNQjk4Iiwib2NjdXBhdGlvbiI6IkNsZWFyaW5nL2ZvcndhcmRpbmcgYWdlbnQiLCJsb2NhdGlvbiI6IkJhcmlnYSIsImdlbmRlciI6Im1hbGUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTMtMDMtMDZUMDA6MDA6MDAuMDAwWiIsImRpc2FibGVCaXJ0aERhdGUiOmZhbHNlLCJkaXNhYmxlRW1haWwiOmZhbHNlLCJkaXNhYmxlR2VuZGVyIjpmYWxzZSwiaWQiOiI2OTk2ZmJkMDRkZTUzNjc2NjdhNGMyNzQifSwidXBkYXRlZEF0IjoxNzczNDQxNDE3MTE1LCJ2ZXJzaW9uIjoiMSJ9LCJleHBpcmVzQXQiOjE3NzM0NDE3MTcxMTUsInNpZ25hdHVyZSI6IjVQRG1SWFd4MkpuVTU3SzV1aTF5cURrQ0FaVGw4MHlpSU5BUEMwV3FxOGMifQ",
       "domain": "localhost",
       "path": "/",
-      "expires": 1772629341.719272,
+      "expires": 1773441717.123753,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -23,7 +23,7 @@
   ],
   "origins": [
     {
-      "origin": "http://localhost:4500/api",
+      "origin": "http://localhost:4500",
       "localStorage": [
         {
           "name": "sidebarOpenBcc007Pay",
