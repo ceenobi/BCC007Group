@@ -1,9 +1,9 @@
 import "dotenv/config";
-import { paystack } from "./src/config/paystack";
+import { getPaystack } from "./src/config/paystack";
 
 async function run() {
   try {
-    const subRes = await paystack.get(`/subscription`);
+    const subRes = await getPaystack().get(`/subscription`);
     const s = subRes.data?.data?.[0];
     console.log(
       "A typical subscription payload from Paystack:\n",

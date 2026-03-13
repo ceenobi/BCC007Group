@@ -43,7 +43,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "npm run dev",
+      command: "yarn dev",
       url: "http://localhost:4500",
       reuseExistingServer: !process.env.CI,
       stdout: "pipe",
@@ -51,7 +51,7 @@ export default defineConfig({
       timeout: 120_000,
     },
     {
-      command: "cd ../server && npm run dev",
+      command: "cd ../server && NODE_ENV=development yarn dev",
       url: "http://localhost:4600",
       reuseExistingServer: !process.env.CI,
       stdout: "pipe",
