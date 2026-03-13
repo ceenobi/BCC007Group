@@ -9,15 +9,15 @@ import { ticketContract } from "~/contract/ticket.contract";
 import { paymentContract } from "~/contract/payment.contract";
 import { dashboardContract } from "~/contract/dashboard.contract";
 
-const getBaseUrl = () => {
-  const url = import.meta.env.VITE_BASE_URL || "http://localhost:4500";
-  if (url.startsWith("/")) {
-    return typeof document === "undefined"
-      ? `https://bcc007pay-server.vercel.app${url}`
-      : "";
-  }
-  return url;
-};
+// const getBaseUrl = () => {
+//   const url = import.meta.env.VITE_BASE_URL || "http://localhost:4500";
+//   if (url) {
+//     return typeof document === "undefined"
+//       ? `https://bcc007pay-server.vercel.app${url}`
+//       : "";
+//   }
+//   return url;
+// };
 
 const combinedContract = {
   ...authContract,
@@ -32,7 +32,7 @@ const combinedContract = {
 };
 
 export const apiClient = initClient(combinedContract, {
-  baseUrl: getBaseUrl(),
+  baseUrl: import.meta.env.VITE_BASE_URL || "http://localhost:4500/api",
   baseHeaders: {
     "Content-Type": "application/json",
   },
