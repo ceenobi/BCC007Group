@@ -43,7 +43,7 @@ export const ticketContract = c.router({
   tickets: {
     createTicket: {
       method: "POST",
-      path: "/api/v1/tickets/create",
+      path: "/v1/tickets/create",
       summary: "Create ticket",
       body: CreateTicketSchema,
       responses: {
