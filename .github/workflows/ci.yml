@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     branches: [main, staging]
@@ -18,23 +17,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
           cache-dependency-path: server/yarn.lock
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
       - name: Typecheck
         run: yarn typecheck
-
       - name: Test
         run: yarn test
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-
   client-ci:
     name: Client CI
     runs-on: ubuntu-latest
@@ -47,25 +42,19 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
           cache-dependency-path: client/yarn.lock
-
       - name: Install client dependencies
         run: yarn install --frozen-lockfile
-
       - name: Install server dependencies (for E2E)
         run: cd ../server && yarn install --frozen-lockfile
-
       - name: Typecheck
         run: yarn typecheck
-
       - name: Unit Tests
         run: yarn test
-
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
       - name: E2E Tests
         run: yarn test:e2e
         env:
