@@ -102,7 +102,7 @@ jobs:
       - name: Verify Services
         run: |
           echo "Checking if server is responding..."
-          curl -f http://localhost:4600/api/health || echo "Server health check failed"
+          curl -f http://localhost:4600 || echo "Server health check failed"
           echo "Checking if client is responding..."
           curl -f http://localhost:4500 || echo "Client health check failed"
         env:
