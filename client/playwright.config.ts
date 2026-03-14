@@ -41,22 +41,22 @@ export default defineConfig({
       testMatch: /security\.spec\.ts/,
     },
   ],
-  webServer: [
+     webServer: process.env.CI ? [] : [
     {
-      command: "npm run dev",
+      command: "yarn dev",
       url: "http://localhost:4500",
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: true,
       stdout: "pipe",
       stderr: "pipe",
-      timeout: 120_000,
+      timeout: 300_000,
     },
     {
-      command: "cd ../server && npm run dev",
+      command: "cd ../server && yarn dev",
       url: "http://localhost:4600",
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: true,
       stdout: "pipe",
       stderr: "pipe",
-      timeout: 120_000,
+      timeout: 300_000,
     },
   ],
 });

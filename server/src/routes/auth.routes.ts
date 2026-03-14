@@ -31,6 +31,25 @@ import { invalidateCache } from "../middleware/cache.middleware.js";
 import { serverEvents } from "../lib/events.js";
 import { connectMongoDb } from "../config/db.server.js";
 
+const forwardAuthHeaders = (res: any, headers: Headers) => {
+  const getSetCookie = (headers as any).getSetCookie?.bind(headers as any);
+  const setCookies =
+    typeof getSetCookie === "function" ? getSetCookie() : headers.get("set-cookie");
+
+  if (Array.isArray(setCookies)) {
+    for (const cookie of setCookies) {
+      res.append("set-cookie", cookie);
+    }
+  } else if (typeof setCookies === "string" && setCookies.length > 0) {
+    res.setHeader("set-cookie", setCookies);
+  }
+
+  headers.forEach((value, key) => {
+    if (key.toLowerCase() === "set-cookie") return;
+    res.setHeader(key, value);
+  });
+};
+
 export const getAuthRouter = () => {
   const s = initServer();
 
@@ -99,7 +118,7 @@ export const getAuthRouter = () => {
               );
             });
           await invalidateCache("cache:/api/v1/members*");
-          res.setHeaders(authResponse.headers);
+          forwardAuthHeaders(res, authResponse.headers);
           serverEvents.emit("member:created", user);
           return createTsRestSuccess(201, {
             success: true,
@@ -126,7 +145,7 @@ export const getAuthRouter = () => {
             logger.error("Failed to login user:", errorData);
             return createTsRestError(400, errorData.message || "Login failed");
           }
-          res.setHeaders(authResponse.headers);
+          forwardAuthHeaders(res, authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "Login successful",
@@ -154,7 +173,7 @@ export const getAuthRouter = () => {
               errorData?.details || [],
             );
           }
-          res.setHeaders(authResponse.headers);
+          forwardAuthHeaders(res, authResponse.headers);
           return createTsRestSuccess(200, {
             success: true,
             message: "Email verified successfully",
@@ -230,7 +249,7 @@ export const getAuthRouter = () => {
         if (!session || !session.user) {
           return createTsRestError(404, "No active session found");
         }
-        res.setHeaders(response.headers);
+        forwardAuthHeaders(res, response.headers);
         return createTsRestSuccess(200, session.user);
       }),
       logOutUser: tryCatchFn(async ({ req, res }) => {
@@ -242,10 +261,10 @@ export const getAuthRouter = () => {
         if (!response.ok) {
           return createTsRestError(404, "No active session found");
         }
-        res.setHeaders(response.headers);
+        forwardAuthHeaders(res, response.headers);
         return createTsRestSuccess(200, {
           success: true,
-          message: "Logout successful",
+          message: "User logged out successfully",
         });
       }),
       resendEmailVerification: {

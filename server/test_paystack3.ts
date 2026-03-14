@@ -1,10 +1,10 @@
 import "dotenv/config";
-import { paystack } from "./src/config/paystack";
+import { getPaystack } from "./src/config/paystack";
 
 async function run() {
   const reference = "BCC-F1FF7F25-1771970254223";
   try {
-    const txRes = await paystack.get(`/transaction/verify/${reference}`);
+    const txRes = await getPaystack().get(`/transaction/verify/${reference}`);
     const tx = txRes.data?.data;
     const customerCode = tx?.customer?.customer_code;
     const customerId = tx?.customer?.id;
@@ -12,7 +12,7 @@ async function run() {
     console.log("Customer Code:", customerCode);
     console.log("Customer ID:", customerId);
 
-    const subResCode = await paystack.get(`/subscription`, {
+    const subResCode = await getPaystack().get(`/subscription`, {
       params: { customer: customerCode },
     });
     console.log(
@@ -20,7 +20,7 @@ async function run() {
       subResCode.data?.data?.length,
     );
 
-    const subResId = await paystack.get(`/subscription`, {
+    const subResId = await getPaystack().get(`/subscription`, {
       params: { customer: customerId },
     });
     console.log(
