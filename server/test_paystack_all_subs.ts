@@ -1,9 +1,9 @@
 import "dotenv/config";
-import { paystack } from "./src/config/paystack";
+import { getPaystack } from "./src/config/paystack";
 
 async function run() {
   try {
-    const subRes = await paystack.get(`/subscription`);
+    const subRes = await getPaystack().get(`/subscription`);
     const subs = subRes.data?.data;
     console.log(`Found ${subs?.length} total recent subscriptions`);
     subs?.slice(0, 3).forEach((s: any) => {

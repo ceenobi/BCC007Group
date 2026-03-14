@@ -62,13 +62,17 @@ describe("Payment Routes", () => {
       },
     }));
 
-    const { paymentRouter } = await import("./payment.routes");
+    vi.doMock("../config/db.server", () => ({
+      connectMongoDb: vi.fn((op) => op()),
+    }));
+
+    const { getPaymentRouter } = await import("./payment.routes");
     const { paymentContract } = await import("../contract/payment.contract");
 
     app = express();
     app.use(express.json());
 
-    createExpressEndpoints(paymentContract, paymentRouter, app, {
+    createExpressEndpoints(paymentContract, getPaymentRouter(), app, {
       jsonQuery: true,
       responseValidation: true,
     });

@@ -29,7 +29,7 @@ export const memberContract = c.router({
   members: {
     getMembers: {
       method: "GET",
-      path: "/api/v1/members/get",
+      path: "/v1/members/get",
       query: z.object({
         page: z.coerce.number().optional(),
         limit: z.coerce.number().optional(),
@@ -50,7 +50,7 @@ export const memberContract = c.router({
     },
     getAMember: {
       method: "GET",
-      path: "/api/v1/members/get/:id",
+      path: "/v1/members/get/:id",
       pathParams: z.object({
         id: z.any(),
       }),
@@ -67,7 +67,7 @@ export const memberContract = c.router({
     },
     assignRole: {
       method: "PATCH",
-      path: "/api/v1/members/:id/assign-role",
+      path: "/v1/members/:id/assign-role",
       pathParams: z.object({
         id: z.any(),
       }),

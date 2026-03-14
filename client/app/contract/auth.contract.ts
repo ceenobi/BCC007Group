@@ -46,7 +46,7 @@ export const authContract = c.router({
   auth: {
     createUser: {
       method: "POST",
-      path: "/api/v1/auth/register",
+      path: "/v1/auth/register",
       body: SignUpSchema,
       responses: {
         201: AuthUserResponseSchema,
@@ -60,7 +60,7 @@ export const authContract = c.router({
     },
     loginUser: {
       method: "POST",
-      path: "/api/v1/auth/login",
+      path: "/v1/auth/login",
       body: SignInSchema,
       responses: {
         200: AuthUserResponseSchema,
@@ -72,7 +72,7 @@ export const authContract = c.router({
     },
     forgotPassword: {
       method: "POST",
-      path: "/api/v1/auth/forgot-password",
+      path: "/v1/auth/forgot-password",
       body: ForgotPasswordSchema,
       responses: {
         200: AuthUserResponseSchema,
@@ -84,7 +84,7 @@ export const authContract = c.router({
     },
     resetPassword: {
       method: "POST",
-      path: "/api/v1/auth/reset-password",
+      path: "/v1/auth/reset-password",
       body: ResetPasswordSchema,
       query: z.object({
         token: z.string(),
@@ -99,7 +99,7 @@ export const authContract = c.router({
     },
     getSession: {
       method: "GET",
-      path: "/api/v1/auth/session",
+      path: "/v1/auth/session",
       responses: {
         200: UserSchema,
         400: ErrorSchema,
@@ -118,7 +118,7 @@ export const authContract = c.router({
     },
     logOutUser: {
       method: "POST",
-      path: "/api/v1/auth/logout",
+      path: "/v1/auth/logout",
       body: z.object({}),
       responses: {
         200: AuthUserResponseSchema,
@@ -130,7 +130,7 @@ export const authContract = c.router({
     },
     resendEmailVerification: {
       method: "POST",
-      path: "/api/v1/auth/resend-email-verification",
+      path: "/v1/auth/resend-email-verification",
       body: ForgotPasswordSchema,
       responses: {
         200: AuthUserResponseSchema,
@@ -144,7 +144,7 @@ export const authContract = c.router({
     },
     verifyEmail: {
       method: "GET",
-      path: "/api/v1/auth/verify-email",
+      path: "/v1/auth/verify-email",
       query: z.object({
         token: z.string(),
       }),
@@ -161,7 +161,7 @@ export const authContract = c.router({
 
     deleteAccount: {
       method: "POST",
-      path: "/api/v1/auth/delete-account",
+      path: "/v1/auth/delete-account",
       body: z.object({}),
       responses: {
         200: SuccessSchema,
@@ -176,7 +176,7 @@ export const authContract = c.router({
     },
     confirmDeleteAccount: {
       method: "GET",
-      path: "/api/v1/auth/confirm-delete-account",
+      path: "/v1/auth/confirm-delete-account",
       query: z.object({
         token: z.string(),
       }),
@@ -191,7 +191,7 @@ export const authContract = c.router({
     },
     changePassword: {
       method: "POST",
-      path: "/api/v1/auth/change-password",
+      path: "/v1/auth/change-password",
       body: ChangePasswordSchema,
       responses: {
         200: AuthUserResponseSchema,
@@ -206,7 +206,7 @@ export const authContract = c.router({
     },
     changeEmail: {
       method: "POST",
-      path: "/api/v1/auth/change-email",
+      path: "/v1/auth/change-email",
       body: ChangeEmailSchema,
       responses: {
         200: AuthUserResponseSchema,
@@ -221,7 +221,7 @@ export const authContract = c.router({
     },
     updateUser: {
       method: "PATCH",
-      path: "/api/v1/auth/update-user",
+      path: "/v1/auth/update-user",
       body: UpdateUserSchema,
       responses: {
         200: SuccessSchema,
@@ -235,7 +235,7 @@ export const authContract = c.router({
     },
     updateAvatar: {
       method: "PATCH",
-      path: "/api/v1/auth/update-avatar",
+      path: "/v1/auth/update-avatar",
       body: UpdateUserAvatarSchema,
       responses: {
         200: SuccessSchema,
@@ -249,7 +249,7 @@ export const authContract = c.router({
     },
     completeOnboarding: {
       method: "PATCH",
-      path: "/api/v1/auth/complete-onboarding",
+      path: "/v1/auth/complete-onboarding",
       body: z.object({}),
       responses: {
         200: SuccessSchema,

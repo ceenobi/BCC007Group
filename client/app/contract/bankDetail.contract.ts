@@ -18,7 +18,7 @@ export const bankDetailContract = c.router({
   bank: {
     createBankAccount: {
       method: "POST",
-      path: "/api/v1/bank-account/create",
+      path: "/v1/bank-account/create",
       summary: "Create bank detail",
       body: createBankAccountSchema,
       responses: {
@@ -33,7 +33,7 @@ export const bankDetailContract = c.router({
     },
     getBankAccount: {
       method: "GET",
-      path: "/api/v1/bank-account/get",
+      path: "/v1/bank-account/get",
       summary: "Get bank detail",
       responses: {
         200: BankResponseSchema,
@@ -47,7 +47,7 @@ export const bankDetailContract = c.router({
     },
     updateBankAccount: {
       method: "PATCH",
-      path: "/api/v1/bank-account/update",
+      path: "/v1/bank-account/update",
       summary: "Update bank detail",
       body: createBankAccountSchema,
       responses: {

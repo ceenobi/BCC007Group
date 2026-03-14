@@ -9,13 +9,35 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const res = await logout({
     cookie: request.headers.get("Cookie") || "",
   });
-  if (!res.ok) return res;
+
+  // ts-rest client returns an object with status, body, and headers
+  if (res.status !== 200) {
+    return res;
+  }
+
   const headers = new Headers();
-  for (const [key, value] of res.headers.entries()) {
-    if (key.toLowerCase() === "set-cookie") {
-      headers.append("Set-Cookie", value);
+
+  // Forward Set-Cookie headers from the backend to the browser
+  if (res.headers) {
+    // If headers is a Headers object
+    if (typeof res.headers.entries === "function") {
+      for (const [key, value] of res.headers.entries()) {
+        if (key.toLowerCase() === "set-cookie") {
+          headers.append("Set-Cookie", value);
+        }
+      }
+    } else {
+      // If headers is a plain object Record<string, string>
+      Object.entries(res.headers as Record<string, string>).forEach(
+        ([key, value]) => {
+          if (key.toLowerCase() === "set-cookie" && value) {
+            headers.append("Set-Cookie", value);
+          }
+        },
+      );
     }
   }
+
   headers.set("Location", "/account/login");
   return new Response(null, { status: 302, headers });
 };

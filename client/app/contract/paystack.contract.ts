@@ -14,7 +14,7 @@ export const paystackContract = c.router({
   paystack: {
     listBanks: {
       method: "GET",
-      path: "/api/paystack/banks",
+      path: "/paystack/banks",
       responses: {
         200: z.object({
           success: z.boolean(),
@@ -38,7 +38,7 @@ export const paystackContract = c.router({
     },
     resolveAccount: {
       method: "GET",
-      path: "/api/paystack/resolve-account",
+      path: "/paystack/resolve-account",
       query: z.object({
         account_number: z.coerce.string(),
         bank_code: z.coerce.string(),
@@ -64,7 +64,7 @@ export const paystackContract = c.router({
     },
     initializePayment: {
       method: "POST",
-      path: "/api/paystack/initialize-payment",
+      path: "/paystack/initialize-payment",
       body: initializePaymentSchema,
       responses: {
         200: z.object({
@@ -84,7 +84,7 @@ export const paystackContract = c.router({
     },
     verifyPayment: {
       method: "POST",
-      path: "/api/paystack/verify-payment",
+      path: "/paystack/verify-payment",
       body: verifyPaymentSchema,
       responses: {
         200: z.object({
@@ -100,7 +100,7 @@ export const paystackContract = c.router({
     },
     cancelSubscription: {
       method: "POST",
-      path: "/api/paystack/subscription-cancel",
+      path: "/paystack/subscription-cancel",
       body: cancelSubscriptionSchema,
       responses: {
         200: z.object({
@@ -115,7 +115,7 @@ export const paystackContract = c.router({
     },
     webhook: {
       method: "POST",
-      path: "/api/paystack/webhook",
+      path: "/paystack/webhook",
       body: z.any(),
       responses: {
         200: z.object({
