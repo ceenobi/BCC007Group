@@ -1,4 +1,5 @@
 import type { SearchResult } from "../lib/queries/searchAggregate";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "./storage";
 
 export interface SearchAnalytics {
   totalSearches: number;
@@ -63,7 +64,7 @@ export class SearchAnalyticsService {
 
   static getAnalytics(): SearchAnalytics {
     try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
+      const stored = safeGetItem(this.STORAGE_KEY);
       if (stored) {
         return JSON.parse(stored);
       }
@@ -82,19 +83,11 @@ export class SearchAnalyticsService {
   }
 
   static clearAnalytics(): void {
-    try {
-      localStorage.removeItem(this.STORAGE_KEY);
-    } catch (error) {
-      console.warn("Failed to clear search analytics:", error);
-    }
+    safeRemoveItem(this.STORAGE_KEY);
   }
 
   private static saveAnalytics(analytics: SearchAnalytics): void {
-    try {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(analytics));
-    } catch (error) {
-      console.warn("Failed to save search analytics:", error);
-    }
+    safeSetItem(this.STORAGE_KEY, JSON.stringify(analytics));
   }
 
   static getSearchInsights(): {
