@@ -56,9 +56,9 @@ export default function Filter() {
 
   return (
     <>
-      <div className="flex items-center justify-between px-4">
+      <div className="md:flex flex-wrap items-center justify-between px-2 gap-2 md:gap-0">
         <form
-          className="flex items-center gap-1"
+          className="flex flex-wrap justify-between md:justify-start w-full md:w-auto md:flex-nowrap items-center gap-2"
           onSubmit={handleSubmit}
           id="filter"
         >
@@ -100,7 +100,7 @@ export default function Filter() {
             </Select>
           </div>
         </form>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pt-2 md:pt-0 border-t md:border-none">
           <Button
             onClick={handleClearFilters}
             variant="ghost"

@@ -170,14 +170,27 @@ export const getTicketRouter = () => {
           if (!ticket) {
             return createTsRestError(404, "Ticket not found");
           }
-          //throw error if ticket status is resolved but has not been assigned
-          if (ticket.status === "resolved" && !ticket.assignedTo) {
+
+          const { assignedTo, status } = req.body;
+
+          // Define statuses that require the ticket to be assigned
+          const STATUSES_REQUIRING_ASSIGNMENT = new Set([
+            "resolved",
+            "in-progress",
+            "closed",
+          ]) as Set<string>;
+
+          // Validate that ticket is assigned when setting certain statuses
+          if (
+            status &&
+            STATUSES_REQUIRING_ASSIGNMENT.has(status) &&
+            !ticket.assignedTo
+          ) {
             return createTsRestError(
               400,
-              "Ticket cannot be resolved without being assigned",
+              `Ticket cannot be set to "${status}" without being assigned to an admin`,
             );
           }
-          const { assignedTo } = req.body;
 
           if (assignedTo) {
             // Ensure only super admin can assign tickets

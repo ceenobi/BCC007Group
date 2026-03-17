@@ -15,7 +15,7 @@ export default function StatsCard({ summary }: { summary: Summary }) {
       className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
     >
       <Card
-        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-blue-100"
+        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-lightBlue/20"
         style={{ animationDelay: "100ms" }}
       >
         <CardContent className="p-4 text-center">
@@ -24,7 +24,7 @@ export default function StatsCard({ summary }: { summary: Summary }) {
         </CardContent>
       </Card>
       <Card
-        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-amber-100"
+        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-lightBlue/20"
         style={{ animationDelay: "200ms" }}
       >
         <CardContent className="p-4 text-center">
@@ -35,7 +35,7 @@ export default function StatsCard({ summary }: { summary: Summary }) {
         </CardContent>
       </Card>
       <Card
-        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-green-100"
+        className="rounded-sm animate-in fade-in slide-in-from-bottom-4 duration-300 dark:bg-lightBlue/20"
         style={{ animationDelay: "300ms" }}
       >
         <CardContent className="p-4 text-center">

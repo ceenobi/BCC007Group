@@ -105,7 +105,7 @@ export default function CreateEvent({ members }: { members: UserData[] }) {
   return (
     <>
       <Button
-        size="icon"
+        size="icon-sm"
         onClick={() => setIsOpen(true)}
         className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white rounded-full cursor-pointer"
       >

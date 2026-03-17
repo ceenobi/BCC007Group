@@ -237,7 +237,7 @@ function PaymentsList() {
       <div className="mt-6">
         <Tabs
           value={tabQuery}
-          className="space-y-6"
+          className="space-y-3"
           onValueChange={(value) => handleTabSwitch(value)}
         >
           <div className="relative">
@@ -257,10 +257,10 @@ function PaymentsList() {
             <div className="absolute -bottom-px w-full mx-1 h-[2px] bg-gray-200 dark:bg-gray-600"></div>
           </div>
           <Card
-            className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-3 transition-all duration-300 ease-in-out"
+            className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-2 transition-all duration-300 ease-in-out"
             style={{ animationDelay: "100ms" }}
           >
-            <div className="flex gap-4 items-center px-4">
+            <div className="flex gap-4 items-center px-2">
               <Search
                 id="search reference"
                 placeholder={
@@ -277,7 +277,7 @@ function PaymentsList() {
                 >
                   <ListFilter /> Filter
                 </Button>
-                <Separator orientation="vertical" />
+                <Separator orientation="vertical" className="hidden md:block" />
                 <ExportData payments={payments} selected={selected} />
               </div>
             </div>
@@ -288,15 +288,15 @@ function PaymentsList() {
               </>
             )}
           </Card>
-          <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4">
-            <CardContent className="p-0 text-start">
-              <TabsContent value={tabQuery} className="w-full">
-                <Suspense fallback={<SkeletonTable />}>
-                  <Await
-                    resolve={payments}
-                    children={(resolvedPayments) => (
-                      <>
-                        <div className="hidden xl:block">
+          <TabsContent value={tabQuery} className="w-full">
+            <Suspense fallback={<SkeletonTable />}>
+              <Await
+                resolve={payments}
+                children={(resolvedPayments) => (
+                  <>
+                    <div className="hidden xl:block">
+                      <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4">
+                        <CardContent className="p-0 text-start">
                           <TableView
                             tableColumns={[
                               { name: "REFERENCE", uid: "reference" },
@@ -312,21 +312,21 @@ function PaymentsList() {
                             selected={selected}
                             setSelected={setSelected}
                           />
-                        </div>
-                        <div className="xl:hidden">
-                          <CardView
-                            payments={resolvedPayments}
-                            user={user}
-                            tabQuery={tabQuery}
-                          />
-                        </div>
-                      </>
-                    )}
-                  />
-                </Suspense>
-              </TabsContent>
-            </CardContent>
-          </Card>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    <div className="xl:hidden">
+                      <CardView
+                        payments={resolvedPayments}
+                        user={user}
+                        tabQuery={tabQuery}
+                      />
+                    </div>
+                  </>
+                )}
+              />
+            </Suspense>
+          </TabsContent>
         </Tabs>
         {payments?.length > 0 && (
           <Paginate

@@ -1,4 +1,4 @@
-import NotFound from "~/components/notFound";
+import ComingSoon from "~/components/comingSoon";
 import PageTitle from "~/components/pageTitle";
 import { PageSection, PageWrapper } from "~/components/pageWrapper";
 
@@ -15,7 +15,7 @@ export default function Transfers() {
       </PageSection>
       <div className="mt-6">
         <PageSection index={1}>
-          <NotFound message="This feature is currently unavailable" />
+          <ComingSoon/>
         </PageSection>
       </div>
     </PageWrapper>

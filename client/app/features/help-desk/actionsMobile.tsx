@@ -70,19 +70,19 @@ export default function ActionsMobile({
       {tickets?.length === 0 ? (
         <NotFound message="No data found" />
       ) : (
-        <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {tickets?.map((ticket, index) => (
             <PageSection key={ticket._id} index={index + 3}>
               <Card
                 className={`relative rounded-sm hover:shadow-md transition-shadow dark:bg-lightBlue/20`}
-                style={{ animationDelay: "100ms" }}
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
                 <CardContent className="p-4 sm:p-4 space-y-4">
                   <div className="flex justify-between items-center">
-                    <h1 className="text-lg font-semibold">{ticket.ticketId}</h1>
+                    <h3 className="font-semibold">{ticket.ticketId}</h3>
                     <Badge
                       variant="outline"
-                      className={`text-xs ${getTicketStatusColor(ticket.status)}`}
+                      className={`text-xs ${getTicketStatusColor(ticket.status)} rounded-sm`}
                     >
                       {ticket.status.replace("-", " ").toUpperCase()}
                     </Badge>
@@ -92,7 +92,7 @@ export default function ActionsMobile({
                       {ticket.title}
                     </p>
                     <Badge
-                      className={`text-xs ${getPriorityColor(ticket.priority)}`}
+                      className={`text-xs ${getPriorityColor(ticket.priority)} rounded-sm`}
                     >
                       {ticket.priority.replace("-", " ").toUpperCase()}
                     </Badge>
@@ -130,31 +130,40 @@ export default function ActionsMobile({
                         )}
                       </SelectContent>
                     </Select>
-
-                    {canManageTickets ? (
-                      <Select
-                        value={ticket.assignedTo?.id}
-                        onValueChange={(value) =>
-                          handleAssignedToChange(value, ticket._id)
-                        }
-                      >
-                        <SelectTrigger className="gap-2 w-full rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
-                          <SelectValue placeholder={ticket.assignedTo?.name ? "Reassign" : "Assign issue"} />
-                        </SelectTrigger>
-                        <SelectContent className="rounded-sm">
-                          {getMembers?.map((item) => (
-                            <SelectItem
-                              key={item.id}
-                              value={item.id}
-                              className="capitalize rounded-sm"
-                            >
-                              {item.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <Lock />
+                    {getMembers?.length > 0 && (
+                      <>
+                        {canManageTickets ? (
+                          <Select
+                            value={ticket.assignedTo?.id}
+                            onValueChange={(value) =>
+                              handleAssignedToChange(value, ticket._id)
+                            }
+                          >
+                            <SelectTrigger className="gap-2 w-full rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
+                              <SelectValue
+                                placeholder={
+                                  ticket.assignedTo?.name
+                                    ? "Reassign"
+                                    : "Assign issue"
+                                }
+                              />
+                            </SelectTrigger>
+                            <SelectContent className="rounded-sm">
+                              {getMembers?.map((item) => (
+                                <SelectItem
+                                  key={item.id}
+                                  value={item.id}
+                                  className="capitalize rounded-sm"
+                                >
+                                  {item.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <Lock />
+                        )}
+                      </>
                     )}
                   </div>
                 </CardContent>

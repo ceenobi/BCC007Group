@@ -22,14 +22,14 @@ export default function EventCard({ eventsData }: { eventsData: EventData[] }) {
       {eventsData?.length === 0 ? (
         <NotFound message="No data found" />
       ) : (
-        <div className="space-y-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {eventsData?.map((event, index) => {
             const StatusIcon = getStatusIcon(event.status);
             return (
               <PageSection key={event._id} index={index + 3}>
                 <Card
                   className={`relative h-[330px] rounded-sm hover:shadow-md transition-shadow ${getBGColor(event.status)}`}
-                  style={{ animationDelay: "100ms" }}
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
                   <CardContent className="p-4 sm:p-4">
                     <div className="flex items-start gap-3 sm:gap-4">
@@ -41,7 +41,7 @@ export default function EventCard({ eventsData }: { eventsData: EventData[] }) {
                       <div className="flex-1 space-y-3 sm:space-y-4 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="space-y-2 flex-1 min-w-0">
-                            <div className="flex flex-wrap flex-col sm:flex-row sm:items-center justify-between sm:gap-3">
+                            <div className="flex flex-wrap flex-col justify-between gap-2 sm:gap-3">
                               <h3 className="font-semibold text-base truncate">
                                 {event.title}
                               </h3>

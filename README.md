@@ -102,20 +102,39 @@ The application maintains a persistent connection (`/api/v1/sse/stream`) to keep
 
 ---
 
-## 🧪 Testing & CI/CD
+## 🏗 Development & CI/CD Workflow
 
-The project implements a multi-layer testing strategy to ensure reliability across both frontend and backend.
+To ensure a high-standard, production-ready codebase, the project follows a strict branching and CI/CD strategy.
 
-### **Testing Layers**
-- **Server Unit & Integration**: [Vitest](https://vitest.dev/) for testing services, models, and API routes with comprehensive mocking for external dependencies (Paystack, MongoDB).
-- **Client Unit**: Vitest and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for component-level validation.
-- **End-to-End (E2E)**: [Playwright](https://playwright.dev/) for full user flows (Auth, Payments) with automated server orchestration.
+### 1. Branching Model
 
-### **Automated Pipeline (GitHub Actions)**
-Every Pull Request to `main` or `staging` triggers the CI pipeline:
-1. **Server CI**: Handles TypeScript validation and unit/integration tests.
-2. **Client CI**: Handles TypeScript validation, unit tests, and full E2E Playwright tests.
-3. **Security**: Automated GitGuardian scans for exposed secrets.
+- **`main`**: The production-ready branch. Only merges from `staging` are allowed via Pull Requests.
+- **`staging`**: The integration branch. All feature branches and bug fixes must be merged here first for testing.
+- **`feature/*` or `fix/*`**: Temporary branches for new development or patches.
 
-> [!IMPORTANT]
-> To ensure E2E tests pass in CI, the following **GitHub Actions Secrets** must be configured in the repository: `DATABASE_URL`, `DATABASE_NAME`, `BETTER_AUTH_SECRET`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `QSTASH_TOKEN`, `QSTASH_URL`, `PAYSTACK_SECRET_KEY`, `PAYSTACK_PUBLIC_KEY`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_SECRET_KEY`, `CLOUDINARY_UPLOAD_PRESET`, `RESEND_API_KEY`.
+### 2. Branch Protection Rules
+
+Both `main` and `staging` branches are protected to prevent accidental direct pushes and ensure quality:
+
+- **Pull Requests (PRs) Required**: All changes must go through a PR. Direct pushes to `main` and `staging` are blocked.
+- **Status Checks**: GitHub Actions must pass (Linting, Typechecking, Unit Tests, E2E Tests) before a merge is permitted.
+- **Code Reviews**: 
+  - `main` requires at least **1 approving review** from a code owner.
+  - `staging` requires a successful PR and passing CI (no manual approval required for solo development speed).
+- **Admin Enforcement**: These rules apply to everyone, including repository owners, to ensure a consistent workflow.
+
+### 3. CI/CD Operations
+
+- **CI (GitHub Actions)**: Every PR to `staging` or `main` triggers an automated pipeline:
+  - **Server**: Typechecks and Vitest unit/integration tests.
+  - **Client**: Typechecks, Vitest unit tests, and Playwright E2E tests.
+- **Deployment**: 
+  - Merges to `main` trigger a production deployment to **Vercel** for both client and server applications.
+
+### 4. Contributing
+
+When starting a new task:
+1. Create a feature branch from latest `staging`.
+2. Push changes and open a PR targeting `staging`.
+3. Use the provided [PR Template](.github/pull_request_template.md) to describe your changes.
+4. Once CI passes and the PR is merged, create a subsequent PR from `staging` to `main` for production release.

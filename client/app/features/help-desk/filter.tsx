@@ -56,9 +56,9 @@ export default function Filter() {
   };
 
   return (
-    <div className="flex items-center justify-between px-4">
+    <div className="md:flex flex-wrap items-center justify-between px-2 gap-2 md:gap-0">
       <form
-        className="flex flex-wrap lg:flex-nowrap items-center gap-1"
+        className="flex flex-wrap justify-between md:justify-start w-full md:w-auto md:flex-nowrap items-center md:gap-2"
         onSubmit={handleSubmit}
         id="filter"
       >
@@ -85,7 +85,7 @@ export default function Filter() {
           defaultValue={category}
         >
           <SelectTrigger className="gap-2 w-fit rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
-            <SelectValue placeholder="Select category" />
+            <SelectValue placeholder="Select category"/>
           </SelectTrigger>
           <SelectContent>
             {["technical", "event", "payment", "other"].map((item) => (
@@ -95,14 +95,14 @@ export default function Filter() {
             ))}
           </SelectContent>
         </Select>
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:block"/>
         <Select
           value={filters.priority}
           onValueChange={(value) => handleFilterChange("priority", value)}
           defaultValue={priority}
         >
           <SelectTrigger className="gap-2 w-fit rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
-            <SelectValue placeholder="Select priority" />
+            <SelectValue placeholder="Select priority"/>
           </SelectTrigger>
           <SelectContent>
             {["low", "medium", "high", "critical"].map((item) => (
@@ -113,7 +113,7 @@ export default function Filter() {
           </SelectContent>
         </Select>
       </form>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pt-2 md:pt-0 border-t md:border-none">
         <Button
           onClick={handleClearFilters}
           variant="ghost"

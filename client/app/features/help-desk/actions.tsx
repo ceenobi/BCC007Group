@@ -148,7 +148,7 @@ function RenderCell({
       switch (columnKey) {
         case "ticketId":
           return (
-            <div className="font-medium dark:text-white truncate">
+            <div className="dark:text-white truncate">
               {cellValue}
             </div>
           );
@@ -156,7 +156,7 @@ function RenderCell({
           return (
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="font-medium dark:text-white truncate">
+                <div className="dark:text-white truncate">
                   <p>{cellValue}</p>
                 </div>
               </TooltipTrigger>
@@ -167,13 +167,13 @@ function RenderCell({
           );
         case "createdAt":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               {formatDate(cellValue as string)}
             </div>
           );
         case "priority":
           return (
-            <Badge className={`text-xs ${getPriorityColor(cellValue)}`}>
+            <Badge className={`text-xs rounded-sm ${getPriorityColor(cellValue)}`}>
               {cellValue.replace("-", " ").toUpperCase()}
             </Badge>
           );
@@ -185,7 +185,7 @@ function RenderCell({
                   <DropdownMenuTrigger asChild>
                     <Badge
                       variant="outline"
-                      className={`cursor-pointer text-xs ${getTicketStatusColor(cellValue)}`}
+                      className={`cursor-pointer text-xs rounded-sm ${getTicketStatusColor(cellValue)}`}
                     >
                       {cellValue.replace("-", " ").toUpperCase()}
                     </Badge>
@@ -227,47 +227,53 @@ function RenderCell({
           );
         case "category":
           return (
-            <div className="capitalize font-medium dark:text-white">
+            <div className="capitalize dark:text-white">
               {cellValue.replace("-", " ")}
             </div>
           );
         case "assignedTo":
           return (
-            <div className="font-medium dark:text-white truncate">
+            <div className="dark:text-white truncate">
               {item.assignedTo?.name || "N/A"}
             </div>
           );
         case "action":
           return (
             <div className="flex gap-3 items-center">
-              {canManageTickets ? (
-                <Select
-                  value={item.assignedTo?.id}
-                  onValueChange={(value) =>
-                    handleAssignedToChange(value, item._id)
-                  }
-                >
-                  <SelectTrigger className="gap-2 w-fit rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
-                    <SelectValue
-                      placeholder={
-                        item.assignedTo?.name ? "Reassign" : "Assign issue"
+              {getMembers?.length > 0 ? (
+                <>
+                  {canManageTickets ? (
+                    <Select
+                      value={item.assignedTo?.id}
+                      onValueChange={(value) =>
+                        handleAssignedToChange(value, item._id)
                       }
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {getMembers?.map((item) => (
-                      <SelectItem
-                        key={item.id}
-                        value={item.id}
-                        className="capitalize"
-                      >
-                        {item.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                    >
+                      <SelectTrigger className="gap-2 w-fit rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500">
+                        <SelectValue
+                          placeholder={
+                            item.assignedTo?.name ? "Reassign" : "Assign issue"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getMembers?.map((item) => (
+                          <SelectItem
+                            key={item.id}
+                            value={item.id}
+                            className="capitalize"
+                          >
+                            {item.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Lock size={16} className="dark:text-white" />
+                  )}
+                </>
               ) : (
-                <Lock />
+                <Lock size={16} className="dark:text-white" />
               )}
             </div>
           );

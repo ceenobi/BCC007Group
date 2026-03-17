@@ -34,14 +34,14 @@ export default function useTableCell() {
               </div>
             </div>
             <div className="dark:text-white">
-              <p className="font-medium">{item.name}</p>
+              <p>{item.name}</p>
               <p className="text-xs dark:text-gray-400">ID: {item.memberId}</p>
             </div>
           </div>
         );
       case "email":
         return (
-          <div className="font-medium dark:text-white">
+          <div className="dark:text-white">
             <p
               onClick={() => window.open(`mailto:${item.email}`, "_blank")}
               className="cursor-pointer"
@@ -60,7 +60,7 @@ export default function useTableCell() {
         );
       case "phone":
         return (
-          <div className="font-medium dark:text-white">
+          <div className="dark:text-white">
             <p
               onClick={() => window.open(`tel:${item.phone}`, "_blank")}
               className="cursor-pointer"
@@ -79,19 +79,19 @@ export default function useTableCell() {
         );
       case "createdAt":
         return (
-          <div className="font-medium dark:text-white">
+          <div className="dark:text-white">
             {formatDate(cellValue as string)}
           </div>
         );
       case "occupation":
         return (
-          <div className="font-medium dark:text-white truncate">
+          <div className="dark:text-white truncate">
             <p>{cellValue || "N/A"}</p>
           </div>
         );
       case "location":
         return (
-          <div className="font-medium dark:text-white truncate">
+          <div className="dark:text-white truncate">
             <p>{cellValue || "N/A"}</p>
           </div>
         );
@@ -99,16 +99,16 @@ export default function useTableCell() {
         return (
           <Badge
             variant="outline"
-            className={
+            className={`rounded-sm ${
               memberRoleColors[item.role as keyof typeof memberRoleColors]
-            }
+            }`}
           >
             {item.role}
           </Badge>
         );
       case "action":
         return (
-          <div className="font-medium flex gap-4 items-center">
+          <div className="flex gap-4 items-center">
             <Button
               asChild
               variant="ghost"
@@ -119,7 +119,7 @@ export default function useTableCell() {
                 to={`/members/${item.name}/${item.id}`}
                 prefetch="intent"
               >
-                <Eye />
+                <Eye className="dark:text-white"/>
               </Link>
             </Button>
           </div>

@@ -36,13 +36,13 @@ export const authFields = [
     name: "name",
     label: "Name",
     type: "text",
-    placeholder: "Your name",
+    placeholder: "Member name",
   },
   {
     name: "email",
     label: "Email",
     type: "email",
-    placeholder: "Your email",
+    placeholder: "Member email",
   },
   {
     name: "newEmail",

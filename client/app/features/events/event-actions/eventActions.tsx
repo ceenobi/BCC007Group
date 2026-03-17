@@ -15,6 +15,7 @@ import DeleteEvent from "../deleteEvent";
 import EditEvent from "./editEvent";
 import MobileView from "./mobileView";
 import { type UserData } from "~/lib/dataSchema";
+import { Card } from "~/components/ui/card";
 
 interface EventActionProps {
   eventsData: EventData[];
@@ -32,44 +33,55 @@ export default function EventActions({
   return (
     <>
       <div className="hidden lg:block">
-        <TableView
-          tableColumns={[
-            { name: "TITLE", uid: "title" },
-            { name: "DATE", uid: "date" },
-            { name: "TIME", uid: "time" },
-            { name: "STATUS", uid: "status" },
-            { name: "TYPE", uid: "eventType" },
-            { name: "HOST", uid: "organizer" },
-            { name: "ACTIONS", uid: "actions" },
-          ]}
-          tableData={eventsData}
-          renderCell={renderCell({ selected, members })}
-          selected={selected}
-          setSelected={setSelected}
-          batchAction={true}
-        />
+        <Card
+          className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4 transition-all duration-300 ease-in-out"
+          style={{ animationDelay: "100ms" }}
+        >
+          <TableView
+            tableColumns={[
+              { name: "TITLE", uid: "title" },
+              { name: "DATE", uid: "date" },
+              { name: "TIME", uid: "time" },
+              { name: "STATUS", uid: "status" },
+              { name: "TYPE", uid: "eventType" },
+              { name: "HOST", uid: "organizer" },
+              { name: "ACTIONS", uid: "actions" },
+            ]}
+            tableData={eventsData}
+            renderCell={renderCell({ selected, members })}
+            selected={selected}
+            setSelected={setSelected}
+            batchAction={true}
+          />
+        </Card>
       </div>
-      <MobileView eventsData={eventsData} members={members}/>
+      <MobileView eventsData={eventsData} members={members} />
     </>
   );
 }
 
-export function renderCell({ selected, members }: { selected: string[], members: UserData[] }) {
+export function renderCell({
+  selected,
+  members,
+}: {
+  selected: string[];
+  members: UserData[];
+}) {
   return useCallback(
     (item: EventData, columnKey: React.Key) => {
       const cellValue = item[columnKey as keyof EventData];
       switch (columnKey) {
         case "title":
-          return <div className="font-medium dark:text-white truncate">{cellValue}</div>;
+          return <div className="dark:text-white truncate">{cellValue}</div>;
         case "date":
           return (
-            <div className="font-medium dark:text-white">
+            <div className=" dark:text-white">
               {formatDate(cellValue as string)}
             </div>
           );
         case "time":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               {formatTime(cellValue as string)}
             </div>
           );
@@ -77,7 +89,7 @@ export function renderCell({ selected, members }: { selected: string[], members:
           return (
             <Badge
               variant="outline"
-              className={`text-xs ${getStatusColor(cellValue)}`}
+              className={`text-xs rounded-sm ${getStatusColor(cellValue)}`}
             >
               {cellValue.replace("-", " ").toUpperCase()}
             </Badge>
@@ -86,14 +98,14 @@ export function renderCell({ selected, members }: { selected: string[], members:
           return (
             <Badge
               variant="outline"
-              className={`text-xs ${getEventTypeColor(cellValue).replace("text-", "border-").replace("600", "200")} ${getEventTypeColor(cellValue).replace("text-", "bg-").replace("600", "50")} ${getEventTypeColor(cellValue)}`}
+              className={`text-xs rounded-sm ${getEventTypeColor(cellValue).replace("text-", "border-").replace("600", "200")} ${getEventTypeColor(cellValue).replace("text-", "bg-").replace("600", "50")} ${getEventTypeColor(cellValue)}`}
             >
               {cellValue.toUpperCase()}
             </Badge>
           );
         case "organizer":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               <AvatarGroup className="grayscale">
                 {item.organizer.slice(0, 2)?.map((organizer) => (
                   <Avatar key={organizer._id}>

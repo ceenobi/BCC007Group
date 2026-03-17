@@ -65,7 +65,7 @@ export default function Notification() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-7 px-2 text-xs hover:bg-background"
+                  className="cursor-pointer h-7 px-2 text-xs hover:bg-background"
                   onClick={() => notificationStore.clearAll()}
                 >
                   Clear All
@@ -84,8 +84,8 @@ export default function Notification() {
               <div
                 key={n.id}
                 className={cn(
-                  "p-4 border-b last:border-0 hover:bg-muted/50 transition-colors cursor-pointer relative",
-                  !n.isRead && "bg-gray-300 dark:bg-coolBlue",
+                  "p-4 border-b last:border-0 hover:bg-muted/20 transition-colors cursor-pointer relative",
+                  !n.isRead && "bg-gray-100 dark:bg-coolBlue/20",
                 )}
                 onClick={(e) => n.id && handleMarkAsRead(n.id, e)}
               >

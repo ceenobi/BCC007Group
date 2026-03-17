@@ -42,12 +42,12 @@ export default function UserCardView({
       {payments.length === 0 ? (
         <NotFound message="No payments found" />
       ) : (
-        <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {payments?.map((payment, index) => (
             <PageSection key={payment._id} index={index + 3}>
               <Card
-                className={`relative rounded-sm hover:shadow-md transition-shadow`}
-                style={{ animationDelay: "100ms" }}
+                className={`relative rounded-sm hover:shadow-md transition-shadow dark:bg-lightBlue/20`}
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
                 <CardContent className="p-4 sm:p-4 space-y-4">
                   <div className="flex justify-between items-center">
