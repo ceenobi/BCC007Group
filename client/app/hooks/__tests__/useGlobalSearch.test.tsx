@@ -63,38 +63,39 @@ describe("useGlobalSearch", () => {
   });
 
   it("should debounce search queries", async () => {
+    vi.useFakeTimers();
     getMockSearch().mockResolvedValue([]);
 
-    const { result } = renderHook(() => useGlobalSearch({ debounceMs: 50 }), {
+    const { result } = renderHook(() => useGlobalSearch({ debounceMs: 300 }), {
       wrapper: createWrapper(),
     });
 
     result.current.setQuery("test");
     expect(getMockSearch()).not.toHaveBeenCalled();
 
-    // Wait for debounce to complete and query to resolve
-    await waitFor(() => expect(getMockSearch()).toHaveBeenCalledWith("test"), {
-      timeout: 3000,
-    });
+    vi.advanceTimersByTime(300);
+    await waitFor(() => expect(getMockSearch()).toHaveBeenCalledWith("test"));
+
+    vi.useRealTimers();
   });
 
   it("should not search for queries below minimum length", async () => {
+    vi.useFakeTimers();
     getMockSearch().mockResolvedValue([]);
 
-    const { result } = renderHook(() => useGlobalSearch({ minQueryLength: 3, debounceMs: 50 }), {
+    const { result } = renderHook(() => useGlobalSearch({ minQueryLength: 3 }), {
       wrapper: createWrapper(),
     });
 
     result.current.setQuery("ab");
-    
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 100));
-    });
+    vi.advanceTimersByTime(300);
 
-    expect(getMockSearch()).not.toHaveBeenCalled();
+    await waitFor(() => expect(getMockSearch()).not.toHaveBeenCalled());
+    vi.useRealTimers();
   });
 
   it("should handle search results", async () => {
+    vi.useFakeTimers();
     const mockResults = [
       {
         id: "1",
@@ -108,33 +109,34 @@ describe("useGlobalSearch", () => {
     ];
     getMockSearch().mockResolvedValue(mockResults);
 
-    const { result } = renderHook(() => useGlobalSearch({ debounceMs: 50 }), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGlobalSearch(), { wrapper: createWrapper() });
 
     result.current.setQuery("test");
-    
-    // Wait for debounce and query resolution
-    await waitFor(() => expect(result.current.results).toEqual(mockResults), {
-      timeout: 3000,
+    vi.advanceTimersByTime(300);
+
+    await waitFor(() => {
+      expect(result.current.results).toEqual(mockResults);
+      expect(result.current.isLoading).toBe(false);
     });
 
-    expect(result.current.isLoading).toBe(false);
+    vi.useRealTimers();
   });
 
   it("should handle search errors", async () => {
+    vi.useFakeTimers();
     getMockSearch().mockRejectedValue(new Error("Search failed"));
 
-    const { result } = renderHook(() => useGlobalSearch({ debounceMs: 50, maxResults: 20, enableAnalytics: false }), { 
-      wrapper: createWrapper() 
-    });
+    const { result } = renderHook(() => useGlobalSearch(), { wrapper: createWrapper() });
 
     result.current.setQuery("test");
-    
-    // Wait for debounce and query to fail (increase timeout to account for React Query retries)
-    await waitFor(() => expect(result.current.isError).toBe(true), {
-      timeout: 10000,
+    vi.advanceTimersByTime(300);
+
+    await waitFor(() => {
+      expect(result.current.isError).toBe(true);
+      expect(result.current.error).toBeDefined();
     });
 
-    expect(result.current.error).toBeDefined();
+    vi.useRealTimers();
   });
 
   it("should clear search state", () => {
@@ -148,6 +150,7 @@ describe("useGlobalSearch", () => {
   });
 
   it("should apply filters", async () => {
+    vi.useFakeTimers();
     const mockResults = [
       {
         id: "1",
@@ -171,18 +174,19 @@ describe("useGlobalSearch", () => {
     getMockSearch().mockResolvedValue(mockResults);
 
     const { result } = renderHook(
-      () => useGlobalSearch({ defaultFilters: { types: ["member"] }, debounceMs: 50 }),
+      () => useGlobalSearch({ defaultFilters: { types: ["member"] } }),
       { wrapper: createWrapper() }
     );
 
     result.current.setQuery("test");
-    
-    // Wait for debounce and filtering
-    await waitFor(() => expect(result.current.results).toHaveLength(1), {
-      timeout: 3000,
+    vi.advanceTimersByTime(300);
+
+    await waitFor(() => {
+      expect(result.current.results).toHaveLength(1);
+      expect(result.current.results[0].type).toBe("member");
     });
 
-    expect(result.current.results[0].type).toBe("member");
+    vi.useRealTimers();
   });
 });
 
