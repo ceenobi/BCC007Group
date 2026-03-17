@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     branches: [main, staging]
@@ -18,26 +17,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
           cache-dependency-path: server/yarn.lock
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
       - name: Typecheck
         run: yarn typecheck
-
       - name: Test
         run: yarn test
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-
   client-ci:
     name: Client CI
     runs-on: ubuntu-latest
+    needs: server-ci
     defaults:
       run:
         working-directory: ./client
@@ -46,25 +42,86 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "yarn"
           cache-dependency-path: client/yarn.lock
-
       - name: Install client dependencies
         run: yarn install --frozen-lockfile
-
       - name: Install server dependencies (for E2E)
         run: cd ../server && yarn install --frozen-lockfile
-
       - name: Typecheck
         run: yarn typecheck
-
       - name: Unit Tests
         run: yarn test
-
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
+      - name: Start Server
+        run: |
+          cd ../server
+          nohup yarn dev > server.log 2>&1 &
+          echo "Waiting for server to be ready..."
+          for i in {1..60}; do
+            if curl -s http://localhost:4600 > /dev/null 2>&1; then
+              echo "Server is ready!"
+              break
+            fi
+            sleep 2
+          done
+          cat server.log
+        env:
+          NODE_ENV: development
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          BETTER_AUTH_URL: http://localhost:4600
+          CLIENT_URL: http://localhost:4500
+          SERVER_URL: http://localhost:4600
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+          QSTASH_URL: ${{ secrets.QSTASH_URL }}
+          PAYSTACK_SECRET_KEY: ${{ secrets.PAYSTACK_SECRET_KEY }}
+          PAYSTACK_PUBLIC_KEY: ${{ secrets.PAYSTACK_PUBLIC_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_SECRET_KEY: ${{ secrets.CLOUDINARY_SECRET_KEY }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      - name: Start Client
+        run: |
+          nohup yarn dev > client.log 2>&1 &
+          echo "Waiting for client to be ready..."
+          for i in {1..60}; do
+            if curl -s http://localhost:4500 > /dev/null 2>&1; then
+              echo "Client is ready!"
+              break
+            fi
+            sleep 2
+          done
+          cat client.log
+      - name: Verify Services
+        run: |
+          echo "Checking if server is responding..."
+          curl -f http://localhost:4600 || echo "Server health check failed"
+          echo "Checking if client is responding..."
+          curl -f http://localhost:4500 || echo "Client health check failed"
+        env:
+          NODE_ENV: development
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          CLIENT_URL: http://localhost:4500
+          SERVER_URL: http://localhost:4600
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+          QSTASH_URL: ${{ secrets.QSTASH_URL }}
+          PAYSTACK_SECRET_KEY: ${{ secrets.PAYSTACK_SECRET_KEY }}
+          PAYSTACK_PUBLIC_KEY: ${{ secrets.PAYSTACK_PUBLIC_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_SECRET_KEY: ${{ secrets.CLOUDINARY_SECRET_KEY }}
+          CLOUDINARY_UPLOAD_PRESET: ${{ secrets.CLOUDINARY_UPLOAD_PRESET }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       - name: E2E Tests
         run: yarn test:e2e
         env:
