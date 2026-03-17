@@ -78,13 +78,13 @@ export default function NewTicket({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button
-          size="icon"
+          size="icon-sm"
           className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white rounded-full cursor-pointer"
         >
           <Plus />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md rounded-sm p-0">
+      <DialogContent className="sm:max-w-md rounded-sm p-0 dark:bg-deepBlue ">
         <DialogHeader>
           <DialogTitle className="p-4 font-semibold text-gray-900 dark:text-white">
             Create Support Ticket

@@ -37,8 +37,8 @@ export default function Calendar({
   users,
   usersCount,
 }: calendarProps) {
-  console.log(users)
-  const calendarEvents = events?.length > 0 || users?.length > 0 ? [...users, ...events] : [];
+  const calendarEvents =
+    events?.length > 0 || users?.length > 0 ? [...users, ...events] : [];
 
   const getEventBgColor = (type: string) => {
     switch (type) {

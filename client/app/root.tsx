@@ -14,6 +14,7 @@ import {
   HydrationBoundary,
   type DehydratedState,
 } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react"
 import { getQueryClient } from "./lib/queryClient";
 import { ProgressBar } from "./components/progressBar";
 import { ThemeProvider } from "./context/themeProvider";
@@ -107,11 +108,14 @@ export default function App() {
     );
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={dehydratedState}>
-        <Outlet />
-      </HydrationBoundary>
-    </QueryClientProvider>
+    <>
+      <Analytics />
+      <QueryClientProvider client={queryClient}>
+        <HydrationBoundary state={dehydratedState}>
+          <Outlet />
+        </HydrationBoundary>
+      </QueryClientProvider>
+    </>
   );
 }
 
@@ -153,19 +157,19 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             <img
               src="/notFound.svg"
               alt="404 error with a tired person by storyset"
-              className="max-w-[400px] mx-auto h-[250px]"
+              className="max-w-[400px] mx-auto h-[220px]"
             />
           ) : message === "500" ? (
             <img
               src="/500error.svg"
               alt="500 server error by storyset"
-              className="max-w-[400px] mx-auto h-[250px]"
+              className="max-w-[400px] mx-auto h-[220px]"
             />
           ) : (
             <img
               src="/offline.svg"
               alt="offline server by storyset"
-              className="max-w-[400px] mx-auto h-[250px]"
+              className="max-w-[400px] mx-auto h-[220px]"
             />
           )}
           <div className="text-center">
@@ -179,7 +183,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             </p>
             {details !== "fetch failed" && (
               <div className="mt-4 inline-flex gap-4">
-                <Button variant="outline" size="lg" asChild className="rounded-sm shadow-lg w-[200px] bg-lightBlue hover:bg-coolBlue text-white h-12 font-bold transition-all duration-300">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="rounded-sm shadow-lg w-[200px] bg-lightBlue hover:bg-coolBlue text-white hover:text-white font-bold transition-all duration-300"
+                >
                   <Link to="/">Go Home</Link>
                 </Button>
               </div>

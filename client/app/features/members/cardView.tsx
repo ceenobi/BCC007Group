@@ -19,7 +19,7 @@ export default function CardView({ members }: { members: UserData[] }) {
           {members?.map((member, index) => (
             <PageSection key={member.id} index={index + 2}>
               <Card
-                className="rounded-sm hover:shadow-md transition-shadow bg-transparent"
+                className="rounded-sm hover:shadow-md transition-shadow dark:bg-lightBlue/20"
                 style={{ animationDelay: `${(index + 2) * 100}ms` }}
               >
                 <CardContent className="p-6">

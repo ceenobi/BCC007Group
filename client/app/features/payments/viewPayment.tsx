@@ -21,7 +21,7 @@ export default function ViewPayment({
       <Button
         variant="ghost"
         onClick={() => setIsOpen(true)}
-        className="cursor-pointer hidden xl:block"
+        className="dark:text-white cursor-pointer hidden xl:block"
       >
         <Eye />
       </Button>

@@ -73,14 +73,14 @@ const TicketCard: FC<{
             </div>
             <div className="flex flex-col gap-2 items-end">
               <Badge
-                className={`${getTicketStatusColor(ticket.status)} border text-xs`}
+                className={`${getTicketStatusColor(ticket.status)} border text-xs rounded-sm`}
               >
                 <div className="flex items-center gap-1">
                   <StatusIcon status={ticket.status || "open"} />
                   <span className="capitalize">{ticket.status}</span>
                 </div>
               </Badge>
-              <Badge className={`${getPriorityColor(ticket.priority)} text-xs`}>
+              <Badge className={`${getPriorityColor(ticket.priority)} text-xs rounded-sm`}>
                 {ticket.priority.toUpperCase()}
               </Badge>
             </div>

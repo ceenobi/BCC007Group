@@ -60,9 +60,9 @@ export default function Filter() {
   };
 
   return (
-    <div className="flex items-center justify-between px-4">
+    <div className="md:flex flex-wrap items-center justify-between px-2 gap-2 md:gap-0">
       <form
-        className="flex flex-wrap lg:flex-nowrap items-center gap-1"
+        className="flex flex-wrap justify-between lg:justify-start w-full lg:w-auto lg:flex-nowrap items-center gap-2"
         onSubmit={handleSubmit}
         id="filter"
       >
@@ -110,7 +110,7 @@ export default function Filter() {
           </SelectContent>
         </Select>
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="hidden md:block "/>
         <div className="hidden md:block space-y-1">
           <label className="text-muted-foreground text-sm ml-3">
             Start date
@@ -122,7 +122,7 @@ export default function Filter() {
             className="rounded-sm border-none focus:outline-blue-500 focus:ring-blue-500"
           />
         </div>
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical"className="hidden md:block " />
         <div className="hidden md:block space-y-1">
           <label className="text-muted-foreground text-sm ml-3">End date</label>
           <Input
@@ -133,7 +133,7 @@ export default function Filter() {
           />
         </div>
       </form>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pt-2 md:pt-0 border-t md:border-none">
         <Button
           onClick={handleClearFilters}
           variant="ghost"

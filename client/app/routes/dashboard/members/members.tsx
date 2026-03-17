@@ -39,6 +39,7 @@ import Paginate from "~/components/paginate";
 import AssignRole from "~/features/members/assignRole";
 import { assignRole } from "~/lib/actions/member.action";
 import AccessDenied from "~/components/rbac/AccessDenied";
+import ComingSoon from "~/components/comingSoon";
 const TableView = lazy(() => import("~/components/tableView"));
 const CardView = lazy(() => import("~/features/members/cardView"));
 
@@ -181,8 +182,8 @@ function MembersLists() {
             </TabsList>
             <div className="absolute -bottom-px w-full mx-1 h-[2px] bg-gray-200 dark:bg-gray-600"></div>
           </div>
-          <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-3 transition-all duration-300 ease-in-out">
-            <div className="flex gap-4 items-center px-4">
+          <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-2 transition-all duration-300 ease-in-out">
+            <div className="flex gap-4 items-center px-2">
               <Search id="searchMember" placeholder="Search member name" />
               <div className="flex items-center gap-2">
                 <Button
@@ -207,17 +208,17 @@ function MembersLists() {
               </>
             )}
           </Card>
-          <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4">
-            <CardContent className="p-0 text-start">
-              <TabsContent value={tabQuery} className="w-full">
-                <Suspense fallback={<SkeletonTable />}>
-                  <Await
-                    resolve={sortedMembers}
-                    children={(resolvedMembers) => (
+          <TabsContent value={tabQuery} className="w-full">
+            <Suspense fallback={<SkeletonTable />}>
+              <Await
+                resolve={sortedMembers}
+                children={(resolvedMembers) => (
+                  <>
+                    {tabQuery === "all" && (
                       <>
-                        {tabQuery === "all" && (
-                          <>
-                            <div className="hidden xl:block">
+                        <div className="hidden xl:block">
+                          <Card className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4">
+                            <CardContent className="p-0 text-start">
                               <TableView
                                 tableColumns={[
                                   { name: "NAME", uid: "name" },
@@ -232,30 +233,31 @@ function MembersLists() {
                                 tableData={resolvedMembers}
                                 renderCell={renderCell}
                               />
-                            </div>
-                            <div className="xl:hidden">
-                              <CardView members={resolvedMembers} />
-                            </div>
-                          </>
-                        )}
-                        {tabQuery === "roles" && (
-                          <Can
-                            user={user}
-                            permission="MANAGE_MEMBERS"
-                            fallback={<AccessDenied />}
-                          >
-                            <AssignRole members={resolvedMembers} user={user} />
-                          </Can>
-                        )}
+                            </CardContent>
+                          </Card>
+                        </div>
+                        <div className="xl:hidden">
+                          <CardView members={resolvedMembers} />
+                        </div>
                       </>
                     )}
-                  />
-                </Suspense>
-              </TabsContent>
-            </CardContent>
-          </Card>
+                    {tabQuery === "roles" && (
+                      <Can
+                        user={user}
+                        permission="MANAGE_MEMBERS"
+                        fallback={<AccessDenied />}
+                      >
+                        <AssignRole members={resolvedMembers} user={user} />
+                      </Can>
+                    )}
+                    {tabQuery === "options" && <ComingSoon />}
+                  </>
+                )}
+              />
+            </Suspense>
+          </TabsContent>
         </Tabs>
-        {members?.length > 0 && (
+        {members?.length > 0 && ["all", "roles"].includes(tabQuery) && (
           <Paginate
             totalPages={totalPages}
             hasMore={hasMore}

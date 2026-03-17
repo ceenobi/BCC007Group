@@ -201,7 +201,7 @@ export default function HelpDesk() {
             <StatsCard summary={summary} />
             <Tabs
               value={tabQuery}
-              className="space-y-6"
+              className="space-y-3"
               onValueChange={(value) => handleTabSwitch(value)}
             >
               <div className="relative">
@@ -222,10 +222,10 @@ export default function HelpDesk() {
                 <div className="absolute -bottom-px w-full mx-1 h-[2px] bg-gray-200 dark:bg-gray-600"></div>
               </div>
               <Card
-                className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-3 transition-all duration-300 ease-in-out"
+                className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-2 transition-all duration-300 ease-in-out"
                 style={{ animationDelay: "100ms" }}
               >
-                <div className="flex gap-4 items-center px-4">
+                <div className="flex gap-4 items-center px-2">
                   <Search id="searchTickets" placeholder="Search tickets" />
                   <div className="flex items-center gap-2">
                     <Button

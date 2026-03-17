@@ -38,7 +38,7 @@ export function SkeletonTable() {
       </div>
       <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {Array.from({ length: 9 }).map((_, index) => (
-          <Card key={index}>
+          <Card key={index} className="rounded-sm">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
                 <Skeleton className="h-12 w-12 rounded-full" />
@@ -71,7 +71,7 @@ export function SkeletonMemberCard() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {Array.from({ length: 9 }).map((_, index) => (
-        <Card key={index}>
+        <Card key={index} className="rounded-sm">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               <Skeleton className="h-12 w-12 rounded-full" />
@@ -103,7 +103,7 @@ export function SkeletonTicketCard() {
   return (
     <>
       {Array.from({ length: 4 }).map((_, index) => (
-        <Card key={index}>
+        <Card key={index} className="rounded-sm">
           <CardContent>
             <div className="flex items-center gap-4">
               <Skeleton className="h-8 w-8 rounded-full" />
@@ -135,7 +135,7 @@ export function SkeletonEventCard() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {Array.from({ length: 9 }).map((_, index) => (
-        <Card key={index}>
+        <Card key={index} className="rounded-sm">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               <Skeleton className="h-12 w-12 rounded-full" />

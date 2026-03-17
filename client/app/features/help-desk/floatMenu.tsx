@@ -85,7 +85,7 @@ export default function FloatMenu({ summary }: { summary: { openTickets: number 
                 >
                   <Button
                     variant="outline"
-                    className="cursor-pointer w-full justify-start gap-3 h-12"
+                    className="cursor-pointer w-full justify-start gap-3 h-12 rounded-sm"
                   >
                     <Plus className="h-4 w-4 text-blue-600" />
                     <div className="text-left">
@@ -103,7 +103,7 @@ export default function FloatMenu({ summary }: { summary: { openTickets: number 
                 >
                   <Button
                     variant="outline"
-                    className="cursor-pointer w-full justify-start gap-3 h-12"
+                    className="cursor-pointer w-full justify-start gap-3 h-12 rounded-sm"
                   >
                     <MessageSquare className="h-4 w-4 text-green-600" />
                     <div className="text-left">
@@ -121,7 +121,7 @@ export default function FloatMenu({ summary }: { summary: { openTickets: number 
                 >
                   <Button
                     variant="outline"
-                    className="cursor-pointer w-full justify-start gap-3 h-12"
+                    className="cursor-pointer w-full justify-start gap-3 h-12 rounded-sm"
                   >
                     <FileText className="h-4 w-4 text-purple-600" />
                     <div className="text-left">
@@ -133,7 +133,7 @@ export default function FloatMenu({ summary }: { summary: { openTickets: number 
                   </Button>
                 </Link>
               </div>
-              <Card className="bg-red-50 border-red-200 p-0 cursor-pointer">
+              <Card className="bg-red-50 border-red-200 p-0 cursor-pointer rounded-sm">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-red-600" />
