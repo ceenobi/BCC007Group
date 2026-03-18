@@ -70,18 +70,18 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   }, [throttledScroll]);
 
   return (
-    <Suspense fallback={<SuspenseUi />}>
+    <>
       <HeroSection user={user} scrolled={scrolled} />
+      <Suspense fallback={<SuspenseUi />}>
+        <InfoSection />
 
-      <InfoSection />
+        <AboutSection />
 
-      <AboutSection />
+        <ServicesSection />
 
-      <ServicesSection />
-
-      <ContactSection />
-
+        <ContactSection />
+      </Suspense>
       <FooterSection />
-    </Suspense>
+    </>
   );
 }

@@ -146,6 +146,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
               className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] h-auto md:h-[600px] md:w-fit mx-auto object-contain md:mr-0"
               loading="eager"
               decoding="async"
+              fetchPriority="high"
               width="400"
               height="600"
               animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
@@ -160,6 +161,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
               alt="dashboard mockup"
               className="hidden md:block absolute top-5 md:top-[-150px] lg:top-0 xl:top-[-50px] 2xl:top-[-130px] right-0 transform translate-y-1/2 object-contain border-4 border-coolBlue/20 rounded-xl w-full max-w-[700px] h-auto"
               loading="eager"
+              fetchPriority="high"
               decoding="async"
               width="700"
               height="400"

@@ -26,7 +26,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-6 md:mt-0 space-y-6 text-center md:text-start"
+          className="mt-6 md:mt-0 space-y-6 text-center lg:text-start"
         >
           <h1 className="text-zinc-800 dark:text-white text-5xl">
             Who we are?
