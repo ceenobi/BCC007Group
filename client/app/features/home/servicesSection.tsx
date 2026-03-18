@@ -1,4 +1,5 @@
 import { motion, type Variants } from "framer-motion";
+import ImageComponent from "~/components/imageComponent";
 import { cn } from "~/lib/utils";
 
 const containerVariants: Variants = {
@@ -60,19 +61,24 @@ export default function ServicesSection() {
             className="space-y-4 group"
           >
             <div className="overflow-hidden rounded-xl">
-              <img
+              <ImageComponent
+                cellValue="https://res.cloudinary.com/ceenobi/image/upload/q_auto:best/v1772634553/download_kngsdx.webp"
+                alt="naira payment illustration"
+                classname="rounded-xl w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              {/* <img
                 src="https://res.cloudinary.com/ceenobi/image/upload/q_auto:best/v1772634553/download_kngsdx.webp"
                 alt="naira payment illustration"
                 loading="lazy"
                 className="rounded-xl h-[250px] w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 width="400"
                 height="250"
-              />
+              /> */}
             </div>
             <h1 className="text-2xl font-bold">Payments</h1>
             <p className="md:text-sm text-muted-foreground dark:text-white">
-              Manage your payments either donations or our membership fees
-              with ease. Never forget to pay again.
+              Manage your payments either donations or our membership fees with
+              ease. Never forget to pay again.
             </p>
           </motion.div>
 
@@ -101,8 +107,8 @@ export default function ServicesSection() {
                 Community
               </h1>
               <p className="md:text-sm text-white dark:text-black">
-                Connect with your fellow alumni. We're building something
-                great. Your commitment and donations will make a difference.
+                Connect with your fellow alumni. We're building something great.
+                Your commitment and donations will make a difference.
               </p>
             </motion.div>
           </motion.div>
@@ -113,14 +119,19 @@ export default function ServicesSection() {
               Everything centralized in one place.
             </p>
             <div className="overflow-hidden rounded-xl">
-              <img
+              <ImageComponent
+                cellValue="https://res.cloudinary.com/ceenobi/image/upload/v1764191114/BCC007DB/download_xvo2qn.jpg"
+                alt="ease of use"
+                classname="rounded-xl w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              {/* <img
                 src="https://res.cloudinary.com/ceenobi/image/upload/v1764191114/BCC007DB/download_xvo2qn.jpg"
                 alt="ease of use"
                 className="rounded-xl h-[250px] w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
                 width="400"
                 height="250"
-              />
+              /> */}
             </div>
           </motion.div>
         </motion.div>
