@@ -10,7 +10,7 @@ export default function ImageComponent({
   classname?: string;
 }) {
   return (
-    <div className="relative aspect-square w-full h-full rouned-sm">
+    <div className="relative aspect-square w-full h-full rounded-sm">
       <img
         style={{
           background: "rgba(0,0,0,0.05)",

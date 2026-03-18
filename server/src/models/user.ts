@@ -27,6 +27,7 @@ const UserSchema = new Schema<IUser>(
       type: String,
       unique: true,
       sparse: true,
+      required: true,
     },
     name: {
       type: String,

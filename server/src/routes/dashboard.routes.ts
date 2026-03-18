@@ -12,9 +12,6 @@ import DashboardStats from "../models/dashboardStats.js";
 
 import { connectMongoDb } from "../config/db.server.js";
 
-// type ActivityTrendsQuery = z.infer<
-//   typeof dashboardContract.dashboard.getActivityTrends.query
-// >;
 
 interface ActivityTrend {
   date: string;

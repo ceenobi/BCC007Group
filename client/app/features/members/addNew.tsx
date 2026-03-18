@@ -59,7 +59,7 @@ export default function AddNew() {
   return (
     <>
       <Button
-        size="icon"
+        size="icon-sm"
         onClick={() => setIsOpen(true)}
         className="bg-blue-500 hover:bg-blue-600 text-white hover:text-white rounded-full cursor-pointer"
       >
@@ -84,7 +84,7 @@ export default function AddNew() {
               variant="outline"
             />
             <ActionButton
-              text="Register"
+              text="Add Member"
               type="submit"
               form="memberForm"
               classname="w-full sm:w-auto py-4 bg-blue-500 hover:bg-blue-600 text-white hover:text-white"

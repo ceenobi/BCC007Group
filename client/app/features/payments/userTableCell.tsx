@@ -3,9 +3,6 @@ import { Badge } from "~/components/ui/badge";
 import { paymentStatusColors } from "~/lib/constants";
 import type { PaymentData } from "~/lib/dataSchema";
 import { formatCurrency, formatDate } from "~/lib/utils";
-// import { useFetcher } from "react-router";
-import { Button } from "~/components/ui/button";
-// import { toast } from "sonner";
 import type { UserData } from "~/lib/dataSchema";
 import ViewPayment from "./viewPayment";
 
@@ -39,16 +36,16 @@ export default function userTableCell({
       switch (columnKey) {
         case "reference":
           return (
-            <div className="font-medium dark:text-white flex flex-col">
+            <div className="dark:text-white flex flex-col">
               {cellValue as string}
               {tabQuery === "group" && (
-                <span className="text-xs text-muted-foreground">{item.userId.name}</span>
+                <span className="text-xs text-white/80">{item.userId.name}</span>
               )}
             </div>
           );
         case "paymentType":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               {item.paymentType.replace("_", " ")}
               {item.isRecurring && (
                 <Badge
@@ -62,7 +59,7 @@ export default function userTableCell({
           );
         case "paymentStatus":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               <Badge
                 variant="secondary"
                 className={`px-2 py-0.5 rounded-sm text-[12px] font-medium border ${paymentStatusColors[item.paymentStatus] || "bg-gray-100"}`}
@@ -73,13 +70,13 @@ export default function userTableCell({
           );
         case "amount":
           return (
-            <div className="font-medium dark:text-white">
+            <div className=" dark:text-white">
               {formatCurrency(cellValue as number)}
             </div>
           );
         case "createdAt":
           return (
-            <div className="font-medium dark:text-white">
+            <div className="dark:text-white">
               {formatDate(cellValue as string)}
             </div>
           );

@@ -1,10 +1,20 @@
-import { Command, Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  Command,
+  Search,
+  Loader2,
+  AlertCircle,
+  X,
+  Clock,
+  BarChart3,
+} from "lucide-react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
-import { useDebouncedCallback } from "use-debounce";
+import { useGlobalSearch, useSearchHistory } from "../hooks/useGlobalSearch";
+import { useSearchAnalytics } from "../hooks/useSearchAnalytics";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import Modal from "./modal";
+import type { SearchResult as SearchResultType } from "../lib/queries/searchAggregate";
 
 type SearchResult = {
   id: string;
@@ -15,6 +25,8 @@ type SearchResult = {
   relevance: number;
   route: string;
   searchParams?: Record<string, string>;
+  score?: number;
+  matchReason?: string;
 };
 
 const typeLabels = {
@@ -37,10 +49,19 @@ const typeIcons = {
 
 export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [results, setSearchResults] = useState<SearchResult[]>([]);
   const navigate = useNavigate();
+  const isMounted = useRef(false);
+
+  const { query, setQuery, results, isLoading, isError, clearSearch } =
+    useGlobalSearch({
+      debounceMs: 300,
+      minQueryLength: 2,
+      maxResults: 20,
+    });
+
+  const { history, addToHistory, clearHistory } = useSearchHistory();
+  const { recordSearch, insights, analytics } = useSearchAnalytics();
 
   // Handle keyboard shortcut
   useEffect(() => {
@@ -56,7 +77,11 @@ export default function GlobalSearch() {
   }, []);
 
   const handleResultClick = useCallback(
-    (result: SearchResult) => {
+    (result: SearchResultType) => {
+      // Record search analytics when user clicks a result
+      recordSearch(query, results);
+      addToHistory(query);
+
       const searchParams = new URLSearchParams();
       if (result.searchParams) {
         Object.entries(result.searchParams).forEach(([key, value]) => {
@@ -70,9 +95,9 @@ export default function GlobalSearch() {
 
       navigate(routeWithParams);
       setIsOpen(false);
-      setSearchQuery("");
+      clearSearch();
     },
-    [navigate],
+    [navigate, query, addToHistory, clearSearch, recordSearch, results],
   );
 
   const handleQuickAction = useCallback(
@@ -81,9 +106,9 @@ export default function GlobalSearch() {
         case "members":
           navigate("/members");
           break;
-        case "announcements":
-          navigate("/for-you");
-          break;
+        // case "announcements":
+        //   navigate("/for-you");
+        //   break;
         case "events":
           navigate("/events");
           break;
@@ -98,7 +123,7 @@ export default function GlobalSearch() {
 
   useEffect(() => {
     setSelectedIndex(0);
-  }, [results]);
+  }, [query]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -115,7 +140,7 @@ export default function GlobalSearch() {
           break;
         case "Enter":
           e.preventDefault();
-          if (results[selectedIndex] && searchQuery.trim()) {
+          if (results[selectedIndex] && query.trim()) {
             handleResultClick(results[selectedIndex]);
           }
           break;
@@ -128,21 +153,29 @@ export default function GlobalSearch() {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, results, selectedIndex, handleResultClick, searchQuery]);
+  }, [isOpen, results, selectedIndex, handleResultClick, query]);
 
   useEffect(() => {
+    // Skip on initial mount to avoid infinite loop
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
     if (!isOpen) {
-      setSearchQuery("");
+      clearSearch();
       setSelectedIndex(0);
     }
-  }, [isOpen]);
+  }, [isOpen, clearSearch]);
 
-  const handleSubmit = useDebouncedCallback((event: React.FormEvent) => {
-    event.preventDefault();
-    if (searchQuery.trim() && results[selectedIndex]) {
-      handleResultClick(results[selectedIndex]);
-    }
-  }, 500);
+  const handleSubmit = useCallback(
+    (event: React.FormEvent) => {
+      event.preventDefault();
+      if (query.trim() && results[selectedIndex]) {
+        handleResultClick(results[selectedIndex]);
+      }
+    },
+    [query, results, selectedIndex, handleResultClick],
+  );
 
   return (
     <>
@@ -172,44 +205,89 @@ export default function GlobalSearch() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search members, announcements, events, payments, and more..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search members, events, payments, and more..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 className="pl-10 rounded-sm py-5"
                 autoFocus
               />
             </div>
           </form>
           <div className="max-h-96 overflow-y-auto border-t">
-            {searchQuery.trim() === "" ? (
+            {isLoading ? (
+              <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                <span className="text-sm text-muted-foreground">
+                  Searching...
+                </span>
+              </div>
+            ) : isError ? (
+              <div className="flex items-center justify-center p-8">
+                <AlertCircle className="h-6 w-6 text-red-500 mr-2" />
+                <span className="text-sm text-red-500">
+                  Search failed. Please try again.
+                </span>
+              </div>
+            ) : query.trim() === "" ? (
               <>
-                <div className="p-6 space-y-4">
+                {/* Search History Section */}
+                {history && history.length > 0 && (
+                  <div className="p-4 border-b">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-sm font-medium flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        Recent Searches
+                      </h4>
+                      <button
+                        onClick={clearHistory}
+                        className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+                      >
+                        <X className="h-3 w-3" />
+                        Clear
+                      </button>
+                    </div>
+                    <div className="space-y-1">
+                      {history.slice(0, 5).map((searchQuery, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-3 p-2 rounded-sm hover:bg-accent cursor-pointer"
+                          onClick={() => setQuery(searchQuery)}
+                        >
+                          <Clock className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm">{searchQuery}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-4 space-y-4">
                   <div>
                     <h4 className="text-sm font-medium mb-3">Quick Actions</h4>
                     <div className="space-y-1">
                       <div
-                        className="flex items-center gap-3 p-3 rounded-sm hover:bg-lightBlue/40 cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-sm hover:bg-lightBlue/10 cursor-pointer"
                         onClick={() => handleQuickAction("members")}
                       >
                         <span className="text-lg">👤</span>
                         <span className="text-sm">Search members</span>
                       </div>
-                      <div
-                        className="flex items-center gap-3 p-3 rounded-sm hover:bg-lightBlue/40 cursor-pointer"
+                      {/* <div
+                        className="flex items-center gap-3 p-2 rounded-sm hover:bg-lightBlue/10 cursor-pointer"
                         onClick={() => handleQuickAction("announcements")}
                       >
                         <span className="text-lg">📢</span>
                         <span className="text-sm">Search announcements</span>
-                      </div>
+                      </div> */}
                       <div
-                        className="flex items-center gap-3 p-3 rounded-sm hover:bg-lightBlue/40 cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-sm hover:bg-lightBlue/10 cursor-pointer"
                         onClick={() => handleQuickAction("events")}
                       >
                         <span className="text-lg">📅</span>
                         <span className="text-sm">Search calendar events</span>
                       </div>
                       <div
-                        className="flex items-center gap-3 p-3 rounded-sm hover:bg-lightBlue/40 cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-sm hover:bg-lightBlue/10 cursor-pointer"
                         onClick={() => handleQuickAction("payments")}
                       >
                         <span className="text-lg">💸</span>
@@ -217,6 +295,46 @@ export default function GlobalSearch() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Search Insights Section */}
+                  {analytics && analytics.totalSearches > 0 && (
+                    <div className="border-t pt-4">
+                      <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4" />
+                        Search Insights
+                      </h4>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-muted/50 p-2 rounded">
+                          <p className="text-muted-foreground">
+                            Total Searches
+                          </p>
+                          <p className="font-medium">
+                            {analytics.totalSearches}
+                          </p>
+                        </div>
+                        <div className="bg-muted/50 p-2 rounded">
+                          <p className="text-muted-foreground">Success Rate</p>
+                          <p className="font-medium">
+                            {insights.searchSuccessRate.toFixed(1)}%
+                          </p>
+                        </div>
+                        <div className="bg-muted/50 p-2 rounded">
+                          <p className="text-muted-foreground">Most Popular</p>
+                          <p className="font-medium capitalize">
+                            {insights.mostPopularType || "N/A"}
+                          </p>
+                        </div>
+                        <div className="bg-muted/50 p-2 rounded">
+                          <p className="text-muted-foreground">
+                            Avg Query Length
+                          </p>
+                          <p className="font-medium">
+                            {insights.averageQueryLength.toFixed(1)} chars
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
@@ -224,10 +342,9 @@ export default function GlobalSearch() {
                 {results?.length === 0 ? (
                   <div className="p-6 text-center text-muted-foreground">
                     <Search className="h-8 w-8 mx-auto mb-3 opacity-50" />
-                    <p>No results found for "{searchQuery}"</p>
+                    <p>No results found for "{query}"</p>
                     <p className="text-xs mt-1">
-                      Try searching for members, announcements, events, or
-                      payments
+                      Try searching for members, events, or payments
                     </p>
                   </div>
                 ) : (
@@ -260,7 +377,7 @@ export default function GlobalSearch() {
                         </div>
                       ))}
                     </div>
-                    {(searchQuery.trim() || results?.length > 0) && (
+                    {(query.trim() || results?.length > 0) && (
                       <div className="border-t px-6 py-3 text-xs text-muted-foreground bg-muted/30 flex justify-between">
                         <span>
                           {results.length > 0

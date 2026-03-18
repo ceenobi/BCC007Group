@@ -7,7 +7,7 @@ const authFile = path.join(__dirname, ".auth/user.json");
 
 setup("authenticate as admin", async ({ page }) => {
   await page.goto("/account/login");
-  await page.getByPlaceholder("Your email").fill("ceenobi@icloud.com");
+  await page.getByPlaceholder("Member email").fill("ceenobi@icloud.com");
   await page.getByPlaceholder("Your password").fill("Techstudio!!1");
   await page.getByRole("button", { name: "Sign In" }).click();
   // Wait for redirect to dashboard after login

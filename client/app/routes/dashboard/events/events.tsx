@@ -45,6 +45,7 @@ import Paginate from "~/components/paginate";
 import AccessDenied from "~/components/rbac/AccessDenied";
 import EventActions from "~/features/events/event-actions/eventActions";
 import BatchDelete from "~/features/events/event-actions/batchDelete";
+import ComingSoon from "~/components/comingSoon";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -312,10 +313,10 @@ function EventsLists() {
             <div className="absolute -bottom-px w-full mx-1 h-[2px] bg-gray-200 dark:bg-gray-600"></div>
           </div>
           <Card
-            className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-3 transition-all duration-300 ease-in-out"
+            className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm py-2 transition-all duration-300 ease-in-out"
             style={{ animationDelay: "100ms" }}
           >
-            <div className="flex gap-4 items-center px-4">
+            <div className="flex gap-4 items-center px-2">
               <Search id="searchEvents" placeholder="Search events" />
               <div className="flex items-center gap-2">
                 <Button
@@ -360,27 +361,23 @@ function EventsLists() {
                           permission="MANAGE_EVENTS"
                           fallback={<AccessDenied />}
                         >
-                          <Card
-                            className="bg-slate-50/10 dark:bg-coolBlue/20 shadow rounded-sm p-4 transition-all duration-300 ease-in-out"
-                            style={{ animationDelay: "100ms" }}
-                          >
-                            <EventActions
-                              eventsData={resolvedEvents}
-                              selected={selected}
-                              setSelected={setSelected}
-                              members={members}
-                            />
-                          </Card>
+                          <EventActions
+                            eventsData={resolvedEvents}
+                            selected={selected}
+                            setSelected={setSelected}
+                            members={members}
+                          />
                         </Can>
                       </>
                     )}
+                    {tabQuery === "options" && <ComingSoon />}
                   </>
                 )}
               />
             </Suspense>
           </TabsContent>
         </Tabs>
-        {events?.length > 0 && (
+        {events?.length > 0 && ["all", "actions"].includes(tabQuery) &&(
           <Paginate
             totalPages={totalPages}
             hasMore={hasMore}
