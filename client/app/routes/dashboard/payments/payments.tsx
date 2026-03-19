@@ -149,7 +149,7 @@ export default function Payments() {
   return (
     <PageWrapper>
       <PageSection index={0}>
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-4">
           <PageTitle
             title="Payments"
             subtitle="Manage and track your payments within the group"
