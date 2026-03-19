@@ -54,11 +54,11 @@ export default function CardView({ members }: { members: UserData[] }) {
                         <div>
                           <Badge
                             variant="outline"
-                            className={
+                            className={`rounded-sm ${
                               memberRoleColors[
                                 member.role as keyof typeof memberRoleColors
                               ]
-                            }
+                            }`}
                           >
                             {member.role}
                           </Badge>
@@ -86,7 +86,7 @@ export default function CardView({ members }: { members: UserData[] }) {
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1 gap-2 text-xs"
+                              className="rounded-sm flex-1 gap-2 text-xs"
                               onClick={() =>
                                 window.open(`mailto:${member.email}`, "_blank")
                               }
@@ -99,7 +99,7 @@ export default function CardView({ members }: { members: UserData[] }) {
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1 gap-2 text-xs"
+                              className="rounded-sm flex-1 gap-2 text-xs"
                               onClick={() =>
                                 window.open(`tel:${member.phone}`, "_blank")
                               }
