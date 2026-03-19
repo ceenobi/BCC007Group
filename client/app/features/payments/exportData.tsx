@@ -46,10 +46,10 @@ export default function ExportData({
     <Button
       onClick={exportDataToPDF}
       variant="ghost"
-      className="rounded-sm cursor-pointer hidden md:block"
+      className="rounded-sm cursor-pointer hidden md:flex"
       disabled={payments.length === 0 || selected.length === 0}
     >
-      <Download className="h-4 w-4" />
+      <Download />
       Export
     </Button>
   );

@@ -188,15 +188,18 @@ function MembersLists() {
               <div className="flex items-center gap-2">
                 <Button
                   variant="ghost"
-                  className="relative cursor-pointer rounded-sm"
+                  className="relative cursor-pointer rounded-sm hidden md:flex"
                   onClick={() => setIsOpenFilter(!isOpenFilter)}
                 >
                   <ListFilter /> Filter
                 </Button>
-                <Separator orientation="vertical" />
+                <Separator orientation="vertical" className="hidden md:block" />
                 <Sort handleSortChange={handleSortChange} sort={sort} />
                 <Can user={user} permission="MANAGE_MEMBERS">
-                  <Separator orientation="vertical" />
+                  <Separator
+                    orientation="vertical"
+                    className="hidden md:block"
+                  />
                   <AddNew />
                 </Can>
               </div>
