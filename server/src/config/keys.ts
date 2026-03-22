@@ -42,7 +42,7 @@ const ENV_VARS: EnvSpec[] = [
   { key: "QSTASH_TOKEN" },
   { key: "QSTASH_URL" },
   { key: "RESEND_API_KEY" },
-  // { key: "BREVO_API_KEY" },
+  { key: "SENTRY_DSN", required: false },
   // Add optional vars like this:
   // { key: "OPTIONAL_VAR", required: false }
 ];
@@ -98,6 +98,7 @@ interface Env {
     qstashToken: string;
   };
   readonly resendApiKey: string;
+  readonly sentryDsn?: string;
 }
 
 export const env: Env = {
@@ -129,4 +130,5 @@ export const env: Env = {
     qstashUrl: getEnvVar()["QSTASH_URL"],
   },
   resendApiKey: getEnvVar()["RESEND_API_KEY"],
+  sentryDsn: getEnvVar()["SENTRY_DSN"] || undefined,
 };

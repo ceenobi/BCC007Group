@@ -1,11 +1,11 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import Logo from "~/components/logo";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { Link } from "react-router";
 import Profile from "~/components/profile";
 
-const heroContentVariants = {
+const heroContentVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -14,7 +14,7 @@ const heroContentVariants = {
   },
 };
 
-const heroImageVariants = {
+const heroImageVariants: Variants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -24,7 +24,7 @@ const heroImageVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -49,20 +49,20 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
   ];
 
   return (
-    <div className="relative min-h-dvh md:min-h-full xl:min-h-dvh bg-linear-to-bl from-lightBlue via-lightBlue/50 to-lightBlue text-zinc-900 dark:text-white overflow-hidden flex flex-col justify-center items-center">
-      <div className="container mx-auto px-4 py-4 lg:px-8" id="home">
+    <div className="relative min-h-dvh md:min-h-full xl:min-h-dvh bg-linear-to-bl from-lightBlue via-coolBlue to-lightBlue text-zinc-900 dark:text-white overflow-hidden flex flex-col justify-center items-center">
+      <div id="home">
         <motion.div
           initial={
             shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }
           }
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className={`fixed top-5 left-4 right-4 flex justify-center items-center p-4 bg-white/30 backdrop-blur supports-backdrop-filter:bg-white/70 shadow rounded-full z-50 transition-all duration-300`}
+          className={`fixed top-4 left-4 right-4 bg-white/50 backdrop-blur supports-backdrop-filter:bg-white/50 shadow rounded-full z-50 transition-all duration-300 max-w-[800px] mx-auto px-4 lg:px-8`}
         >
-          <div className="flex justify-between items-center w-full container mx-auto px-4">
+          <div className="flex justify-between items-center p-4">
             <Logo
               classname="text-2xl filter drop-shadow-xl"
-              color={scrolled ? "text-coolBlue" : "text-coolBlue"}
+              color="text-coolBlue"
             />
             <div className="flex gap-8 lg:gap-12 items-center">
               {links.map((link) => (
@@ -98,7 +98,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
         </motion.div>
 
         <div
-          className="min-h-[500px] xl:min-h-full items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-4 py-30"
+          className="container mx-auto px-4 lg:px-8 min-h-[500px] xl:min-h-full items-center justify-center grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-4 py-30"
           id="home"
         >
           <motion.div
@@ -124,7 +124,7 @@ export default function HeroSection({ user, scrolled }: HeroSectionProps) {
               BCCOO7 Platform is a web application that allows its users to
               manage their payments and transfers.
             </motion.p>
-            <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }}>
+            <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} className="lg:w-fit">
               <Button
                 asChild
                 className="rounded-sm shadow-lg w-[200px] bg-white text-lightBlue hover:text-white hover:dark:text-coolBlue h-12 font-bold"
