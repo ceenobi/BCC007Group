@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import { env } from "./config/keys.js";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
@@ -218,6 +219,8 @@ createExpressEndpoints(dashboardContract, getDashboardRouter(), app, {
   responseValidation: true,
 });
 
+// Sentry error handler must be before any other error middleware
+Sentry.setupExpressErrorHandler(app);
 // Handle 404
 app.use(notFound);
 // Global error handler (adapted for ts-rest)

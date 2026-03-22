@@ -1,5 +1,6 @@
 import type { Config } from "@react-router/dev/config";
 import { vercelPreset } from "@vercel/react-router/vite";
+import { sentryOnBuildEnd } from "@sentry/react-router";
 
 export default {
   // Config options...
@@ -10,4 +11,5 @@ export default {
   future: {
     v8_middleware: true,
   },
+  buildEnd: sentryOnBuildEnd,
 } satisfies Config;
