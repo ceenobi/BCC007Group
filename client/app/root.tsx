@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react-router";
 import {
   isRouteErrorResponse,
   Links,
@@ -144,9 +145,13 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             : error.status === 500
               ? error.data.message
               : error.data.message || error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+  } else if (error && error instanceof Error) {
+    // Report non-404 errors to Sentry
+    Sentry.captureException(error);
+    if (import.meta.env.DEV) {
+      details = error.message;
+      stack = error.stack;
+    }
   }
 
   return (

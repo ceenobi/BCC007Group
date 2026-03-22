@@ -1,10 +1,22 @@
 import { reactRouter } from "@react-router/dev/vite";
+import { sentryReactRouter } from "@sentry/react-router";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+const sentryConfig = {
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+};
+
+export default defineConfig((config) => ({
+  plugins: [
+    tailwindcss(),
+    reactRouter(),
+    sentryReactRouter(sentryConfig, config),
+    tsconfigPaths(),
+  ],
   server: {
     host: "0.0.0.0",
     port: 4500,
@@ -42,4 +54,4 @@ export default defineConfig({
   esbuild: {
     target: "esnext",
   },
-});
+}));

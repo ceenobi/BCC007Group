@@ -19,6 +19,7 @@
     "test:payment": "vitest run src/routes/payment.routes.test.ts src/routes/paystack.routes.test.ts"
   },
   "dependencies": {
+    "@sentry/node": "^10.45.0",
     "@ts-rest/core": "^3.52.1",
     "@ts-rest/express": "^3.52.1",
     "@upstash/redis": "^1.36.0",

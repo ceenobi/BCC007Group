@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import * as Sentry from "@sentry/node";
 import logger from "../config/logger.js";
 import { createTsRestError } from "../lib/tsRestResponse.js";
 import { env } from "../config/keys.js";
@@ -25,6 +26,9 @@ export const errorHandler = (
 ) => {
   let error = { ...err } as ErrorResponse;
   error.message = err.message;
+
+  // Report to Sentry
+  Sentry.captureException(err);
 
   // Log to console/winston for all errors
   logger.error(err);
